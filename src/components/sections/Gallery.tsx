@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 
 const galleryImages = [
   { src: "/uploads/1752046515076-1725103684395.jpg", alt: "Bangladesh Jatiya Sangsad" },
@@ -17,6 +19,8 @@ const galleryImages = [
 
 export function Gallery() {
   const { translations } = useLanguage();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -43,7 +47,7 @@ export function Gallery() {
       className="py-20 md:py-28"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={sectionVariants}
     >
       <div className="container max-w-screen-xl mx-auto">
@@ -51,29 +55,44 @@ export function Gallery() {
           <h2 className="text-4xl font-bold">{translations.galleryTitle}</h2>
           <p className="text-muted-foreground mt-2">{translations.gallerySubtitle}</p>
         </motion.div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {galleryImages.map((image, index) => (
-            <motion.div 
-              key={index} 
-              className="group relative overflow-hidden rounded-lg border shadow-sm"
-              variants={itemVariants}
-              whileHover={{ scale: 1.05, y: -5 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                width={400}
-                height={400}
-                className="w-full h-auto object-cover aspect-square"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                  <p className="text-white text-center text-sm font-semibold">{image.alt}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <Dialog>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {galleryImages.map((image, index) => (
+               <DialogTrigger key={index} asChild>
+                <motion.div 
+                  className="group relative overflow-hidden rounded-lg border shadow-sm cursor-pointer"
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ duration: 0.3 }}
+                  onClick={() => setSelectedImage(image.src)}
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={400}
+                    height={400}
+                    className="w-full h-auto object-cover aspect-square"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                      <p className="text-white text-center text-sm font-semibold">{image.alt}</p>
+                  </div>
+                </motion.div>
+              </DialogTrigger>
+            ))}
+          </div>
+           {selectedImage && (
+             <DialogContent className="max-w-3xl p-2">
+                <Image
+                    src={selectedImage}
+                    alt="Selected gallery image"
+                    width={1200}
+                    height={800}
+                    className="w-full h-auto object-contain rounded-md"
+                />
+             </DialogContent>
+           )}
+        </Dialog>
       </div>
     </motion.section>
   );
