@@ -39,7 +39,7 @@ export function Faq() {
   return (
     <section id="faq" className="bg-muted/40 py-20 md:py-28">
       <div className="container max-w-screen-lg mx-auto">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 animate-fade-in-up">
           <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
           <p className="text-muted-foreground mt-2">
             Answers to common questions you may have.
@@ -47,7 +47,7 @@ export function Faq() {
         </div>
         <Accordion type="single" collapsible className="w-full">
           {faqData.map((faq, index) => (
-            <AccordionItem key={index} value={`item-${index}`}>
+            <AccordionItem key={index} value={`item-${index}`} className="animate-fade-in-up" style={{ animationDelay: `${index * 150}ms` }}>
               <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
                 {faq.answer}

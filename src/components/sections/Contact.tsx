@@ -10,14 +10,14 @@ export function Contact() {
   return (
     <section id="contact" className="py-20 md:py-28">
       <div className="container max-w-screen-xl mx-auto">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 animate-fade-in-up">
           <h2 className="text-4xl font-bold">Get In Touch</h2>
           <p className="text-muted-foreground mt-2">
             Have a project in mind? I'd love to hear from you. Fill out the form or contact me directly.
           </p>
         </div>
         <div className="grid md:grid-cols-2 gap-12">
-          <Card>
+          <Card className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
             <CardHeader>
               <CardTitle>Send me a message</CardTitle>
             </CardHeader>
@@ -34,7 +34,7 @@ export function Contact() {
               </form>
             </CardContent>
           </Card>
-          <div className="space-y-6">
+          <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '400ms' }}>
             <h3 className="text-2xl font-semibold">Contact Information</h3>
             <div className="flex items-center gap-4">
               <div className="p-3 rounded-full bg-primary/10 text-primary">

@@ -32,7 +32,7 @@ export function Pricing() {
   return (
     <section id="pricing" className="py-20 md:py-28">
       <div className="container max-w-screen-xl mx-auto">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 animate-fade-in-up">
           <h2 className="text-4xl font-bold">My Packages</h2>
           <p className="text-muted-foreground mt-2">Choose a package that suits your needs or contact me for a custom quote.</p>
         </div>
