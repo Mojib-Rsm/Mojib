@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Bot, Megaphone, Server, Wand2 } from "lucide-react";
+import { Bot, Code, Megaphone, Server, Wand2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -12,6 +12,11 @@ const skillsData = [
     category: 'skillsCategory1',
     icon: <Wand2 className="w-8 h-8 text-primary" />,
     skills: ['WordPress', 'PHP', 'Shopify', 'Webflow', 'Elementor'],
+  },
+  {
+    category: 'skillsCategory5',
+    icon: <Code className="w-8 h-8 text-primary" />,
+    skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Laravel'],
   },
   {
     category: 'skillsCategory2',
@@ -65,7 +70,7 @@ export function Skills() {
           <h2 className="text-4xl font-bold">{translations.skillsTitle}</h2>
           <p className="text-muted-foreground mt-2">{translations.skillsSubtitle}</p>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skillsData.map((category, index) => (
             <motion.div key={index} variants={itemVariants} whileHover={{ y: -5 }}>
               <Card className="text-left h-full glass-card">

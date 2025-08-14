@@ -48,8 +48,8 @@ export const translations = {
     service4Desc: 'Improving your website’s ranking on search engines like Google to attract more organic traffic and potential customers.',
     service5Title: 'UI/UX & Graphics Design',
     service5Desc: 'Designing intuitive user interfaces and stunning graphics that provide a great user experience and make your brand stand out.',
-    service6Title: 'Custom Web Solutions',
-    service6Desc: 'Developing custom web applications and providing technical support to ensure your online presence is always running smoothly.',
+    service6Title: 'Basic Web Coding',
+    service6Desc: 'I have a foundational understanding of coding and can assist with basic customizations using HTML, CSS, and JavaScript for your web projects.',
     getStarted: 'Start a Project',
 
     // Experience Section
@@ -59,10 +59,11 @@ export const translations = {
     // Skills Section
     skillsTitle: 'My Skills',
     skillsSubtitle: 'The tools and technologies I use to bring ideas to life.',
-    skillsCategory1: 'Web Development',
+    skillsCategory1: 'Platform Expertise',
     skillsCategory2: 'Artificial Intelligence',
     skillsCategory3: 'Digital Marketing',
     skillsCategory4: 'Computer Expertise',
+    skillsCategory5: 'Coding & Development',
 
     // Portfolio Section
     portfolioTitle: 'Featured Projects',
@@ -158,8 +159,8 @@ export const translations = {
     service4Desc: 'Google-এর মতো সার্চ ইঞ্জিনে আপনার ওয়েবসাইটের র‌্যাঙ্কিং উন্নত করে আরও বেশি অর্গানিক ট্র্যাফিক আকর্ষণ করি।',
     service5Title: 'UI/UX ও গ্রাফিক্স ডিজাইন',
     service5Desc: 'স্বজ্ঞাত ইউজার ইন্টারফেস এবং চমৎকার গ্রাফিক্স ডিজাইন করি যা একটি দুর্দান্ত ব্যবহারকারীর অভিজ্ঞতা প্রদান করে এবং আপনার ব্র্যান্ডকে আলাদা করে তোলে।',
-    service6Title: 'কাস্টম ওয়েব সমাধান',
-    service6Desc: 'আপনার অনলাইন উপস্থিতি সর্বদা মসৃণভাবে চলমান তা নিশ্চিত করতে কাস্টম ওয়েব অ্যাপ্লিকেশন তৈরি করি এবং প্রযুক্তিগত সহায়তা প্রদান করি।',
+    service6Title: 'বেসিক ওয়েব কোডিং',
+    service6Desc: 'আমার কোডিং সম্পর্কে প্রাথমিক ধারণা রয়েছে এবং আপনার ওয়েব প্রোজেক্টের জন্য HTML, CSS, এবং JavaScript ব্যবহার করে সাধারণ কাস্টমাইজেশনে সহায়তা করতে পারি।',
     getStarted: 'প্রকল্প শুরু করুন',
 
     // Experience Section
@@ -169,10 +170,11 @@ export const translations = {
     // Skills Section
     skillsTitle: 'আমার দক্ষতা',
     skillsSubtitle: 'আমার ধারণাগুলোকে বাস্তবে রূপ দেওয়ার জন্য ব্যবহৃত টুলস এবং প্রযুক্তি।',
-    skillsCategory1: 'ওয়েব ডেভেলপমেন্ট',
+    skillsCategory1: 'প্ল্যাটফর্ম দক্ষতা',
     skillsCategory2: 'কৃত্রিম বুদ্ধিমত্তা',
     skillsCategory3: 'ডিজিটাল মার্কেটিং',
     skillsCategory4: 'কম্পিউটার দক্ষতা',
+    skillsCategory5: 'কোডিং এবং ডেভেলপমেন্ট',
 
     // Portfolio Section
     portfolioTitle: 'বৈশিষ্ট্যযুক্ত প্রকল্প',
