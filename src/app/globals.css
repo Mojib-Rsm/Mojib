@@ -6,48 +6,57 @@
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 222 47% 11%;
-    --card: 210 20% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 210 20% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 243 79% 58%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 188 95% 43%;
+    --background: 270 90% 98%;
+    --foreground: 265 15% 15%;
+    --card: 270 90% 100%;
+    --card-foreground: 265 15% 15%;
+    --popover: 270 90% 100%;
+    --popover-foreground: 265 15% 15%;
+    --primary: 262 82% 85%; /* Soft Lavender */
+    --primary-foreground: 265 15% 15%;
+    --secondary: 265 30% 60%; /* Muted Violet */
     --secondary-foreground: 210 40% 98%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 28% 44%;
-    --accent: 45 96% 53%;
-    --accent-foreground: 222 47% 11%;
+    --muted: 270 90% 96%;
+    --muted-foreground: 265 15% 45%;
+    --accent: 265 30% 60%; /* Muted Violet */
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
-    --border: 210 40% 90%;
-    --input: 210 40% 90%;
-    --ring: 243 79% 58%;
+    --border: 270 90% 90%;
+    --input: 270 90% 90%;
+    --ring: 262 82% 85%;
     --radius: 0.75rem;
+
+    /* New colors from user request */
+    --primary-new: 243 79% 58%; /* Indigo */
+    --secondary-new: 188 95% 43%; /* Cyan */
+    --accent-new: 45 96% 53%; /* Yellow */
+
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 14%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 14%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 243 79% 68%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 188 95% 53%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 222 47% 18%;
-    --muted-foreground: 215 28% 64%;
-    --accent: 45 96% 63%;
-    --accent-foreground: 222 47% 11%;
+    --background: 270 10% 5%;
+    --foreground: 270 90% 95%;
+    --card: 270 10% 10%;
+    --card-foreground: 270 90% 95%;
+    --popover: 270 10% 10%;
+    --popover-foreground: 270 90% 95%;
+    --primary: 262 82% 85%; /* Soft Lavender */
+    --primary-foreground: 265 15% 15%;
+    --secondary: 265 30% 60%; /* Muted Violet */
+    --secondary-foreground: 210 40% 98%;
+    --muted: 270 10% 12%;
+    --muted-foreground: 270 90% 65%;
+    --accent: 265 30% 60%; /* Muted Violet */
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    --border: 222 47% 20%;
-    --input: 222 47% 20%;
-    --ring: 243 79% 68%;
+    --border: 270 10% 20%;
+    --input: 270 10% 20%;
+    --ring: 262 82% 85%;
+
+    /* New colors from user request */
+    --background-new: 222 47% 11%; /* Dark */
   }
 }
 
@@ -57,6 +66,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-color: #F5F0FF; /* Light, desaturated lavender */
     min-height: 100vh;
   }
   h1,
@@ -65,7 +75,12 @@
   h4,
   h5,
   h6 {
+    font-family: 'Belleza', sans-serif;
     @apply font-headline;
+  }
+
+  body, p, span, div {
+     font-family: 'Alegreya', serif;
   }
 }
 

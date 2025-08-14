@@ -79,6 +79,7 @@ export function Blog() {
                       height={400}
                       className="w-full h-auto object-cover"
                       data-ai-hint={post.hint}
+                      loading="lazy"
                     />
                 </CardHeader>
                 <CardContent className="p-6 flex-grow">

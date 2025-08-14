@@ -97,6 +97,7 @@ export function Hero() {
                 height={600}
                 className="rounded-lg object-cover w-full h-full relative z-10 shadow-2xl"
                 data-ai-hint="man suit"
+                priority
               />
                <FloatingPill icon={<Code size={20} />} text={translations.webDevelopment} className="top-20 -right-24" delay={0.5} />
                <FloatingPill icon={<Search size={20} />} text={translations.seo} className="top-40 -left-24" delay={0.8} />

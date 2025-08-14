@@ -66,6 +66,7 @@ export function Gallery() {
                 width={400}
                 height={400}
                 className="w-full h-auto object-cover aspect-square"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                   <p className="text-white text-center text-sm font-semibold">{image.alt}</p>
