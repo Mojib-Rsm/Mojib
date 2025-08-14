@@ -56,7 +56,7 @@ export function Experience() {
   return (
     <motion.section 
       id="experience" 
-      className="bg-muted py-20 md:py-28"
+      className="bg-background py-20 md:py-28"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
@@ -69,7 +69,7 @@ export function Experience() {
         </motion.div>
         <div className="relative grid gap-8 before:absolute before:inset-0 before:left-1/2 before:w-px before:bg-border before:-translate-x-1/2">
           {experienceData.map((item, index) => (
-             <motion.div key={index} className="relative flex items-start md:grid md:grid-cols-2 md:gap-8" variants={itemVariants}>
+             <motion.div key={index} className="relative md:grid md:grid-cols-2 md:gap-8 items-start" variants={itemVariants}>
               {index % 2 === 0 ? (
                 <>
                   <div className="flex flex-col items-end text-right">
@@ -77,7 +77,7 @@ export function Experience() {
                   </div>
                    <div className="absolute left-1/2 top-1 w-3 h-3 rounded-full bg-primary -translate-x-1/2"></div>
                    <div>
-                    <Card className="w-full bg-background shadow-md">
+                    <Card className="w-full bg-muted shadow-md">
                         <CardHeader>
                             <CardTitle>{item.role}</CardTitle>
                             <CardDescription>{item.company}</CardDescription>
@@ -90,8 +90,12 @@ export function Experience() {
                 </>
               ) : (
                 <>
-                   <div>
-                     <Card className="w-full bg-background shadow-md">
+                   <div className="md:order-last flex flex-col items-start">
+                     <div className="font-semibold text-primary">{item.dates}</div>
+                   </div>
+                   <div className="absolute left-1/2 top-1 w-3 h-3 rounded-full bg-primary -translate-x-1/2"></div>
+                   <div className="md:text-right">
+                     <Card className="w-full bg-muted shadow-md">
                         <CardHeader>
                             <CardTitle>{item.role}</CardTitle>
                             <CardDescription>{item.company}</CardDescription>
@@ -100,10 +104,6 @@ export function Experience() {
                             <p className="text-muted-foreground">{item.description}</p>
                         </CardContent>
                     </Card>
-                   </div>
-                   <div className="absolute left-1/2 top-1 w-3 h-3 rounded-full bg-primary -translate-x-1/2"></div>
-                   <div className="flex flex-col items-start">
-                     <div className="font-semibold text-primary">{item.dates}</div>
                    </div>
                 </>
               )}
