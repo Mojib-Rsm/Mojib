@@ -2,6 +2,7 @@ import { About } from '@/components/sections/About';
 import { Blog } from '@/components/sections/Blog';
 import { Contact } from '@/components/sections/Contact';
 import { Experience } from '@/components/sections/Experience';
+import { Faq } from '@/components/sections/Faq';
 import { Gallery } from '@/components/sections/Gallery';
 import { Hero } from '@/components/sections/Hero';
 import { Portfolio } from '@/components/sections/Portfolio';
@@ -21,6 +22,7 @@ export default function Home() {
       <Gallery />
       <Pricing />
       <Blog />
+      <Faq />
       <Contact />
     </div>
   );
