@@ -6,24 +6,24 @@ import { Check } from 'lucide-react';
 
 const pricingData = [
   {
-    title: 'Basic',
-    price: '$49',
-    description: 'For small projects and startups.',
-    features: ['UI/UX Design', '10 Pages', '3 Revisions', 'Basic Support'],
+    title: 'Basic Website',
+    price: '৳15,000',
+    description: 'one-time',
+    features: ['5 Pages', 'Responsive Design', 'Contact Form', 'Basic SEO', '1 Month Support'],
     popular: false,
   },
   {
-    title: 'Standard',
-    price: '$99',
-    description: 'For growing businesses.',
-    features: ['UI/UX Design & Development', '20 Pages', '5 Revisions', 'Priority Support', 'Source Files'],
+    title: 'Standard Business',
+    price: '৳35,000',
+    description: 'one-time',
+    features: ['10 Pages', 'Custom Design', 'CMS Integration', 'Advanced SEO', '3 Months Support'],
     popular: true,
   },
   {
-    title: 'Premium',
-    price: '$199',
-    description: 'For large-scale projects.',
-    features: ['Full Design & Dev', 'Unlimited Pages', 'Unlimited Revisions', '24/7 Support', 'Full Ownership'],
+    title: 'E-commerce',
+    price: '৳70,000',
+    description: 'one-time',
+    features: ['Unlimited Products', 'Payment Gateway', 'Admin Panel', 'Premium SEO', '6 Months Support'],
     popular: false,
   },
 ];
@@ -33,19 +33,19 @@ export function Pricing() {
     <section id="pricing" className="py-20 md:py-28">
       <div className="container max-w-screen-xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold">Pricing Plans</h2>
-          <p className="text-muted-foreground mt-2">Choose the plan that fits your needs.</p>
+          <h2 className="text-4xl font-bold">My Packages</h2>
+          <p className="text-muted-foreground mt-2">Choose a package that suits your needs or contact me for a custom quote.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {pricingData.map((plan, index) => (
-            <Card key={index} className={`animate-fade-in-up ${plan.popular ? 'border-primary border-2' : ''}`} style={{ animationDelay: `${index * 200}ms` }}>
+            <Card key={index} className={`animate-fade-in-up flex flex-col ${plan.popular ? 'border-primary border-2' : ''}`} style={{ animationDelay: `${index * 200}ms` }}>
               <CardHeader className="text-center">
-                {plan.popular && <div className="text-primary font-semibold mb-2">Most Popular</div>}
+                {plan.popular && <div className="text-primary font-semibold mb-2">Popular</div>}
                 <CardTitle className="text-2xl">{plan.title}</CardTitle>
-                <p className="text-4xl font-bold">{plan.price}<span className="text-lg font-normal text-muted-foreground">/project</span></p>
+                <p className="text-4xl font-bold">{plan.price}</p>
                 <CardDescription>{plan.description}</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow">
                 <ul className="space-y-4">
                   {plan.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-center">
@@ -56,7 +56,7 @@ export function Pricing() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button className="w-full" variant={plan.popular ? 'default' : 'outline'}>Choose Plan</Button>
+                <Button className="w-full" variant={plan.popular ? 'default' : 'outline'}>Order Now</Button>
               </CardFooter>
             </Card>
           ))}
