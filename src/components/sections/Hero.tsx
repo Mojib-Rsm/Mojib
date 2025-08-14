@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Button } from '../ui/button';
-import { Code, Smartphone, TrendingUp } from 'lucide-react';
+import { Code, Search, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const FloatingPill = ({ icon, text, className, delay }: { icon: React.ReactNode, text: string, className?: string, delay: number }) => (
@@ -66,9 +66,8 @@ export function Hero() {
             Wordpress Developer & SEO Marketer
           </motion.div>
           <motion.h1 
-            className="text-5xl md:text-6xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary-dark to-accent" 
+            className="text-5xl md:text-6xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary" 
             variants={itemVariants}
-            style={{'--primary-dark': 'hsl(var(--accent))', '--accent': 'hsl(var(--primary))'} as React.CSSProperties}
           >
             I'm Binjan, designing <br/>digital experiences.
           </motion.h1>
@@ -97,9 +96,9 @@ export function Hero() {
                 className="rounded-lg object-cover w-full h-full relative z-10 shadow-2xl"
                 data-ai-hint="man suit"
               />
-               <FloatingPill icon={<Code size={20} />} text="Clean Code" className="top-20 -right-24" delay={0.5} />
-               <FloatingPill icon={<Smartphone size={20} />} text="Responsive Design" className="top-40 -left-24" delay={0.8} />
-               <FloatingPill icon={<TrendingUp size={20} />} text="SEO Optimized" className="bottom-16 -right-20" delay={1.1} />
+               <FloatingPill icon={<Code size={20} />} text="Web Development" className="top-20 -right-24" delay={0.5} />
+               <FloatingPill icon={<Search size={20} />} text="SEO" className="top-40 -left-24" delay={0.8} />
+               <FloatingPill icon={<TrendingUp size={20} />} text="Marketing" className="bottom-16 -right-20" delay={1.1} />
             </div>
           </div>
         </motion.div>
