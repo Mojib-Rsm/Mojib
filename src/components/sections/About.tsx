@@ -11,12 +11,12 @@ export function About() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative h-[450px] md:h-[550px] animate-fade-in-up" style={{ animationDelay: '200ms' }}>
             <Image
-              src="https://placehold.co/600x800.png"
+              src="/uploads/1752046744345-Mojibur_Rahman_sm.png"
               alt="About Binjan"
               width={600}
               height={800}
               className="rounded-lg object-cover w-full h-full relative z-10"
-              data-ai-hint="man glasses"
+              data-ai-hint="man suit"
             />
              <div className="absolute -top-4 -right-4 w-full h-full border-2 border-primary rounded-lg z-0"></div>
           </div>
