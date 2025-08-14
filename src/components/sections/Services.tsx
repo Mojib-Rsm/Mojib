@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { PenTool, Code, Search, Megaphone, Bot, Languages, ArrowRight } from 'lucide-react';
+import { PenTool, Code, Search, Megaphone, Bot, ArrowRight } from 'lucide-react';
 
 const servicesData = [
   {
@@ -41,12 +41,6 @@ const servicesData = [
     title: 'Content Writing',
     description:
       'Optimized and engaging content for your website and blog that captures your brand’s voice. I write to attract and retain your audience, providing value while improving your SEO.',
-  },
-  {
-    icon: <Languages className="w-10 h-10 mb-4 text-primary" />,
-    title: 'Translation',
-    description:
-      'High-quality translation services to help you reach a global audience. I ensure your message is accurately and effectively communicated in different languages, maintaining its original intent.',
   },
 ];
 
