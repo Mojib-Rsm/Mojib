@@ -75,14 +75,14 @@ export function Hero() {
           >
            {nameParts[0]}
             <motion.span 
-              className="text-primary relative inline-block"
+              className="relative inline-block bg-gradient-to-r from-fuchsia-500 to-cyan-500 bg-clip-text text-transparent"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               Mojib Rsm
               <motion.span 
-                className="absolute left-0 -bottom-1 w-full h-1 bg-gradient-to-r from-cyan-400 to-yellow-400"
+                className="absolute left-0 -bottom-1 w-full h-1 bg-gradient-to-r from-fuchsia-500 to-cyan-500"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.8, ease: 'easeOut', delay: 0.6 }}
