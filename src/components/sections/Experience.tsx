@@ -73,10 +73,10 @@ export function Experience() {
             <motion.div key={index} className="relative md:grid md:grid-cols-2 md:gap-8 items-start" variants={itemVariants}>
               {index % 2 === 0 ? (
                 <>
-                  <div className="flex flex-col items-start md:items-end md:text-right">
+                  <div className="flex flex-col items-start md:items-end md:text-right pr-8">
                      <div className="font-semibold text-primary mb-2 md:mb-0 md:mt-1">{item.dates}</div>
                   </div>
-                  <div>
+                  <div className="md:col-start-2">
                     <motion.div
                       whileHover={{ y: -5, scale: 1.02 }}
                     >
@@ -99,7 +99,7 @@ export function Experience() {
                 </>
               ) : (
                 <>
-                  <div className="md:col-start-2">
+                  <div className="md:col-start-2 pl-8">
                      <motion.div
                       whileHover={{ y: -5, scale: 1.02 }}
                     >
@@ -119,7 +119,7 @@ export function Experience() {
                       </Card>
                     </motion.div>
                   </div>
-                   <div className="flex flex-col items-start md:row-start-1 md:col-start-1 md:items-start md:text-left mt-2 md:mt-0">
+                   <div className="flex flex-col items-start md:items-start md:text-left md:col-start-1 md:row-start-1 md:text-right pr-8 mt-2 md:mt-0">
                     <div className="font-semibold text-primary mb-2 md:mb-0 md:mt-1">{item.dates}</div>
                   </div>
                 </>
