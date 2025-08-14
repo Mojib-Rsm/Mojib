@@ -3,6 +3,7 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
+import { Briefcase } from "lucide-react";
 
 const experienceData = [
   {
@@ -45,11 +46,11 @@ export function Experience() {
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 50, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.5 },
+      transition: { duration: 0.6, ease: 'easeOut' },
     },
   };
   
@@ -67,46 +68,32 @@ export function Experience() {
             <h2 className="text-4xl font-bold">{translations.experienceTitle}</h2>
             <p className="text-muted-foreground mt-2">{translations.experienceSubtitle}</p>
         </motion.div>
-        <div className="relative grid gap-8 before:absolute before:inset-0 before:left-1/2 before:w-px before:bg-border before:-translate-x-1/2">
+        <div className="relative grid gap-12 before:absolute before:inset-0 before:left-6 before:md:left-1/2 before:w-px before:bg-border before:md:-translate-x-1/2">
           {experienceData.map((item, index) => (
-             <motion.div key={index} className="relative md:grid md:grid-cols-2 md:gap-8 items-start" variants={itemVariants}>
-              {index % 2 === 0 ? (
-                <>
-                  <div className="flex flex-col items-end text-right">
-                     <div className="font-semibold text-primary">{item.dates}</div>
-                  </div>
-                   <div className="absolute left-1/2 top-1 w-3 h-3 rounded-full bg-primary -translate-x-1/2"></div>
-                   <div>
-                    <Card className="w-full bg-muted shadow-md">
-                        <CardHeader>
+             <motion.div key={index} className="relative flex md:grid md:grid-cols-2 gap-8 items-start" variants={itemVariants}>
+              <div className="md:order-1 md:col-span-1 md:text-right">
+                <div className="font-semibold text-primary">{item.dates}</div>
+              </div>
+              <div className="absolute left-6 top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-background -translate-x-1/2 md:left-1/2"></div>
+              <motion.div 
+                className="md:order-2 md:col-span-1"
+                whileHover={{ y: -5, scale: 1.02 }}
+              >
+                <Card className="w-full bg-muted/50 shadow-md border transition-shadow hover:shadow-primary/20">
+                    <CardHeader>
+                        <div className="flex items-center gap-4">
+                          <Briefcase className="w-6 h-6 text-primary"/>
+                          <div>
                             <CardTitle>{item.role}</CardTitle>
                             <CardDescription>{item.company}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-muted-foreground">{item.description}</p>
-                        </CardContent>
-                    </Card>
-                   </div>
-                </>
-              ) : (
-                <>
-                   <div className="md:order-last flex flex-col items-start">
-                     <div className="font-semibold text-primary">{item.dates}</div>
-                   </div>
-                   <div className="absolute left-1/2 top-1 w-3 h-3 rounded-full bg-primary -translate-x-1/2"></div>
-                   <div className="md:text-right">
-                     <Card className="w-full bg-muted shadow-md">
-                        <CardHeader>
-                            <CardTitle>{item.role}</CardTitle>
-                            <CardDescription>{item.company}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-muted-foreground">{item.description}</p>
-                        </CardContent>
-                    </Card>
-                   </div>
-                </>
-              )}
+                          </div>
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-sm text-muted-foreground">{item.description}</p>
+                    </CardContent>
+                </Card>
+              </motion.div>
             </motion.div>
           ))}
         </div>
