@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
-import { ThemeToggle } from '../ThemeToggle';
 import { useLanguage } from '@/context/LanguageContext';
 import { LanguageToggle } from '../LanguageToggle';
 
@@ -57,7 +56,6 @@ export function Header() {
           <Button asChild>
             <a href="#contact">{translations.contactMe}</a>
           </Button>
-          <ThemeToggle />
           <LanguageToggle />
           <div className="md:hidden">
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
