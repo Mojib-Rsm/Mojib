@@ -2,9 +2,16 @@
 
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import { useEffect, useState } from 'react';
 
 export function Footer() {
   const { translations } = useLanguage();
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
+
   const navLinks = [
     { href: '/', label: translations.home },
     { href: '#about', label: translations.about },
@@ -35,7 +42,7 @@ export function Footer() {
             ))}
           </nav>
           <div className="text-sm text-muted-foreground mt-4">
-            © {new Date().getFullYear()} Mojib Rsm. {translations.footerAllRightsReserved}
+            © {currentYear} Mojib Rsm. {translations.footerAllRightsReserved}
           </div>
         </div>
       </div>
