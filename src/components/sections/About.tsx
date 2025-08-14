@@ -11,7 +11,7 @@ export function About() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative h-[450px] md:h-[550px] animate-fade-in-up" style={{ animationDelay: '200ms' }}>
             <Image
-              src="/uploads/1752046744345-Mojibur_Rahman_sm.png"
+              src="/uploads/about-sec.jpeg"
               alt="About Binjan"
               width={600}
               height={800}
