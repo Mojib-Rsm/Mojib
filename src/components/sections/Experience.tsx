@@ -70,13 +70,13 @@ export function Experience() {
         </motion.div>
         <div className="relative grid gap-12 before:absolute before:inset-0 before:left-6 md:before:left-1/2 before:w-px before:bg-border before:-translate-x-1/2">
           {experienceData.map((item, index) => (
-            <motion.div key={index} className="relative flex md:grid md:grid-cols-2 gap-8 items-start" variants={itemVariants}>
+            <motion.div key={index} className="relative md:grid md:grid-cols-2 md:gap-8 items-start" variants={itemVariants}>
               {index % 2 === 0 ? (
                 <>
-                  <div className="md:text-right md:order-1">
-                    <div className="font-semibold text-primary">{item.dates}</div>
+                  <div className="flex flex-col items-start md:items-end md:text-right">
+                     <div className="font-semibold text-primary mb-2 md:mb-0 md:mt-1">{item.dates}</div>
                   </div>
-                  <div className="md:order-2">
+                  <div>
                     <motion.div
                       whileHover={{ y: -5, scale: 1.02 }}
                     >
@@ -99,7 +99,7 @@ export function Experience() {
                 </>
               ) : (
                 <>
-                  <div className="md:order-2">
+                  <div className="md:col-start-2">
                      <motion.div
                       whileHover={{ y: -5, scale: 1.02 }}
                     >
@@ -119,8 +119,8 @@ export function Experience() {
                       </Card>
                     </motion.div>
                   </div>
-                  <div className="md:text-left md:order-1">
-                    <div className="font-semibold text-primary">{item.dates}</div>
+                   <div className="flex flex-col items-start md:row-start-1 md:col-start-1 md:items-start md:text-left mt-2 md:mt-0">
+                    <div className="font-semibold text-primary mb-2 md:mb-0 md:mt-1">{item.dates}</div>
                   </div>
                 </>
               )}
