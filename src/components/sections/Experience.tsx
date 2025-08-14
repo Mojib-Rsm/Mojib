@@ -68,65 +68,44 @@ export function Experience() {
             <h2 className="text-4xl font-bold">{translations.experienceTitle}</h2>
             <p className="text-muted-foreground mt-2">{translations.experienceSubtitle}</p>
         </motion.div>
-        <div className="relative grid gap-12 before:absolute before:inset-0 before:left-6 md:before:left-1/2 before:w-px before:bg-border before:-translate-x-1/2">
-          {experienceData.map((item, index) => (
-            <motion.div key={index} className="relative md:grid md:grid-cols-2 md:gap-8 items-start" variants={itemVariants}>
-              {index % 2 === 0 ? (
-                <>
-                  <div className="flex flex-col items-start md:items-end md:text-right pr-8">
-                     <div className="font-semibold text-primary mb-2 md:mb-0 md:mt-1">{item.dates}</div>
-                  </div>
-                  <div className="md:col-start-2">
-                    <motion.div
-                      whileHover={{ y: -5, scale: 1.02 }}
-                    >
-                      <Card className="w-full bg-muted/50 shadow-md border transition-shadow hover:shadow-primary/20">
-                          <CardHeader>
-                              <div className="flex items-center gap-4">
-                                <Briefcase className="w-6 h-6 text-primary"/>
-                                <div>
-                                  <CardTitle>{item.role}</CardTitle>
-                                  <CardDescription>{item.company}</CardDescription>
-                                </div>
+        <div className="relative">
+          <div className="absolute left-6 md:left-1/2 w-px h-full bg-border -translate-x-1/2"></div>
+          <div className="space-y-12">
+            {experienceData.map((item, index) => (
+              <motion.div 
+                key={index} 
+                className="relative md:grid md:grid-cols-2 md:gap-8 items-center" 
+                variants={itemVariants}
+              >
+                <div className="flex flex-col items-start md:items-end text-left md:text-right mb-4 md:mb-0">
+                  <h3 className="font-semibold text-lg">{item.company}</h3>
+                  <p className="text-sm text-muted-foreground">{item.dates}</p>
+                </div>
+
+                <div className="relative">
+                   <div className="absolute -left-[34px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-background -translate-x-1/2 md:left-0"></div>
+                   <motion.div
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    className="md:ml-8"
+                  >
+                    <Card className="w-full bg-muted/50 shadow-md border transition-shadow hover:shadow-primary/20">
+                        <CardHeader>
+                            <div className="flex items-center gap-4">
+                              <Briefcase className="w-6 h-6 text-primary"/>
+                              <div>
+                                <CardTitle>{item.role}</CardTitle>
                               </div>
-                          </CardHeader>
-                          <CardContent>
-                              <p className="text-sm text-muted-foreground">{item.description}</p>
-                          </CardContent>
-                      </Card>
-                    </motion.div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="md:col-start-2 pl-8">
-                     <motion.div
-                      whileHover={{ y: -5, scale: 1.02 }}
-                    >
-                      <Card className="w-full bg-muted/50 shadow-md border transition-shadow hover:shadow-primary/20">
-                          <CardHeader>
-                              <div className="flex items-center gap-4">
-                                <Briefcase className="w-6 h-6 text-primary"/>
-                                <div>
-                                  <CardTitle>{item.role}</CardTitle>
-                                  <CardDescription>{item.company}</CardDescription>
-                                </div>
-                              </div>
-                          </CardHeader>
-                          <CardContent>
-                              <p className="text-sm text-muted-foreground">{item.description}</p>
-                          </CardContent>
-                      </Card>
-                    </motion.div>
-                  </div>
-                   <div className="flex flex-col items-start md:items-start md:text-left md:col-start-1 md:row-start-1 md:text-right pr-8 mt-2 md:mt-0">
-                    <div className="font-semibold text-primary mb-2 md:mb-0 md:mt-1">{item.dates}</div>
-                  </div>
-                </>
-              )}
-               <div className="absolute left-6 top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-background -translate-x-1/2 md:left-1/2"></div>
-            </motion.div>
-          ))}
+                            </div>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-sm text-muted-foreground">{item.description}</p>
+                        </CardContent>
+                    </Card>
+                  </motion.div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </motion.section>
