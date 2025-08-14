@@ -39,6 +39,16 @@ export function About() {
     }
   };
 
+  const statCardVariants = {
+    ...itemVariants,
+    hover: {
+      scale: 1.05,
+      boxShadow: '0px 10px 30px -5px hsl(var(--primary) / 0.2)',
+      y: -5,
+      transition: { duration: 0.3 }
+    }
+  }
+
 
   return (
     <motion.section 
@@ -85,21 +95,21 @@ export function About() {
               {translations.aboutDescription}
             </motion.p>
             <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full mt-4" variants={itemVariants}>
-              <div className="p-4 rounded-lg border text-center glass-card">
+              <motion.div className="p-4 rounded-lg border text-center glass-card" variants={statCardVariants} whileHover="hover">
                 <Award className="w-8 h-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold">{translations.experienceLabel}</h3>
                 <p className="text-sm text-muted-foreground">{translations.experienceValue}</p>
-              </div>
-              <div className="p-4 rounded-lg border text-center glass-card">
+              </motion.div>
+              <motion.div className="p-4 rounded-lg border text-center glass-card" variants={statCardVariants} whileHover="hover">
                 <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold">{translations.clientsLabel}</h3>
                 <p className="text-sm text-muted-foreground">{translations.clientsValue}</p>
-              </div>
-              <div className="p-4 rounded-lg border text-center glass-card">
+              </motion.div>
+              <motion.div className="p-4 rounded-lg border text-center glass-card" variants={statCardVariants} whileHover="hover">
                 <Briefcase className="w-8 h-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold">{translations.projectsLabel}</h3>
                 <p className="text-sm text-muted-foreground">{translations.projectsValue}</p>
-              </div>
+              </motion.div>
             </motion.div>
             <motion.div variants={itemVariants}>
               <Button size="lg" className="mt-4">{translations.downloadCv}</Button>
