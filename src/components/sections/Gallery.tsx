@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog';
 
 const galleryImages = [
   { src: "/uploads/1752046515076-1725103684395.jpg", alt: "Bangladesh Jatiya Sangsad" },
@@ -19,7 +19,7 @@ const galleryImages = [
 
 export function Gallery() {
   const { translations } = useLanguage();
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{src: string, alt: string} | null>(null);
 
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -64,7 +64,7 @@ export function Gallery() {
                   variants={itemVariants}
                   whileHover={{ scale: 1.05, y: -5 }}
                   transition={{ duration: 0.3 }}
-                  onClick={() => setSelectedImage(image.src)}
+                  onClick={() => setSelectedImage(image)}
                 >
                   <Image
                     src={image.src}
@@ -83,9 +83,10 @@ export function Gallery() {
           </div>
            {selectedImage && (
              <DialogContent className="max-w-3xl p-2">
+                <DialogTitle className="sr-only">{selectedImage.alt}</DialogTitle>
                 <Image
-                    src={selectedImage}
-                    alt="Selected gallery image"
+                    src={selectedImage.src}
+                    alt={selectedImage.alt}
                     width={1200}
                     height={800}
                     className="w-full h-auto object-contain rounded-md"
