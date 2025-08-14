@@ -54,6 +54,10 @@ export function Hero() {
       }
   }
 
+  const heroTitleHtml = {
+    __html: translations.heroTitle.replace('Mojib Rsm', '<span class="text-primary underline">Mojib Rsm</span>')
+  };
+
   return (
     <section className="container max-w-screen-xl mx-auto py-16 md:py-24 overflow-hidden">
       <motion.div 
@@ -70,8 +74,8 @@ export function Hero() {
           <motion.h1 
             className="text-5xl md:text-6xl font-bold tracking-tight"
             variants={itemVariants}
+            dangerouslySetInnerHTML={heroTitleHtml}
           >
-            {translations.heroTitle.replace('Mojib Rsm', '<span class="text-primary">Mojib Rsm</span>')}
           </motion.h1>
           <motion.p className="text-lg text-muted-foreground max-w-md" variants={itemVariants}>
             {translations.heroDescription}

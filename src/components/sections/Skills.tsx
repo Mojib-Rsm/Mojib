@@ -11,27 +11,27 @@ const skillsData = [
   {
     category: 'skillsCategory1',
     icon: <Wand2 className="w-8 h-8 text-primary" />,
-    skills: ['WordPress', 'PHP', 'Shopify', 'Webflow', 'Elementor'],
+    skills: ['WordPress', 'PHP', 'Shopify', 'Webflow', 'Elementor', 'Divi'],
   },
   {
     category: 'skillsCategory5',
     icon: <Code className="w-8 h-8 text-primary" />,
-    skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Laravel'],
+    skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Laravel', 'Bootstrap', 'Tailwind'],
   },
   {
     category: 'skillsCategory2',
     icon: <Bot className="w-8 h-8 text-primary" />,
-    skills: ['Genkit', 'AI Integration', 'Chatbots', 'Prompt Engineering', 'Automation'],
+    skills: ['Genkit', 'AI Integration', 'Chatbots', 'Prompt Engineering', 'Automation', 'Gemini API'],
   },
   {
     category: 'skillsCategory3',
     icon: <Megaphone className="w-8 h-8 text-primary" />,
-    skills: ['SEO', 'SEM', 'Social Media', 'Content Marketing', 'Analytics'],
+    skills: ['SEO', 'SEM', 'Social Media', 'Content Marketing', 'Google Analytics'],
   },
   {
     category: 'skillsCategory4',
     icon: <Server className="w-8 h-8 text-primary" />,
-    skills: ['Computer Hardware', 'Networking', 'Security', 'System Admin', 'Troubleshooting'],
+    skills: ['Computer Hardware', 'Networking', 'Cyber Security', 'System Admin', 'Troubleshooting'],
   },
 ];
 
