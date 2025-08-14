@@ -2,6 +2,16 @@
 
 import Image from 'next/image';
 import { Button } from '../ui/button';
+import { Brush, Lightbulb, Infinity } from 'lucide-react';
+
+const FloatingPill = ({ icon, text, className }: { icon: React.ReactNode, text: string, className: string }) => (
+    <div className={`absolute flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-card/60 backdrop-blur-sm rounded-full shadow-lg animate-fade-in-up ${className}`}>
+        <div className="p-2 bg-primary/10 rounded-full text-primary">
+            {icon}
+        </div>
+        <span className="text-sm font-medium text-foreground">{text}</span>
+    </div>
+)
 
 export function Hero() {
   return (
@@ -32,8 +42,11 @@ export function Hero() {
                 width={400}
                 height={600}
                 className="rounded-lg object-cover w-full h-full relative z-10"
-                data-ai-hint="man red beanie"
+                data-ai-hint="man suit glasses"
               />
+               <FloatingPill icon={<Brush size={20} />} text="Illustration" className="top-20 -right-24" />
+               <FloatingPill icon={<Lightbulb size={20} />} text="Graphic Design" className="top-40 -left-24" />
+               <FloatingPill icon={<Infinity size={20} />} text="Creative Branding" className="bottom-16 -right-20" />
             </div>
           </div>
         </div>
