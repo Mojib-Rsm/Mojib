@@ -8,10 +8,17 @@ export default {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: '1rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
     extend: {
       fontFamily: {
-        body: ['Alegreya', 'serif'],
-        headline: ['Belleza', 'sans-serif'],
+        body: ['Poppins', 'sans-serif'],
+        headline: ['Poppins', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {

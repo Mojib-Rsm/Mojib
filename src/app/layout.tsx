@@ -1,14 +1,12 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
-import { LanguageProvider } from '@/contexts/LanguageProvider';
 import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Mojibfolio - Mojib Rsm Personal Portfolio',
-  description: 'The personal portfolio of Mojib Rsm, showcasing projects, skills, and professional achievements.',
+  title: 'Xander - Creative Portfolio',
+  description: 'The personal portfolio of Xander, showcasing projects, skills, and professional achievements.',
 };
 
 export default function RootLayout({
@@ -21,22 +19,19 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700&family=Belleza&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
         >
-          <LanguageProvider>
-            <div className="flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-grow">{children}</main>
-              <Footer />
-            </div>
-            <Toaster />
-          </LanguageProvider>
+          <div className="flex flex-col min-h-screen bg-gradient-to-br from-white to-[#E0F0FF]">
+            <Header />
+            <main className="flex-grow">{children}</main>
+          </div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
