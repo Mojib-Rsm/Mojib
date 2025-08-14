@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Button } from '../ui/button';
-import { Brush, Lightbulb, Infinity } from 'lucide-react';
+import { Code, Smartphone, TrendingUp } from 'lucide-react';
 
 const FloatingPill = ({ icon, text, className, delay }: { icon: React.ReactNode, text: string, className: string, delay: string }) => (
     <div className={`absolute flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-card/60 backdrop-blur-sm rounded-full shadow-lg animate-fade-in-up ${className}`} style={{ animationDelay: delay }}>
@@ -44,9 +44,9 @@ export function Hero() {
                 className="rounded-lg object-cover w-full h-full relative z-10"
                 data-ai-hint="man suit glasses"
               />
-               <FloatingPill icon={<Brush size={20} />} text="Illustration" className="top-20 -right-24 animate-float" delay="400ms" />
-               <FloatingPill icon={<Lightbulb size={20} />} text="Graphic Design" className="top-40 -left-24 animate-float" delay="600ms" />
-               <FloatingPill icon={<Infinity size={20} />} text="Creative Branding" className="bottom-16 -right-20 animate-float" delay="800ms" />
+               <FloatingPill icon={<Code size={20} />} text="Clean Code" className="top-20 -right-24 animate-float" delay="400ms" />
+               <FloatingPill icon={<Smartphone size={20} />} text="Responsive Design" className="top-40 -left-24 animate-float" delay="600ms" />
+               <FloatingPill icon={<TrendingUp size={20} />} text="SEO Optimized" className="bottom-16 -right-20 animate-float" delay="800ms" />
             </div>
           </div>
         </div>
