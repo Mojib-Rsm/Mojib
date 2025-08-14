@@ -60,7 +60,7 @@ const worksData = [
         title: "RoktoDao- Blood Donator",
         description: "A reliable online platform that connects blood donors and recipients, making it easy to find and donate blood.",
         technologies: ["NextJs", "React"],
-        link: "#",
+        link: "https://roktodao.bartanow.com/",
         hint: "donation app"
     },
     {
@@ -68,7 +68,7 @@ const worksData = [
         title: "OFT Tools",
         description: "A digital tools hub offering mobile location tracking, number analysis, and various other utilities — designed for quick and easy solutions.",
         technologies: ["NextJs", "React"],
-        link: "#",
+        link: "https://tools.bartanow.com/",
         hint: "utility tools"
     }
 ]
@@ -81,7 +81,7 @@ export function Portfolio() {
             <h2 className="text-4xl font-bold">My Latest Works</h2>
             <p className="text-muted-foreground mt-2">Perfect solutions for digital experiences.</p>
         </div>
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {worksData.map((work, index) =>(
                 <Card key={index} className="group overflow-hidden animate-fade-in-up bg-background flex flex-col" style={{animationDelay: `${index * 200}ms`}}>
                     <CardHeader className="p-0">
@@ -104,9 +104,9 @@ export function Portfolio() {
                           {work.technologies.map(tech => <Badge key={tech} variant="secondary">{tech}</Badge>)}
                         </div>
                     </CardContent>
-                    <CardFooter className="p-6 pt-0">
-                      <Button asChild variant="outline">
-                        <Link href={work.link}>{work.title.includes("Portfolio") ? "Customize" : "View Project"}</Link>
+                    <CardFooter className="p-6 pt-0 mt-auto">
+                      <Button asChild className="w-full">
+                        <Link href={work.link} target="_blank" rel="noopener noreferrer">{work.title.includes("Portfolio") ? "Customize" : "View Project"}</Link>
                       </Button>
                     </CardFooter>
                 </Card>
