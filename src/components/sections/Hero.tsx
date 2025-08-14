@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Button } from '../ui/button';
-import { Bot, Code, Megaphone, Wand2, Search } from 'lucide-react';
+import { Bot, Code, Megaphone, Wand2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -71,7 +71,7 @@ export function Hero() {
             className="text-5xl md:text-6xl font-bold tracking-tight"
             variants={itemVariants}
           >
-            {translations.heroTitle}
+            {translations.heroTitle.replace('Mojib Rsm', '<span class="text-primary">Mojib Rsm</span>')}
           </motion.h1>
           <motion.p className="text-lg text-muted-foreground max-w-md" variants={itemVariants}>
             {translations.heroDescription}

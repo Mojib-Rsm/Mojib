@@ -17,7 +17,7 @@ export const translations = {
 
     // Hero Section
     heroSubtitle: 'WordPress Specialist, AI Enthusiast & Digital Marketer',
-    heroTitle: "Crafting Digital Experiences with Code & Creativity.",
+    heroTitle: "Hi, I'm Mojib Rsm. Crafting Digital Experiences with Code & Creativity.",
     heroDescription: "I build beautiful, functional websites with WordPress, custom code and integrate intelligent AI solutions. I'm passionate about technology and helping businesses grow online through effective digital marketing.",
     myWorks: 'View My Work',
     webDevelopment: 'WordPress Dev',
@@ -129,7 +129,7 @@ export const translations = {
 
     // Hero Section
     heroSubtitle: 'ওয়ার্ডপ্রেস বিশেষজ্ঞ, এআই উৎসাহী এবং ডিজিটাল মার্কেটার',
-    heroTitle: 'কোড এবং সৃজনশীলতা দিয়ে ডিজিটাল অভিজ্ঞতা তৈরি করি।',
+    heroTitle: 'হাই, আমি মুজিব। কোড এবং সৃজনশীলতা দিয়ে ডিজিটাল অভিজ্ঞতা তৈরি করি।',
     heroDescription: 'আমি ওয়ার্ডপ্রেস ও কাস্টম কোডিং এর মাধ্যমে সুন্দর এবং কার্যকরী ওয়েবসাইট তৈরি করি এবং বুদ্ধিমান এআই সমাধান যুক্ত করি। আমি প্রযুক্তি এবং ডিজিটাল মার্কেটিংয়ের মাধ্যমে ব্যবসাকে অনলাইনে বৃদ্ধি করতে সাহায্য করতে আগ্রহী।',
     myWorks: 'আমার কাজ দেখুন',
     webDevelopment: 'ওয়ার্ডপ্রেস ডেভ',
