@@ -15,11 +15,11 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-muted/40 py-12">
+    <footer className="py-12">
       <div className="container max-w-screen-xl mx-auto">
         <div className="flex flex-col items-center text-center gap-6">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <span className="font-bold text-3xl font-logo sm:inline-block">
+            <span className="font-bold text-3xl font-headline sm:inline-block">
               Mojib Rsm
             </span>
           </Link>

@@ -46,7 +46,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-screen-xl items-center">
         <Link href="/" className="mr-6 flex items-center space-x-2">
-          <span className="font-bold text-2xl font-logo sm:inline-block">
+          <span className="font-bold text-2xl font-headline sm:inline-block">
             {translations.logoText}
           </span>
         </Link>
@@ -68,7 +68,7 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="right">
                  <Link href="/" className="mr-6 flex items-center space-x-2 mb-6">
-                    <span className="font-bold text-2xl font-logo sm:inline-block">
+                    <span className="font-bold text-2xl font-headline sm:inline-block">
                     {translations.logoText}
                     </span>
                 </Link>
