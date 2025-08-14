@@ -29,9 +29,9 @@
   }
 
   .dark {
-    --background: 220 40% 5%; /* Dark Navy Blue */
+    --background: 230 25% 10%;
     --foreground: 0 0% 98%; /* Lighter Text */
-    --card: 220 40% 8%;
+    --card: 220 40% 12%;
     --card-foreground: 0 0% 98%;
     --popover: 220 40% 8%;
     --popover-foreground: 0 0% 98%;
