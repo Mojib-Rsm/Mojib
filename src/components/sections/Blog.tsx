@@ -1,10 +1,10 @@
-'use client';
+'use 'client';
 
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
+import { motion } from 'framer-motion';
 
 const blogData = [
   {
@@ -31,38 +31,67 @@ const blogData = [
 ];
 
 export function Blog() {
+  const sectionVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
-    <section id="blog" className="bg-muted/40 py-20 md:py-28">
+    <motion.section 
+      id="blog" 
+      className="bg-muted/40 py-20 md:py-28"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={sectionVariants}
+    >
       <div className="container max-w-screen-xl mx-auto">
-        <div className="text-center mb-12">
+        <motion.div className="text-center mb-12" variants={itemVariants}>
           <h2 className="text-4xl font-bold">From My Blog</h2>
           <p className="text-muted-foreground mt-2">Latest news, articles, and resources.</p>
-        </div>
+        </motion.div>
         <div className="grid md:grid-cols-3 gap-8">
           {blogData.map((post, index) => (
-            <Card key={index} className="overflow-hidden animate-fade-in-up" style={{ animationDelay: `${index * 200}ms` }}>
-              <CardHeader className="p-0">
-                 <Image
-                    src={post.image}
-                    alt={post.title}
-                    width={600}
-                    height={400}
-                    className="w-full h-auto object-cover"
-                    data-ai-hint={post.hint}
-                  />
-              </CardHeader>
-              <CardContent className="p-6">
-                <Badge variant="secondary" className="mb-2">{post.category}</Badge>
-                <CardTitle className="text-lg mb-2">{post.title}</CardTitle>
-                <p className="text-sm text-muted-foreground">{post.date}</p>
-              </CardContent>
-              <CardFooter className="p-6 pt-0">
-                <Button variant="link" className="p-0">Read More</Button>
-              </CardFooter>
-            </Card>
+            <motion.div key={index} variants={itemVariants}>
+              <Card className="overflow-hidden h-full flex flex-col glass-card">
+                <CardHeader className="p-0">
+                   <Image
+                      src={post.image}
+                      alt={post.title}
+                      width={600}
+                      height={400}
+                      className="w-full h-auto object-cover"
+                      data-ai-hint={post.hint}
+                    />
+                </CardHeader>
+                <CardContent className="p-6 flex-grow">
+                  <Badge variant="secondary" className="mb-2">{post.category}</Badge>
+                  <CardTitle className="text-lg mb-2">{post.title}</CardTitle>
+                  <p className="text-sm text-muted-foreground">{post.date}</p>
+                </CardContent>
+                <CardFooter className="p-6 pt-0">
+                  <Button variant="link" className="p-0">Read More</Button>
+                </CardFooter>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

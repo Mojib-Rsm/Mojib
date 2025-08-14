@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { PenTool, Code, Search, Megaphone, Bot, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const servicesData = [
   {
@@ -51,38 +52,69 @@ const servicesData = [
 ];
 
 export function Services() {
+  const sectionVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
-    <section id="services" className="bg-muted/40 py-20 md:py-28">
+    <motion.section 
+      id="services" 
+      className="bg-muted/40 py-20 md:py-28"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={sectionVariants}
+    >
       <div className="container max-w-screen-xl mx-auto">
-        <div className="text-center mb-12">
+        <motion.div className="text-center mb-12" variants={itemVariants}>
           <h2 className="text-4xl font-bold">Services I Offer</h2>
           <p className="text-muted-foreground mt-2">
             Providing the best solutions for your digital needs.
           </p>
-        </div>
+        </motion.div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesData.map((service, index) => (
-            <Card
+            <motion.div
               key={index}
-              className="flex flex-col text-left animate-fade-in-up transition-transform duration-300 ease-in-out hover:-translate-y-2"
-              style={{ animationDelay: `${index * 150}ms` }}
+              variants={itemVariants}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className="flex"
             >
-              <CardHeader>
-                {service.icon}
-                <CardTitle>{service.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <CardDescription>{service.description}</CardDescription>
-              </CardContent>
-              <CardFooter>
-                 <Button variant="link" className="p-0">
-                    Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </CardFooter>
-            </Card>
+              <Card
+                className="flex flex-col text-left glass-card"
+              >
+                <CardHeader>
+                  {service.icon}
+                  <CardTitle>{service.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <CardDescription>{service.description}</CardDescription>
+                </CardContent>
+                <CardFooter>
+                   <Button variant="link" className="p-0">
+                      Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </CardFooter>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 const experienceData = [
   {
@@ -31,16 +32,42 @@ const experienceData = [
 
 
 export function Experience() {
+  const sectionVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.5 },
+    },
+  };
+  
   return (
-    <section id="experience" className="bg-muted/40 py-20 md:py-28">
+    <motion.section 
+      id="experience" 
+      className="bg-muted/40 py-20 md:py-28"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={sectionVariants}
+    >
       <div className="container max-w-screen-lg mx-auto">
-        <div className="text-center mb-12">
+        <motion.div className="text-center mb-12" variants={itemVariants}>
             <h2 className="text-4xl font-bold">My Experience</h2>
             <p className="text-muted-foreground mt-2">My professional journey so far.</p>
-        </div>
+        </motion.div>
         <div className="relative grid gap-8 before:absolute before:inset-0 before:left-1/2 before:w-px before:bg-border before:-translate-x-1/2">
           {experienceData.map((item, index) => (
-             <div key={index} className="relative flex items-start md:grid md:grid-cols-2 md:gap-8 animate-fade-in-up" style={{animationDelay: `${index * 200}ms`}}>
+             <motion.div key={index} className="relative flex items-start md:grid md:grid-cols-2 md:gap-8" variants={itemVariants}>
               {index % 2 === 0 ? (
                 <>
                   <div className="flex flex-col items-end text-right">
@@ -48,7 +75,7 @@ export function Experience() {
                   </div>
                    <div className="absolute left-1/2 top-1 w-3 h-3 rounded-full bg-primary -translate-x-1/2"></div>
                    <div>
-                    <Card className="w-full">
+                    <Card className="w-full glass-card">
                         <CardHeader>
                             <CardTitle>{item.role}</CardTitle>
                             <CardDescription>{item.company}</CardDescription>
@@ -62,7 +89,7 @@ export function Experience() {
               ) : (
                 <>
                    <div>
-                     <Card className="w-full">
+                     <Card className="w-full glass-card">
                         <CardHeader>
                             <CardTitle>{item.role}</CardTitle>
                             <CardDescription>{item.company}</CardDescription>
@@ -78,10 +105,10 @@ export function Experience() {
                    </div>
                 </>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const galleryImages = [
   { src: "/uploads/1752046515076-1725103684395.jpg", alt: "Bangladesh Jatiya Sangsad" },
@@ -14,30 +15,63 @@ const galleryImages = [
 ];
 
 export function Gallery() {
+  const sectionVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0, scale: 0.95 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
-    <section id="gallery" className="py-20 md:py-28">
+    <motion.section 
+      id="gallery" 
+      className="py-20 md:py-28"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={sectionVariants}
+    >
       <div className="container max-w-screen-xl mx-auto">
-        <div className="text-center mb-12">
+        <motion.div className="text-center mb-12" variants={itemVariants}>
           <h2 className="text-4xl font-bold">My Gallery</h2>
           <p className="text-muted-foreground mt-2">A collection of moments and creations that inspire me.</p>
-        </div>
+        </motion.div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {galleryImages.map((image, index) => (
-            <div key={index} className="group relative overflow-hidden rounded-lg animate-fade-in-up" style={{ animationDelay: `${index * 150}ms` }}>
+            <motion.div 
+              key={index} 
+              className="group relative overflow-hidden rounded-lg glass-card"
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
               <Image
                 src={image.src}
                 alt={image.alt}
                 width={400}
                 height={400}
-                className="w-full h-auto object-cover aspect-square transform transition-transform duration-500 ease-in-out group-hover:scale-105"
+                className="w-full h-auto object-cover aspect-square"
               />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                   <p className="text-white text-center text-sm font-semibold">{image.alt}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

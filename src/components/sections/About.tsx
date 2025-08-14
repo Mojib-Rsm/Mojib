@@ -3,49 +3,80 @@
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import { Award, Briefcase, Users } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function About() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
   return (
-    <section id="about" className="py-20 md:py-28">
+    <motion.section 
+      id="about" 
+      className="py-20 md:py-28"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={containerVariants}
+    >
       <div className="container max-w-screen-xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="relative h-[450px] md:h-[550px] animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+          <motion.div className="relative h-[450px] md:h-[550px]" variants={itemVariants}>
             <Image
               src="/uploads/about-sec.jpeg"
               alt="About Binjan"
               width={600}
               height={800}
-              className="rounded-lg object-cover w-full h-full relative z-10"
+              className="rounded-lg object-cover w-full h-full relative z-10 shadow-2xl"
               data-ai-hint="man suit"
             />
              <div className="absolute -top-4 -right-4 w-full h-full border-2 border-primary rounded-lg z-0"></div>
-          </div>
-          <div className="flex flex-col gap-6 items-start text-left animate-fade-in-up">
-            <h2 className="text-4xl font-bold">About Me</h2>
-            <p className="text-lg text-muted-foreground">
+          </motion.div>
+          <motion.div className="flex flex-col gap-6 items-start text-left" variants={containerVariants}>
+            <motion.h2 className="text-4xl font-bold" variants={itemVariants}>About Me</motion.h2>
+            <motion.p className="text-lg text-muted-foreground" variants={itemVariants}>
               I am a passionate UI/UX designer and developer with over 10 years of experience creating beautiful, functional, and user-centered digital experiences. My goal is to bridge the gap between user needs and business goals, crafting solutions that are both intuitive and impactful.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full mt-4">
-              <div className="p-4 rounded-lg border text-center">
+            </motion.p>
+            <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full mt-4" variants={itemVariants}>
+              <div className="p-4 rounded-lg border text-center glass-card">
                 <Award className="w-8 h-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold">Experience</h3>
                 <p className="text-sm text-muted-foreground">10+ Years</p>
               </div>
-              <div className="p-4 rounded-lg border text-center">
+              <div className="p-4 rounded-lg border text-center glass-card">
                 <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold">Clients</h3>
                 <p className="text-sm text-muted-foreground">50+ Worldwide</p>
               </div>
-              <div className="p-4 rounded-lg border text-center">
+              <div className="p-4 rounded-lg border text-center glass-card">
                 <Briefcase className="w-8 h-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold">Projects</h3>
                 <p className="text-sm text-muted-foreground">100+ Completed</p>
               </div>
-            </div>
-            <Button size="lg" className="mt-4">Download CV</Button>
-          </div>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <Button size="lg" className="mt-4">Download CV</Button>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
