@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Footer } from '@/components/layout/Footer';
 import { Alegreya, Belleza } from 'next/font/google';
 import { LanguageProvider } from '@/context/LanguageContext';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 const belleza = Belleza({
   subsets: ['latin'],
@@ -30,14 +31,21 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${belleza.variable} ${alegreya.variable} font-body antialiased`} suppressHydrationWarning>
-        <LanguageProvider>
-          <div className="flex flex-col min-h-screen bg-background">
-            <Header />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-          </div>
-          <Toaster />
-        </LanguageProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <LanguageProvider>
+            <div className="flex flex-col min-h-screen bg-background">
+              <Header />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </div>
+            <Toaster />
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
