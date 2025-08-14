@@ -8,7 +8,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card
 
 const worksData = [
     {
-        image: "https://placehold.co/600x400.png",
+        image: "https://www.mojib.me/uploads/1754959172720-Screenshot-842.webp",
         title: "Oftern News Website",
         description: "A comprehensive news portal with a custom theme and plugins.",
         technologies: ["WordPress", "PHP", "MySQL"],
@@ -16,7 +16,7 @@ const worksData = [
         hint: "news website"
     },
     {
-        image: "https://placehold.co/600x400.png",
+        image: "https://www.mojib.me/uploads/1754959260179-images.jpeg",
         title: "Oftern Shop (E-commerce)",
         description: "A full-featured e-commerce platform with a modern tech stack.",
         technologies: ["React", "Firebase", "Node.js"],
@@ -24,7 +24,7 @@ const worksData = [
         hint: "online store"
     },
     {
-        image: "https://placehold.co/600x400.png",
+        image: "https://www.mojib.me/uploads/1754959382218-Screenshot_1.webp",
         title: "Bulk SMS Platform",
         description: "A platform for sending bulk SMS messages for marketing campaigns.",
         technologies: ["PHP", "Laravel", "MySQL"],
@@ -32,7 +32,7 @@ const worksData = [
         hint: "messaging app"
     },
     {
-        image: "https://placehold.co/600x400.png",
+        image: "https://www.mojib.me/uploads/1754959668098-Screenshot_26.png",
         title: "BMI Calculator",
         description: "A simple and fast BMI calculator to check your body weight category based on height and weight.",
         technologies: ["Laravel/PHP"],
@@ -40,7 +40,7 @@ const worksData = [
         hint: "health calculator"
     },
     {
-        image: "https://placehold.co/600x400.png",
+        image: "https://www.mojib.me/uploads/1754959771134-Screenshot-841.webp",
         title: "Oftern Telecom",
         description: "A fast and reliable platform to purchase mobile data and minutes at affordable prices.",
         technologies: ["WordPress", "Laravel/PHP"],
@@ -48,7 +48,7 @@ const worksData = [
         hint: "telecom app"
     },
     {
-        image: "https://placehold.co/600x400.png",
+        image: "https://www.mojib.me/uploads/1754959905963-Screenshot-844.webp",
         title: "Portfolio – Personal & Agency/Team Portfolio",
         description: "A modern, responsive portfolio website to showcase projects, skills, and achievements.",
         technologies: ["WordPress", "Customize"],
@@ -56,7 +56,7 @@ const worksData = [
         hint: "portfolio site"
     },
     {
-        image: "https://placehold.co/600x400.png",
+        image: "https://www.mojib.me/uploads/1754959965506-Screenshot_2.png",
         title: "RoktoDao- Blood Donator",
         description: "A reliable online platform that connects blood donors and recipients, making it easy to find and donate blood.",
         technologies: ["NextJs", "React"],
@@ -64,7 +64,7 @@ const worksData = [
         hint: "donation app"
     },
     {
-        image: "https://placehold.co/600x400.png",
+        image: "https://www.mojib.me/uploads/1754960293988-Screenshot_3.png",
         title: "OFT Tools",
         description: "A digital tools hub offering mobile location tracking, number analysis, and various other utilities — designed for quick and easy solutions.",
         technologies: ["NextJs", "React"],
@@ -92,7 +92,6 @@ export function Portfolio() {
                                 width={600}
                                 height={400}
                                 className="w-full h-auto object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-105"
-                                data-ai-hint={work.hint}
                             />
                         </div>
                     </CardHeader>
