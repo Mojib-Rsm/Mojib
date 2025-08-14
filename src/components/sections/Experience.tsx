@@ -1,54 +1,57 @@
 'use client';
 
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+
 const experienceData = [
   {
     company: 'Self-Employed, Brisbane',
-    dates: 'Sep 2014 - Aug 2016',
+    dates: '2014 - 2016',
     role: 'Visual Designer',
-    description: 'A visual designer designs for a variety of platforms, which may include Internet and intranet sites, games, movies, kiosks and wearables. In short, they create the concepts.',
-    color: 'bg-teal-500',
+    description: 'Created stunning visual designs for a variety of platforms including websites, games, and mobile apps. Focused on creating engaging and user-friendly interfaces.',
   },
   {
     company: 'New Man Services',
-    dates: 'Jan 2017 - Mar 2018',
+    dates: '2017 - 2018',
     role: 'UI/UX Designer',
-    description: 'User interface design or user interface engineering is the design of user interfaces for machines and software, such as computers, home appliances, mobile devices.',
-    color: 'bg-red-500',
+    description: 'Designed and engineered user interfaces for machines and software. Specialized in creating intuitive experiences for complex systems.',
   },
   {
     company: 'Global Solution',
-    dates: 'Feb 2019 - Mar 2020',
+    dates: '2019 - Present',
     role: 'Sr. Product Designer',
-    description: 'Find Product Photography Canada. Large Selection. Always Sale. Cheap Prices. Full Offer. Save Online. Compare Online. Simple Search. The Best Price. Compare Simply.',
-    color: 'bg-yellow-500',
+    description: 'Lead product design initiatives from concept to launch. I specialize in creating beautiful, usable, and impactful digital products that users love.',
   },
 ];
-
-const ExperienceItem = ({ item, isLast }) => (
-    <div className="flex items-start">
-      <div className="w-1/3 text-right pr-8">
-        <h3 className="font-bold">{item.company}</h3>
-        <p className="text-sm text-muted-foreground">{item.dates}</p>
-      </div>
-      <div className="relative w-12 flex-shrink-0 flex justify-center">
-        <div className={`w-4 h-4 rounded-full ${item.color} z-10`}></div>
-        {!isLast && <div className="absolute top-4 left-1/2 w-0.5 h-full bg-border -translate-x-1/2"></div>}
-      </div>
-      <div className="w-2/3 pl-8 pb-12">
-        <h3 className="font-bold text-xl">{item.role}</h3>
-        <p className="text-muted-foreground mt-2">{item.description}</p>
-      </div>
-    </div>
-);
 
 
 export function Experience() {
   return (
-    <section id="experience" className="bg-orange-50/50 py-20">
+    <section id="experience" className="bg-muted/40 py-20 md:py-28">
       <div className="container max-w-screen-lg mx-auto">
-        <div className="relative">
+        <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold">Work Experience</h2>
+            <p className="text-muted-foreground mt-2">My professional journey so far.</p>
+        </div>
+        <div className="relative grid gap-8 before:absolute before:inset-0 before:left-6 before:md:left-1/2 before:w-px before:bg-border before:-translate-x-1/2">
           {experienceData.map((item, index) => (
-            <ExperienceItem key={index} item={item} isLast={index === experienceData.length - 1} />
+            <div key={index} className="relative flex items-start md:grid md:grid-cols-2 md:gap-8 animate-fade-in-up" style={{animationDelay: `${index * 200}ms`}}>
+              <div className="hidden md:flex justify-end text-right">
+                <div className="font-semibold text-primary">{item.dates}</div>
+              </div>
+              <div className="absolute md:relative left-6 top-1 w-3 h-3 rounded-full bg-primary -translate-x-1/2"></div>
+              <div className="pl-12 md:pl-0">
+                <Card className="w-full">
+                    <CardHeader>
+                        <div className="md:hidden font-semibold text-primary mb-1">{item.dates}</div>
+                        <CardTitle>{item.role}</CardTitle>
+                        <CardDescription>{item.company}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">{item.description}</p>
+                    </CardContent>
+                </Card>
+              </div>
+            </div>
           ))}
         </div>
       </div>

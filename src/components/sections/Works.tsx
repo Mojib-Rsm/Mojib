@@ -8,61 +8,59 @@ const worksData = [
     {
         image: "https://placehold.co/600x400.png",
         category: "UI/UX Design",
-        title: "Project One",
+        title: "E-commerce Platform",
         hint: "abstract shapes"
     },
     {
         image: "https://placehold.co/600x400.png",
         category: "Branding",
-        title: "Project Two",
+        title: "Startup Rebranding",
         hint: "geometric pattern"
     },
      {
         image: "https://placehold.co/600x400.png",
         category: "Web Design",
-        title: "Project Three",
+        title: "Portfolio Website",
         hint: "modern architecture"
     },
     {
         image: "https://placehold.co/600x400.png",
         category: "App Development",
-        title: "Project Four",
+        title: "Mobile Banking App",
         hint: "nature landscape"
     }
 ]
 
 export function Works() {
   return (
-    <section id="works" className="py-20 bg-orange-50/50">
+    <section id="works" className="py-20 md:py-28">
       <div className="container max-w-screen-xl mx-auto">
-        <div className="flex justify-between items-center mb-12">
-          <div>
+        <div className="text-center mb-12">
             <h2 className="text-4xl font-bold">My Latest Works</h2>
-            <p className="text-muted-foreground mt-2">Perfect solution for digital experience</p>
-          </div>
-          <Button variant="link" asChild>
-            <Link href="#">Explore More Works</Link>
-          </Button>
+            <p className="text-muted-foreground mt-2">Perfect solutions for digital experiences.</p>
         </div>
         <div className="grid md:grid-cols-2 gap-8">
             {worksData.map((work, index) =>(
-                <div key={index} className="group">
-                    <div className="overflow-hidden rounded-lg">
+                <div key={index} className="group rounded-lg border overflow-hidden animate-fade-in-up" style={{animationDelay: `${index * 200}ms`}}>
+                    <div className="overflow-hidden">
                         <Image 
                             src={work.image} 
                             alt={work.title}
                             width={600}
                             height={400}
-                            className="w-full h-auto object-cover transform transition-transform duration-300 group-hover:scale-105"
+                            className="w-full h-auto object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-105"
                             data-ai-hint={work.hint}
                         />
                     </div>
-                    <div className="mt-4">
-                        <p className="text-sm text-muted-foreground">{work.category}</p>
-                        <h3 className="text-xl font-semibold mt-1">{work.title}</h3>
+                    <div className="p-6 bg-background">
+                        <p className="text-sm text-primary font-medium">{work.category}</p>
+                        <h3 className="text-xl font-semibold mt-2 group-hover:text-primary transition-colors">{work.title}</h3>
                     </div>
                 </div>
             ))}
+        </div>
+        <div className="text-center mt-12">
+            <Button variant="outline" size="lg">Explore More Works</Button>
         </div>
       </div>
     </section>
