@@ -19,7 +19,7 @@ export function Hero() {
       <div className="grid md:grid-cols-2 gap-12 items-center">
         
         <div className="flex flex-col gap-6 items-start text-left animate-fade-in-up">
-          <div className="text-sm uppercase text-primary font-semibold tracking-wider">UI/UX Designer & Developer</div>
+          <div className="text-sm uppercase text-primary font-semibold tracking-wider">Wordpress Developer & SEO Marketer</div>
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
             I'm Binjan, designing <br/>digital experiences.
           </h1>
