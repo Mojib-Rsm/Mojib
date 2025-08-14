@@ -42,6 +42,12 @@ const servicesData = [
     description:
       'Optimized and engaging content for your website and blog that captures your brand’s voice. I write to attract and retain your audience, providing value while improving your SEO.',
   },
+   {
+    icon: <Code className="w-10 h-10 mb-4 text-primary" />,
+    title: 'Website Maintenance',
+    description:
+      'Reliable support and maintenance to keep your website running smoothly, ensuring optimal performance and security at all times.',
+  },
 ];
 
 export function Services() {
