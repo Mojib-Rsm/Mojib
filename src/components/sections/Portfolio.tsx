@@ -121,6 +121,7 @@ export function Portfolio() {
                                     width={600}
                                     height={400}
                                     className="w-full h-auto object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-105"
+                                    loading="lazy"
                                 />
                             </div>
                         </CardHeader>

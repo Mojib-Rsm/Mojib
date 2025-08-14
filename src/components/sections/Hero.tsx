@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Button } from '../ui/button';
-import { Code, Search, TrendingUp } from 'lucide-react';
+import { Bot, Megaphone, Wand2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -99,9 +99,9 @@ export function Hero() {
                 data-ai-hint="man suit"
                 priority
               />
-               <FloatingPill icon={<Code size={20} />} text={translations.webDevelopment} className="top-20 -right-24" delay={0.5} />
-               <FloatingPill icon={<Search size={20} />} text={translations.seo} className="top-40 -left-24" delay={0.8} />
-               <FloatingPill icon={<TrendingUp size={20} />} text={translations.marketing} className="bottom-16 -right-20" delay={1.1} />
+               <FloatingPill icon={<Wand2 size={20} />} text={translations.webDevelopment} className="top-20 -right-24" delay={0.5} />
+               <FloatingPill icon={<Bot size={20} />} text={translations.seo} className="top-40 -left-24" delay={0.8} />
+               <FloatingPill icon={<Megaphone size={20} />} text={translations.marketing} className="bottom-16 -right-20" delay={1.1} />
             </div>
           </div>
         </motion.div>

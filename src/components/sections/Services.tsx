@@ -9,33 +9,34 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { PenTool, Code, Search, Megaphone, Bot, ArrowRight } from 'lucide-react';
+import { Wand2, Bot, Megaphone, Search, Code, Palette } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import { ArrowRight } from 'lucide-react';
 
 const servicesData = [
   {
-    icon: <Code className="w-10 h-10 mb-4 text-primary" />,
+    icon: <Wand2 className="w-10 h-10 mb-4 text-primary" />,
     title: 'service1Title',
     description: 'service1Desc',
   },
   {
-    icon: <Search className="w-10 h-10 mb-4 text-primary" />,
+    icon: <Bot className="w-10 h-10 mb-4 text-primary" />,
     title: 'service2Title',
     description: 'service2Desc',
   },
   {
-    icon: <PenTool className="w-10 h-10 mb-4 text-primary" />,
+    icon: <Megaphone className="w-10 h-10 mb-4 text-primary" />,
     title: 'service3Title',
     description: 'service3Desc',
   },
   {
-    icon: <Megaphone className="w-10 h-10 mb-4 text-primary" />,
+    icon: <Search className="w-10 h-10 mb-4 text-primary" />,
     title: 'service4Title',
     description: 'service4Desc',
   },
   {
-    icon: <Bot className="w-10 h-10 mb-4 text-primary" />,
+    icon: <Palette className="w-10 h-10 mb-4 text-primary" />,
     title: 'service5Title',
     description: 'service5Desc',
   },
