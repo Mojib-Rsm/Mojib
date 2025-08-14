@@ -8,7 +8,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 const FloatingPill = ({ icon, text, className, delay }: { icon: React.ReactNode, text: string, className?: string, delay: number }) => (
     <motion.div 
-        className={`absolute flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-card/60 backdrop-blur-sm rounded-full shadow-lg ${className}`}
+        className={`absolute z-20 flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-card/60 backdrop-blur-sm rounded-full shadow-lg ${className}`}
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: [20, -10, 20], opacity: 1 }}
         transition={{ 
@@ -54,7 +54,7 @@ export function Hero() {
       }
   }
 
-  const nameParts = translations.heroTitle.split('Mojib Rsm.');
+  const nameParts = translations.heroTitle.split('Mojib Rsm');
 
   return (
     <section className="container max-w-screen-xl mx-auto py-16 md:py-24 overflow-hidden">
@@ -65,7 +65,7 @@ export function Hero() {
         variants={containerVariants}
       >
         
-        <div className="flex flex-col gap-6 items-start text-left">
+        <div className="flex flex-col gap-6 items-start text-left md:order-1 order-2">
           <motion.div className="text-sm uppercase text-primary font-semibold tracking-wider" variants={itemVariants}>
             {translations.heroSubtitle}
           </motion.div>
@@ -106,14 +106,16 @@ export function Hero() {
           </motion.div>
         </div>
 
-        <motion.div className="relative h-[450px] md:h-[550px]" variants={imageVariants}>
+        <motion.div className="relative h-[450px] md:h-[550px] md:order-2 order-1" variants={imageVariants}>
           <div className="absolute inset-0 w-full h-full flex items-center justify-center">
-            <div className="relative w-[320px] h-[480px] md:w-[360px] md:h-[540px]">
+            <div className="relative w-[300px] h-[450px] md:w-[360px] md:h-[540px]">
               <motion.div 
-                className="absolute -top-4 -left-4 w-full h-full border-2 border-primary rounded-lg z-0"
+                className="absolute -top-4 -left-4 w-full h-full border-2 border-primary rounded-lg z-0 p-1"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-              ></motion.div>
+              >
+                 <div className="w-full h-full rounded-lg bg-gradient-to-br from-primary/20 via-transparent to-primary/20"></div>
+              </motion.div>
               <Image
                 src="/uploads/mojib-hero.png"
                 alt="Portrait of Mojib, a Full-Stack Developer"
@@ -123,10 +125,10 @@ export function Hero() {
                 data-ai-hint="man suit"
                 priority
               />
-               <FloatingPill icon={<Wand2 size={20} />} text={translations.webDevelopment} className="top-20 -right-24" delay={0.5} />
-               <FloatingPill icon={<Bot size={20} />} text={translations.aiSolutions} className="top-40 -left-24" delay={0.8} />
-               <FloatingPill icon={<Megaphone size={20} />} text={translations.marketing} className="bottom-16 -right-20" delay={1.1} />
-               <FloatingPill icon={<Code size={20} />} text={translations.coding} className="bottom-32 -left-16" delay={1.4} />
+               <FloatingPill icon={<Wand2 size={20} />} text={translations.webDevelopment} className="top-20 -right-16 md:-right-24" delay={0.5} />
+               <FloatingPill icon={<Bot size={20} />} text={translations.aiSolutions} className="top-40 -left-16 md:-left-24" delay={0.8} />
+               <FloatingPill icon={<Megaphone size={20} />} text={translations.marketing} className="bottom-16 -right-12 md:-right-20" delay={1.1} />
+               <FloatingPill icon={<Code size={20} />} text={translations.coding} className="bottom-32 -left-12 md:-left-16" delay={1.4} />
             </div>
           </div>
         </motion.div>
