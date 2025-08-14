@@ -21,6 +21,7 @@ export default {
         headline: ['Poppins', 'sans-serif'],
         logo: ['Playfair Display', 'serif'],
         code: ['monospace'],
+        bengali: ['"Hind Siliguri"', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
