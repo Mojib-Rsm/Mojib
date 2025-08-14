@@ -4,22 +4,28 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 
 const experienceData = [
   {
-    company: 'Self-Employed, Brisbane',
-    dates: '2014 - 2016',
-    role: 'Visual Designer',
-    description: 'Created stunning visual designs for a variety of platforms including websites, games, and mobile apps. Focused on creating engaging and user-friendly interfaces.',
+    company: 'Oftern IT & Oftern Shop',
+    dates: '2023 - Present',
+    role: 'Founder',
+    description: 'Led the development of various web and mobile projects. Managed client relationships and project requirements. Oversaw the technical architecture and implementation.',
   },
   {
-    company: 'New Man Services',
-    dates: '2017 - 2018',
-    role: 'UI/UX Designer',
-    description: 'Designed and engineered user interfaces for machines and software. Specialized in creating intuitive experiences for complex systems.',
+    company: 'Creative Solutions Inc.',
+    dates: '2022 - 2023',
+    role: 'Lead UI/UX Designer',
+    description: 'Lead the design team for a major e-commerce platform redesign. Conducted user research and usability testing sessions. Created wireframes, prototypes, and high-fidelity mockups.',
   },
   {
-    company: 'Global Solution',
-    dates: '2019 - Present',
-    role: 'Sr. Product Designer',
-    description: 'Lead product design initiatives from concept to launch. I specialize in creating beautiful, usable, and impactful digital products that users love.',
+    company: 'ThemeForest Marketplace',
+    dates: '2021 - 2022',
+    role: 'WordPress Theme Developer',
+    description: 'Developed and maintained popular WordPress themes. Provided technical support to thousands of customers. Ensured themes meet high-quality coding standards.',
+  },
+  {
+    company: 'Freelancer',
+    dates: '2022 - Present',
+    role: 'Android App Developer',
+    description: 'Designed and developed native Android applications. Published apps on the Google Play Store. Integrated various APIs and third-party services.',
   },
 ];
 
@@ -29,7 +35,7 @@ export function Experience() {
     <section id="experience" className="bg-muted/40 py-20 md:py-28">
       <div className="container max-w-screen-lg mx-auto">
         <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold">Work Experience</h2>
+            <h2 className="text-4xl font-bold">My Experience</h2>
             <p className="text-muted-foreground mt-2">My professional journey so far.</p>
         </div>
         <div className="relative grid gap-8 before:absolute before:inset-0 before:left-6 before:md:left-1/2 before:w-px before:bg-border before:-translate-x-1/2">
