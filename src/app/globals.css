@@ -30,11 +30,11 @@
 
   .dark {
     --background: 220 40% 5%; /* Dark Navy Blue */
-    --foreground: 0 0% 96%; /* #F5F5F5 */
+    --foreground: 0 0% 98%; /* Lighter Text */
     --card: 220 40% 8%;
-    --card-foreground: 0 0% 96%;
+    --card-foreground: 0 0% 98%;
     --popover: 220 40% 8%;
-    --popover-foreground: 0 0% 96%;
+    --popover-foreground: 0 0% 98%;
     --primary: 210 100% 56%; /* #1E90FF */
     --primary-foreground: 0 0% 98%;
     --secondary: 243 100% 70%; /* #6C63FF */
