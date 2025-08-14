@@ -54,7 +54,7 @@ export function Hero() {
       }
   }
 
-  const nameParts = translations.heroTitle.split('Mojib Rsm');
+  const nameParts = translations.heroTitle.split('Mojib Rsm.');
 
   return (
     <section className="container max-w-screen-xl mx-auto py-16 md:py-24 overflow-hidden">
