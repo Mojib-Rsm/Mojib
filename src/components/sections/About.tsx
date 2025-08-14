@@ -29,6 +29,16 @@ export function About() {
       },
     },
   };
+  
+  const imageContainerVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { duration: 0.6, ease: 'easeOut' }
+    }
+  };
+
 
   return (
     <motion.section 
@@ -41,7 +51,25 @@ export function About() {
     >
       <div className="container max-w-screen-xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <motion.div className="relative h-[450px] md:h-[550px]" variants={itemVariants}>
+          <motion.div 
+            className="relative h-[450px] md:h-[550px]" 
+            variants={imageContainerVariants}
+            whileHover={{ scale: 1.03 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.div
+              className="absolute -top-4 -right-4 w-full h-full border-2 border-primary rounded-lg z-0"
+              animate={{
+                x: [-5, 5, -5],
+                y: [5, -5, 5],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                repeatType: 'reverse',
+                ease: 'easeInOut',
+              }}
+            />
             <Image
               src="/uploads/about-sec.jpeg"
               alt="About Binjan"
@@ -50,7 +78,6 @@ export function About() {
               className="rounded-lg object-cover w-full h-full relative z-10 shadow-2xl"
               data-ai-hint="man suit"
             />
-             <div className="absolute -top-4 -right-4 w-full h-full border-2 border-primary rounded-lg z-0"></div>
           </motion.div>
           <motion.div className="flex flex-col gap-6 items-start text-left" variants={containerVariants}>
             <motion.h2 className="text-4xl font-bold" variants={itemVariants}>{translations.aboutMe}</motion.h2>
