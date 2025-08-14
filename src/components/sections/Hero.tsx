@@ -54,9 +54,7 @@ export function Hero() {
       }
   }
 
-  const heroTitleHtml = {
-    __html: translations.heroTitle.replace('Mojib Rsm', '<span class="text-primary underline">Mojib Rsm</span>')
-  };
+  const nameParts = translations.heroTitle.split('Mojib Rsm');
 
   return (
     <section className="container max-w-screen-xl mx-auto py-16 md:py-24 overflow-hidden">
@@ -74,9 +72,31 @@ export function Hero() {
           <motion.h1 
             className="text-5xl md:text-6xl font-bold tracking-tight"
             variants={itemVariants}
-            dangerouslySetInnerHTML={heroTitleHtml}
           >
+           {nameParts[0]}
+            <motion.span 
+              className="text-primary relative inline-block"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              Mojib Rsm
+              <motion.span 
+                className="absolute left-0 -bottom-1 w-full h-1 bg-gradient-to-r from-cyan-400 to-yellow-400"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, ease: 'easeOut', delay: 0.6 }}
+                style={{ originX: 0 }}
+              />
+            </motion.span>
           </motion.h1>
+           <motion.h2 
+            className="text-3xl md:text-4xl font-bold tracking-tight text-muted-foreground"
+            variants={itemVariants}
+          >
+            {nameParts[1]}
+          </motion.h2>
+
           <motion.p className="text-lg text-muted-foreground max-w-md" variants={itemVariants}>
             {translations.heroDescription}
           </motion.p>
