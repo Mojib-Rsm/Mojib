@@ -102,8 +102,10 @@ export function Services() {
                   <CardDescription>{translations[service.description]}</CardDescription>
                 </CardContent>
                 <CardFooter>
-                   <Button variant="link" className="p-0">
-                      {translations.getStarted} <ArrowRight className="ml-2 h-4 w-4" />
+                   <Button variant="link" asChild className="p-0">
+                      <a href="#contact">
+                        {translations.getStarted} <ArrowRight className="ml-2 h-4 w-4" />
+                      </a>
                   </Button>
                 </CardFooter>
               </Card>

@@ -54,7 +54,9 @@ export function Header() {
           <NavItems />
         </nav>
         <div className="flex items-center justify-end space-x-2 flex-1">
-          <Button>{translations.contactMe}</Button>
+          <Button asChild>
+            <a href="#contact">{translations.contactMe}</a>
+          </Button>
           <ThemeToggle />
           <LanguageToggle />
           <div className="md:hidden">

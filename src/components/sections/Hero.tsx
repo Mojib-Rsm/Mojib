@@ -68,7 +68,7 @@ export function Hero() {
             {translations.heroSubtitle}
           </motion.div>
           <motion.h1 
-            className="text-5xl md:text-6xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary" 
+            className="text-5xl md:text-6xl font-bold tracking-tight"
             variants={itemVariants}
           >
             {translations.heroTitle}
@@ -77,8 +77,8 @@ export function Hero() {
             {translations.heroDescription}
           </motion.p>
           <motion.div className="flex gap-4 mt-4" variants={itemVariants}>
-            <Button size="lg">{translations.myWorks}</Button>
-            <Button size="lg" variant="outline">{translations.contactMe}</Button>
+            <Button size="lg" asChild><a href="#portfolio">{translations.myWorks}</a></Button>
+            <Button size="lg" variant="outline" asChild><a href="#contact">{translations.contactMe}</a></Button>
           </motion.div>
         </div>
 
@@ -92,7 +92,7 @@ export function Hero() {
               ></motion.div>
               <Image
                 src="/uploads/mojib-hero.png"
-                alt="Portrait of Binjan, a Wordpress Developer & SEO Marketer"
+                alt="Portrait of Mojib, a Full-Stack Developer"
                 width={400}
                 height={600}
                 className="rounded-lg object-cover w-full h-full relative z-10 shadow-2xl"

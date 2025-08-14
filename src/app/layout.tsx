@@ -19,8 +19,8 @@ const alegreya = Alegreya({
 });
 
 export const metadata: Metadata = {
-  title: 'Mojibfolio - Professional Portfolio',
-  description: 'The personal portfolio of Mojib, showcasing projects, skills, and professional achievements.',
+  title: 'Mojib Rsm - Professional Portfolio',
+  description: 'The professional portfolio of Mojib Rsm, showcasing software development projects, skills, and experience.',
 };
 
 export default function RootLayout({
@@ -33,7 +33,7 @@ export default function RootLayout({
       <body className={`${belleza.variable} ${alegreya.variable} font-body antialiased`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem={false}
         >
           <LanguageProvider>

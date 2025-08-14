@@ -3,30 +3,30 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Brush, Code, Megaphone, Server } from "lucide-react";
+import { Brush, Code, Database, Server } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 
 const skillsData = [
   {
     category: 'skillsCategory1',
-    icon: <Megaphone className="w-8 h-8 text-primary" />,
-    skills: ['SEO', 'Google Analytics', 'Content Strategy'],
+    icon: <Server className="w-8 h-8 text-primary" />,
+    skills: ['Node.js', 'Laravel', 'PHP', 'Express.js', 'Python'],
   },
   {
     category: 'skillsCategory2',
     icon: <Code className="w-8 h-8 text-primary" />,
-    skills: ['HTML', 'CSS', 'JavaScript', 'WordPress', 'React', 'PHP'],
+    skills: ['React', 'Next.js', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3/Sass'],
   },
   {
     category: 'skillsCategory3',
-    icon: <Brush className="w-8 h-8 text-primary" />,
-    skills: ['UI/UX Design', 'Figma', 'Responsive Design', 'Branding'],
+    icon: <Database className="w-8 h-8 text-primary" />,
+    skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'Firebase', 'Redis'],
   },
   {
     category: 'skillsCategory4',
-    icon: <Server className="w-8 h-8 text-primary" />,
-    skills: ['Git', 'MySQL', 'Firebase', 'Canva', 'Android Studio'],
+    icon: <Brush className="w-8 h-8 text-primary" />,
+    skills: ['Docker', 'Git', 'CI/CD', 'AWS', 'Linux'],
   },
 ];
 
