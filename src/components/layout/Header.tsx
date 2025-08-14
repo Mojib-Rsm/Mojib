@@ -20,6 +20,7 @@ export function Header() {
     { href: '#gallery', label: 'Gallery' },
     { href: '#pricing', label: 'Pricing' },
     { href: '#blog', label: 'Blog' },
+    { href: '#contact', label: 'Contact' },
   ];
 
   const NavItems = () => (

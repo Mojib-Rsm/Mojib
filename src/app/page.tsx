@@ -1,5 +1,6 @@
 import { About } from '@/components/sections/About';
 import { Blog } from '@/components/sections/Blog';
+import { Contact } from '@/components/sections/Contact';
 import { Experience } from '@/components/sections/Experience';
 import { Gallery } from '@/components/sections/Gallery';
 import { Hero } from '@/components/sections/Hero';
@@ -20,6 +21,7 @@ export default function Home() {
       <Gallery />
       <Pricing />
       <Blog />
+      <Contact />
     </div>
   );
 }

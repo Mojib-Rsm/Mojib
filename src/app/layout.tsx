@@ -3,6 +3,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Header } from '@/components/layout/Header';
 import { Toaster } from "@/components/ui/toaster"
+import { Footer } from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: 'Binjan - Professional UI/UX Designer',
@@ -30,6 +31,7 @@ export default function RootLayout({
           <div className="flex flex-col min-h-screen bg-background">
             <Header />
             <main className="flex-grow">{children}</main>
+            <Footer />
           </div>
           <Toaster />
         </ThemeProvider>
