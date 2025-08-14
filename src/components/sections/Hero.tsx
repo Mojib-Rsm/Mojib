@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Button } from '../ui/button';
-import { Bot, Megaphone, Wand2 } from 'lucide-react';
+import { Bot, Code, Megaphone, Wand2, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -100,8 +100,9 @@ export function Hero() {
                 priority
               />
                <FloatingPill icon={<Wand2 size={20} />} text={translations.webDevelopment} className="top-20 -right-24" delay={0.5} />
-               <FloatingPill icon={<Bot size={20} />} text={translations.seo} className="top-40 -left-24" delay={0.8} />
+               <FloatingPill icon={<Bot size={20} />} text={translations.aiSolutions} className="top-40 -left-24" delay={0.8} />
                <FloatingPill icon={<Megaphone size={20} />} text={translations.marketing} className="bottom-16 -right-20" delay={1.1} />
+               <FloatingPill icon={<Code size={20} />} text={translations.coding} className="bottom-32 -left-16" delay={1.4} />
             </div>
           </div>
         </motion.div>
