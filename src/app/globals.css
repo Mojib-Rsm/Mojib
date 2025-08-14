@@ -6,48 +6,48 @@
 
 @layer base {
   :root {
-    --background: 260 100% 97%; /* Light, desaturated lavender */
-    --foreground: 265 15% 25%;
-    --card: 260 100% 99%;
-    --card-foreground: 265 15% 25%;
-    --popover: 260 100% 99%;
-    --popover-foreground: 265 15% 25%;
-    --primary: 260 100% 88%; /* Soft lavender */
-    --primary-foreground: 265 15% 25%;
-    --secondary: 260 100% 94%;
-    --secondary-foreground: 265 15% 25%;
-    --muted: 260 100% 94%;
-    --muted-foreground: 260 10% 55%;
-    --accent: 260 40% 75%; /* Muted violet */
-    --accent-foreground: 0 0% 100%;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 210 100% 56%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 243 100% 70%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 69%;
+    --accent: 243 100% 70%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 260 40% 90%;
-    --input: 260 40% 90%;
-    --ring: 260 100% 88%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 210 100% 56%;
     --radius: 0.75rem;
   }
 
   .dark {
-    --background: 260 40% 8%; /* Dark lavender */
-    --foreground: 260 20% 95%;
-    --card: 260 30% 12%;
-    --card-foreground: 260 20% 95%;
-    --popover: 260 30% 12%;
-    --popover-foreground: 260 20% 95%;
-    --primary: 260 100% 88%; /* Soft lavender */
-    --primary-foreground: 265 15% 15%;
-    --secondary: 260 40% 15%;
-    --secondary-foreground: 260 20% 95%;
-    --muted: 260 40% 15%;
-    --muted-foreground: 260 15% 65%;
-    --accent: 260 70% 70%; /* Muted violet */
-    --accent-foreground: 260 20% 98%;
+    --background: 0 0% 5%; /* #0E0E0E */
+    --foreground: 0 0% 96%; /* #F5F5F5 */
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 210 100% 56%; /* #1E90FF */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 243 100% 70%; /* #6C63FF */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 69%; /* #B0B0B0 */
+    --accent: 243 100% 70%; /* #6C63FF */
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 260 40% 20%;
-    --input: 260 40% 20%;
-    --ring: 260 100% 88%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 210 100% 56%;
   }
 }
 
@@ -77,7 +77,7 @@
 
 @layer utilities {
   .glass-card {
-    background-color: transparent;
+    background-color: rgba(14, 14, 14, 0.6);
     backdrop-filter: blur(10px);
     border: 1px solid hsl(var(--border));
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
