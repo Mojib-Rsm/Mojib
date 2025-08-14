@@ -2,9 +2,10 @@
 
 import Image from 'next/image';
 import { Button } from '../ui/button';
-import { Bot, Code, Megaphone, Wand2 } from 'lucide-react';
+import { Bot, Code, Facebook, Github, Linkedin, Megaphone, Wand2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import Link from 'next/link';
 
 const FloatingPill = ({ icon, text, className, delay }: { icon: React.ReactNode, text: string, className?: string, delay: number }) => (
     <motion.div 
@@ -103,6 +104,23 @@ export function Hero() {
           <motion.div className="flex gap-4 mt-4" variants={itemVariants}>
             <Button size="lg" asChild><a href="#portfolio">{translations.myWorks}</a></Button>
             <Button size="lg" variant="outline" asChild><a href="#contact">{translations.contactMe}</a></Button>
+          </motion.div>
+          <motion.div className="flex gap-2 mt-4" variants={itemVariants}>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="https://github.com/mojibrsm" target="_blank">
+                  <Github className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="https://linkedin.com/in/mojibrsm" target="_blank">
+                  <Linkedin className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="https://facebook.com/mojibur.rsm" target="_blank">
+                  <Facebook className="h-5 w-5" />
+                </Link>
+              </Button>
           </motion.div>
         </div>
 

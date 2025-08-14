@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { useEffect, useState } from 'react';
+import { Button } from '../ui/button';
+import { Facebook, Github, Linkedin } from 'lucide-react';
 
 export function Footer() {
   const { translations } = useLanguage();
@@ -19,6 +21,12 @@ export function Footer() {
     { href: '#gallery', label: translations.gallery },
     { href: '#blog', label: translations.blog },
     { href: '#contact', label: translations.contact },
+  ];
+  
+  const socialLinks = [
+    { href: 'https://github.com/mojibrsm', icon: <Github className="h-5 w-5" />, label: 'Github' },
+    { href: 'https://linkedin.com/in/mojibrsm', icon: <Linkedin className="h-5 w-5" />, label: 'LinkedIn' },
+    { href: 'https://facebook.com/mojibur.rsm', icon: <Facebook className="h-5 w-5" />, label: 'Facebook' },
   ];
 
   return (
@@ -41,6 +49,15 @@ export function Footer() {
               </Link>
             ))}
           </nav>
+           <div className="flex gap-2 mt-2">
+            {socialLinks.map((link) => (
+              <Button key={link.href} variant="ghost" size="icon" asChild>
+                <Link href={link.href} target="_blank" aria-label={link.label}>
+                  {link.icon}
+                </Link>
+              </Button>
+            ))}
+          </div>
           <div className="text-sm text-muted-foreground mt-4">
             © {currentYear} Mojib Rsm. {translations.footerAllRightsReserved}
           </div>
