@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 const pricingData = [
   {
@@ -30,6 +31,7 @@ const pricingData = [
 ];
 
 export function Pricing() {
+  const { translations } = useLanguage();
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -60,8 +62,8 @@ export function Pricing() {
     >
       <div className="container max-w-screen-xl mx-auto">
         <motion.div className="text-center mb-12" variants={itemVariants}>
-          <h2 className="text-4xl font-bold">My Packages</h2>
-          <p className="text-muted-foreground mt-2">Choose a package that suits your needs or contact me for a custom quote.</p>
+          <h2 className="text-4xl font-bold">{translations.pricingTitle}</h2>
+          <p className="text-muted-foreground mt-2">{translations.pricingSubtitle}</p>
         </motion.div>
         <div className="grid md:grid-cols-3 gap-8">
           {pricingData.map((plan, index) => (
@@ -73,10 +75,10 @@ export function Pricing() {
             >
               <Card className="flex flex-col h-full glass-card">
                 <CardHeader className="text-center">
-                  {plan.popular && <div className="text-primary font-semibold mb-2">Popular</div>}
+                  {plan.popular && <div className="text-primary font-semibold mb-2">{translations.popular}</div>}
                   <CardTitle className="text-2xl">{plan.title}</CardTitle>
                   <p className="text-4xl font-bold">{plan.price}</p>
-                  <CardDescription>{plan.description}</CardDescription>
+                  <CardDescription>{translations.oneTime}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <ul className="space-y-4">
@@ -89,7 +91,7 @@ export function Pricing() {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full" variant={plan.popular ? 'default' : 'outline'}>Order Now</Button>
+                  <Button className="w-full" variant={plan.popular ? 'default' : 'outline'}>{translations.orderNow}</Button>
                 </CardFooter>
               </Card>
             </motion.div>

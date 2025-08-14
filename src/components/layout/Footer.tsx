@@ -1,14 +1,17 @@
+'use client';
+
 import Link from 'next/link';
-import { Button } from '../ui/button';
+import { useLanguage } from '@/context/LanguageContext';
 
 export function Footer() {
+  const { translations } = useLanguage();
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#portfolio', label: 'Portfolio' },
-    { href: '#gallery', label: 'Gallery' },
-    { href: '#blog', label: 'Blog' },
-    { href: '#contact', label: 'Contact' },
+    { href: '/', label: translations.home },
+    { href: '#about', label: translations.about },
+    { href: '#portfolio', label: translations.portfolio },
+    { href: '#gallery', label: translations.gallery },
+    { href: '#blog', label: translations.blog },
+    { href: '#contact', label: translations.contact },
   ];
 
   return (
@@ -32,7 +35,7 @@ export function Footer() {
             ))}
           </nav>
           <div className="text-sm text-muted-foreground mt-4">
-            © {new Date().getFullYear()} Mojib Rsm. All Rights Reserved.
+            © {new Date().getFullYear()} Mojib Rsm. {translations.footerAllRightsReserved}
           </div>
         </div>
       </div>

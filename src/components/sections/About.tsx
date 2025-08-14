@@ -4,8 +4,11 @@ import Image from 'next/image';
 import { Button } from '../ui/button';
 import { Award, Briefcase, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 export function About() {
+  const { translations } = useLanguage();
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -50,29 +53,29 @@ export function About() {
              <div className="absolute -top-4 -right-4 w-full h-full border-2 border-primary rounded-lg z-0"></div>
           </motion.div>
           <motion.div className="flex flex-col gap-6 items-start text-left" variants={containerVariants}>
-            <motion.h2 className="text-4xl font-bold" variants={itemVariants}>About Me</motion.h2>
+            <motion.h2 className="text-4xl font-bold" variants={itemVariants}>{translations.aboutMe}</motion.h2>
             <motion.p className="text-lg text-muted-foreground" variants={itemVariants}>
-              I am a passionate UI/UX designer and developer with over 10 years of experience creating beautiful, functional, and user-centered digital experiences. My goal is to bridge the gap between user needs and business goals, crafting solutions that are both intuitive and impactful.
+              {translations.aboutDescription}
             </motion.p>
             <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full mt-4" variants={itemVariants}>
               <div className="p-4 rounded-lg border text-center glass-card">
                 <Award className="w-8 h-8 mx-auto mb-2 text-primary" />
-                <h3 className="font-semibold">Experience</h3>
-                <p className="text-sm text-muted-foreground">10+ Years</p>
+                <h3 className="font-semibold">{translations.experienceLabel}</h3>
+                <p className="text-sm text-muted-foreground">{translations.experienceValue}</p>
               </div>
               <div className="p-4 rounded-lg border text-center glass-card">
                 <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
-                <h3 className="font-semibold">Clients</h3>
-                <p className="text-sm text-muted-foreground">50+ Worldwide</p>
+                <h3 className="font-semibold">{translations.clientsLabel}</h3>
+                <p className="text-sm text-muted-foreground">{translations.clientsValue}</p>
               </div>
               <div className="p-4 rounded-lg border text-center glass-card">
                 <Briefcase className="w-8 h-8 mx-auto mb-2 text-primary" />
-                <h3 className="font-semibold">Projects</h3>
-                <p className="text-sm text-muted-foreground">100+ Completed</p>
+                <h3 className="font-semibold">{translations.projectsLabel}</h3>
+                <p className="text-sm text-muted-foreground">{translations.projectsValue}</p>
               </div>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <Button size="lg" className="mt-4">Download CV</Button>
+              <Button size="lg" className="mt-4">{translations.downloadCv}</Button>
             </motion.div>
           </motion.div>
         </div>

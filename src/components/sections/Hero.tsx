@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Button } from '../ui/button';
 import { Code, Search, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 const FloatingPill = ({ icon, text, className, delay }: { icon: React.ReactNode, text: string, className?: string, delay: number }) => (
     <motion.div 
@@ -26,6 +27,7 @@ const FloatingPill = ({ icon, text, className, delay }: { icon: React.ReactNode,
 )
 
 export function Hero() {
+  const { translations } = useLanguage();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -63,20 +65,20 @@ export function Hero() {
         
         <div className="flex flex-col gap-6 items-start text-left">
           <motion.div className="text-sm uppercase text-primary font-semibold tracking-wider" variants={itemVariants}>
-            Wordpress Developer & SEO Marketer
+            {translations.heroSubtitle}
           </motion.div>
           <motion.h1 
             className="text-5xl md:text-6xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary" 
             variants={itemVariants}
           >
-            I'm Binjan, designing <br/>digital experiences.
+            {translations.heroTitle}
           </motion.h1>
           <motion.p className="text-lg text-muted-foreground max-w-md" variants={itemVariants}>
-            I design and build beautiful, accessible, and user-centered digital products. I'm passionate about creating intuitive and delightful user experiences.
+            {translations.heroDescription}
           </motion.p>
           <motion.div className="flex gap-4 mt-4" variants={itemVariants}>
-            <Button size="lg">My Works</Button>
-            <Button size="lg" variant="outline">Contact Me</Button>
+            <Button size="lg">{translations.myWorks}</Button>
+            <Button size="lg" variant="outline">{translations.contactMe}</Button>
           </motion.div>
         </div>
 
@@ -96,9 +98,9 @@ export function Hero() {
                 className="rounded-lg object-cover w-full h-full relative z-10 shadow-2xl"
                 data-ai-hint="man suit"
               />
-               <FloatingPill icon={<Code size={20} />} text="Web Development" className="top-20 -right-24" delay={0.5} />
-               <FloatingPill icon={<Search size={20} />} text="SEO" className="top-40 -left-24" delay={0.8} />
-               <FloatingPill icon={<TrendingUp size={20} />} text="Marketing" className="bottom-16 -right-20" delay={1.1} />
+               <FloatingPill icon={<Code size={20} />} text={translations.webDevelopment} className="top-20 -right-24" delay={0.5} />
+               <FloatingPill icon={<Search size={20} />} text={translations.seo} className="top-40 -left-24" delay={0.8} />
+               <FloatingPill icon={<TrendingUp size={20} />} text={translations.marketing} className="bottom-16 -right-20" delay={1.1} />
             </div>
           </div>
         </motion.div>

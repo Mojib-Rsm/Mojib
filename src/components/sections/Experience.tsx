@@ -2,6 +2,7 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 const experienceData = [
   {
@@ -32,6 +33,7 @@ const experienceData = [
 
 
 export function Experience() {
+  const { translations } = useLanguage();
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -62,8 +64,8 @@ export function Experience() {
     >
       <div className="container max-w-screen-lg mx-auto">
         <motion.div className="text-center mb-12" variants={itemVariants}>
-            <h2 className="text-4xl font-bold">My Experience</h2>
-            <p className="text-muted-foreground mt-2">My professional journey so far.</p>
+            <h2 className="text-4xl font-bold">{translations.experienceTitle}</h2>
+            <p className="text-muted-foreground mt-2">{translations.experienceSubtitle}</p>
         </motion.div>
         <div className="relative grid gap-8 before:absolute before:inset-0 before:left-1/2 before:w-px before:bg-border before:-translate-x-1/2">
           {experienceData.map((item, index) => (

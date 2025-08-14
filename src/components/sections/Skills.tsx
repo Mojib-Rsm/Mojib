@@ -5,31 +5,33 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Brush, Code, Megaphone, Server } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 const skillsData = [
   {
-    category: 'Digital Marketing',
+    category: 'skillsCategory1',
     icon: <Megaphone className="w-8 h-8 text-primary" />,
     skills: ['SEO', 'Google Analytics', 'Content Strategy'],
   },
   {
-    category: 'Core Development',
+    category: 'skillsCategory2',
     icon: <Code className="w-8 h-8 text-primary" />,
     skills: ['HTML', 'CSS', 'JavaScript', 'WordPress', 'React', 'PHP'],
   },
   {
-    category: 'Design Skills',
+    category: 'skillsCategory3',
     icon: <Brush className="w-8 h-8 text-primary" />,
     skills: ['UI/UX Design', 'Figma', 'Responsive Design', 'Branding'],
   },
   {
-    category: 'Tools',
+    category: 'skillsCategory4',
     icon: <Server className="w-8 h-8 text-primary" />,
     skills: ['Git', 'MySQL', 'Firebase', 'Canva', 'Android Studio'],
   },
 ];
 
 export function Skills() {
+  const { translations } = useLanguage();
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -60,8 +62,8 @@ export function Skills() {
     >
       <div className="container max-w-screen-xl mx-auto">
         <motion.div className="text-center mb-12" variants={itemVariants}>
-          <h2 className="text-4xl font-bold">My Skills</h2>
-          <p className="text-muted-foreground mt-2">A showcase of my technical abilities.</p>
+          <h2 className="text-4xl font-bold">{translations.skillsTitle}</h2>
+          <p className="text-muted-foreground mt-2">{translations.skillsSubtitle}</p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {skillsData.map((category, index) => (
@@ -70,7 +72,7 @@ export function Skills() {
                 <CardHeader>
                   <div className="flex items-center gap-4">
                     {category.icon}
-                    <CardTitle className="text-xl">{category.category}</CardTitle>
+                    <CardTitle className="text-xl">{translations[category.category]}</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>

@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 const faqData = [
   {
@@ -37,6 +38,7 @@ const faqData = [
 ];
 
 export function Faq() {
+  const { translations } = useLanguage();
     const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -67,9 +69,9 @@ export function Faq() {
     >
       <div className="container max-w-screen-lg mx-auto">
         <motion.div className="text-center mb-12" variants={itemVariants}>
-          <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
+          <h2 className="text-4xl font-bold">{translations.faqTitle}</h2>
           <p className="text-muted-foreground mt-2">
-            Answers to common questions you may have.
+            {translations.faqSubtitle}
           </p>
         </motion.div>
         <Accordion type="single" collapsible className="w-full">

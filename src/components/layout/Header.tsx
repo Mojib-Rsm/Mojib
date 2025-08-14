@@ -3,25 +3,28 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
-import { Menu, Phone } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useState } from 'react';
 import { ThemeToggle } from '../ThemeToggle';
+import { useLanguage } from '@/context/LanguageContext';
+import { LanguageToggle } from '../LanguageToggle';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { translations } = useLanguage();
 
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#services', label: 'Services' },
-    { href: '#experience', label: 'Experience' },
-    { href: '#skills', label: 'Skills' },
-    { href: '#portfolio', label: 'Portfolio' },
-    { href: '#gallery', label: 'Gallery' },
-    { href: '#pricing', label: 'Pricing' },
-    { href: '#blog', label: 'Blog' },
-    { href: '#faq', label: 'FAQ' },
-    { href: '#contact', label: 'Contact' },
+    { href: '/', label: translations.home },
+    { href: '#about', label: translations.about },
+    { href: '#services', label: translations.services },
+    { href: '#experience', label: translations.experience },
+    { href: '#skills', label: translations.skills },
+    { href: '#portfolio', label: translations.portfolio },
+    { href: '#gallery', label: translations.gallery },
+    { href: '#pricing', label: translations.pricing },
+    { href: '#blog', label: translations.blog },
+    { href: '#faq', label: translations.faq },
+    { href: '#contact', label: translations.contact },
   ];
 
   const NavItems = () => (
@@ -44,15 +47,16 @@ export function Header() {
       <div className="container flex h-16 max-w-screen-xl items-center">
         <Link href="/" className="mr-6 flex items-center space-x-2">
           <span className="font-bold text-2xl font-logo sm:inline-block">
-            Binjan
+            {translations.logoText}
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm flex-1">
           <NavItems />
         </nav>
         <div className="flex items-center justify-end space-x-2 flex-1">
-          <Button>Contact Me</Button>
+          <Button>{translations.contactMe}</Button>
           <ThemeToggle />
+          <LanguageToggle />
           <div className="md:hidden">
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild>
@@ -63,7 +67,7 @@ export function Header() {
               <SheetContent side="right">
                  <Link href="/" className="mr-6 flex items-center space-x-2 mb-6">
                     <span className="font-bold text-2xl font-logo sm:inline-block">
-                    Binjan
+                    {translations.logoText}
                     </span>
                 </Link>
                 <nav className="flex flex-col gap-6">

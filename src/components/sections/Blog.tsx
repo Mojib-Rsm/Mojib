@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 const blogData = [
   {
@@ -31,6 +32,7 @@ const blogData = [
 ];
 
 export function Blog() {
+  const { translations } = useLanguage();
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -62,8 +64,8 @@ export function Blog() {
     >
       <div className="container max-w-screen-xl mx-auto">
         <motion.div className="text-center mb-12" variants={itemVariants}>
-          <h2 className="text-4xl font-bold">From My Blog</h2>
-          <p className="text-muted-foreground mt-2">Latest news, articles, and resources.</p>
+          <h2 className="text-4xl font-bold">{translations.blogTitle}</h2>
+          <p className="text-muted-foreground mt-2">{translations.blogSubtitle}</p>
         </motion.div>
         <div className="grid md:grid-cols-3 gap-8">
           {blogData.map((post, index) => (
@@ -85,7 +87,7 @@ export function Blog() {
                   <p className="text-sm text-muted-foreground">{post.date}</p>
                 </CardContent>
                 <CardFooter className="p-6 pt-0">
-                  <Button variant="link" className="p-0">Read More</Button>
+                  <Button variant="link" className="p-0">{translations.readMore}</Button>
                 </CardFooter>
               </Card>
             </motion.div>

@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 const galleryImages = [
   { src: "/uploads/1752046515076-1725103684395.jpg", alt: "Bangladesh Jatiya Sangsad" },
@@ -15,6 +16,7 @@ const galleryImages = [
 ];
 
 export function Gallery() {
+  const { translations } = useLanguage();
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -46,8 +48,8 @@ export function Gallery() {
     >
       <div className="container max-w-screen-xl mx-auto">
         <motion.div className="text-center mb-12" variants={itemVariants}>
-          <h2 className="text-4xl font-bold">My Gallery</h2>
-          <p className="text-muted-foreground mt-2">A collection of moments and creations that inspire me.</p>
+          <h2 className="text-4xl font-bold">{translations.galleryTitle}</h2>
+          <p className="text-muted-foreground mt-2">{translations.gallerySubtitle}</p>
         </motion.div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {galleryImages.map((image, index) => (

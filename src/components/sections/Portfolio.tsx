@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Badge } from '../ui/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 const worksData = [
     {
@@ -75,6 +76,7 @@ const worksData = [
 ]
 
 export function Portfolio() {
+  const { translations } = useLanguage();
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -104,8 +106,8 @@ export function Portfolio() {
     >
       <div className="container max-w-screen-xl mx-auto">
         <motion.div className="text-center mb-12" variants={itemVariants}>
-            <h2 className="text-4xl font-bold">My Latest Works</h2>
-            <p className="text-muted-foreground mt-2">Perfect solutions for digital experiences.</p>
+            <h2 className="text-4xl font-bold">{translations.portfolioTitle}</h2>
+            <p className="text-muted-foreground mt-2">{translations.portfolioSubtitle}</p>
         </motion.div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {worksData.map((work, index) =>(
@@ -126,13 +128,13 @@ export function Portfolio() {
                             <CardTitle className="text-xl mb-2 group-hover:text-primary transition-colors">{work.title}</CardTitle>
                             <p className="text-muted-foreground text-sm mb-4">{work.description}</p>
                             <div className="flex flex-wrap gap-2">
-                              <span className="text-sm font-semibold mr-2">Technologies Used:</span>
+                              <span className="text-sm font-semibold mr-2">{translations.technologiesUsed}</span>
                               {work.technologies.map(tech => <Badge key={tech} variant="secondary">{tech}</Badge>)}
                             </div>
                         </CardContent>
                         <CardFooter className="p-6 pt-0 mt-auto">
                           <Button asChild className="w-full">
-                            <Link href={work.link} target="_blank" rel="noopener noreferrer">{work.title.includes("Portfolio") ? "Customize" : "View Project"}</Link>
+                            <Link href={work.link} target="_blank" rel="noopener noreferrer">{work.title.includes("Portfolio") ? translations.customize : translations.viewProject}</Link>
                           </Button>
                         </CardFooter>
                     </Card>
