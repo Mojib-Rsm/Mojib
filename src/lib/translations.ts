@@ -67,11 +67,12 @@ export const translations = {
     skillsCategory5: 'Coding & Development',
 
     // Portfolio Section
-    portfolioTitle: 'Featured Projects',
-    portfolioSubtitle: 'A selection of my best work.',
+    portfolioTitle: 'My Latest Works',
+    portfolioSubtitle: 'Perfect solution for digital experience',
     technologiesUsed: 'Technologies:',
     viewProject: 'View Project',
     customize: 'View on ThemeForest',
+    exploreMore: 'Explore More Works',
     
     // Gallery Section
     galleryTitle: 'My Gallery',
@@ -179,11 +180,12 @@ export const translations = {
     skillsCategory5: 'কোডিং এবং ডেভেলপমেন্ট',
 
     // Portfolio Section
-    portfolioTitle: 'বৈশিষ্ট্যযুক্ত প্রকল্প',
-    portfolioSubtitle: 'আমার সেরা কাজগুলোর একটি নির্বাচন।',
+    portfolioTitle: 'আমার সর্বশেষ কাজ',
+    portfolioSubtitle: 'ডিজিটাল অভিজ্ঞতার জন্য নিখুঁত সমাধান',
     technologiesUsed: 'ব্যবহৃত প্রযুক্তি:',
     viewProject: 'প্রকল্প দেখুন',
     customize: 'থিমফরেস্টে দেখুন',
+    exploreMore: 'আরও কাজ দেখুন',
     
     // Gallery Section
     galleryTitle: 'আমার গ্যালারি',

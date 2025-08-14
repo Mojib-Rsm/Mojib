@@ -98,16 +98,21 @@ export function Portfolio() {
   return (
     <motion.section 
       id="portfolio" 
-      className="py-20 md:py-28 bg-muted"
+      className="py-20 md:py-28 bg-background"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
       variants={sectionVariants}
     >
       <div className="container max-w-screen-xl mx-auto">
-        <motion.div className="text-center mb-12" variants={itemVariants}>
-            <h2 className="text-4xl font-bold">{translations.portfolioTitle}</h2>
-            <p className="text-muted-foreground mt-2">{translations.portfolioSubtitle}</p>
+        <motion.div className="flex justify-between items-end mb-12" variants={itemVariants}>
+            <div>
+                <h2 className="text-4xl font-bold">{translations.portfolioTitle}</h2>
+                <p className="text-muted-foreground mt-2">{translations.portfolioSubtitle}</p>
+            </div>
+            <Link href="#" className="text-primary font-semibold hover:underline">
+                {translations.exploreMore}
+            </Link>
         </motion.div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {worksData.map((work, index) =>(
