@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${belleza.variable} ${alegreya.variable} font-body antialiased`}>
+      <body className={`${belleza.variable} ${alegreya.variable} font-body antialiased`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
