@@ -5,8 +5,8 @@ import { Header } from '@/components/layout/Header';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Xander - Creative Portfolio',
-  description: 'The personal portfolio of Xander, showcasing projects, skills, and professional achievements.',
+  title: 'Binjan - Professional UI/UX Designer',
+  description: 'The personal portfolio of Binjan, showcasing projects, skills, and professional achievements in UI/UX design.',
 };
 
 export default function RootLayout({
@@ -19,7 +19,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
         <ThemeProvider
@@ -27,7 +27,7 @@ export default function RootLayout({
           defaultTheme="light"
           enableSystem={false}
         >
-          <div className="flex flex-col min-h-screen bg-gradient-to-br from-white to-[#E0F0FF]">
+          <div className="flex flex-col min-h-screen bg-background">
             <Header />
             <main className="flex-grow">{children}</main>
           </div>

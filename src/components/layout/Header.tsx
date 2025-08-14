@@ -3,27 +3,28 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
-import { Menu } from 'lucide-react';
+import { Menu, Phone } from 'lucide-react';
 import { useState } from 'react';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: '#about', label: 'About' },
-    { href: '#service', label: 'Service' },
+    { href: '#services', label: 'Services' },
     { href: '#works', label: 'Works' },
-    { href: '#products', label: 'Products' },
-    { href: '#contact', label: 'Contact' },
+    { href: '#notes', label: 'Notes' },
+    { href: '#experience', label: 'Experience' },
   ];
 
   const NavItems = () => (
     <>
-      {navLinks.map((link) => (
+      {navLinks.map((link, index) => (
         <Link
           key={link.href}
           href={link.href}
-          className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          className={`text-sm font-medium transition-colors hover:text-primary ${
+            index === 0 ? 'border border-primary rounded-full px-3 py-1' : 'text-foreground'
+          }`}
           onClick={() => setIsMenuOpen(false)}
         >
           {link.label}
@@ -36,17 +37,18 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-20 max-w-screen-xl items-center">
         <Link href="/" className="mr-6 flex items-center space-x-2">
-          <span className="font-bold text-2xl font-headline sm:inline-block">
-            Xander.
+          <span className="font-bold text-3xl font-logo sm:inline-block">
+            Binjan
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-sm flex-1 justify-center">
           <NavItems />
         </nav>
-        <div className="flex items-center justify-end space-x-2">
+        <div className="flex items-center justify-end space-x-4">
           <div className="hidden md:flex items-center space-x-2">
-            <Button>
-              Sign up
+            <span className="text-sm font-medium">+001 (313) 345 678</span>
+            <Button variant="outline" size="icon" className="rounded-full">
+              <Phone size={16} />
             </Button>
           </div>
           <div className="md:hidden">
@@ -59,9 +61,12 @@ export function Header() {
               <SheetContent side="right">
                 <nav className="flex flex-col gap-6 mt-8">
                   <NavItems />
-                   <Button>
-                      Sign up
-                    </Button>
+                   <div className="flex items-center space-x-2">
+                     <span className="text-sm font-medium">+001 (313) 345 678</span>
+                     <Button variant="outline" size="icon" className="rounded-full">
+                       <Phone size={16} />
+                     </Button>
+                   </div>
                 </nav>
               </SheetContent>
             </Sheet>
