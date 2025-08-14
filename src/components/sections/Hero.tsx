@@ -37,7 +37,7 @@ export function Hero() {
             <div className="relative w-[320px] h-[480px] md:w-[360px] md:h-[540px]">
               <div className="absolute -top-4 -left-4 w-full h-full border-2 border-primary rounded-lg z-0 animate-pulse-slow"></div>
               <Image
-                src="https://www.mojib.me/uploads/1752046744345-Mojibur_Rahman_sm.png"
+                src="/uploads/mojib-hero.png"
                 alt="Portrait of Binjan, a Wordpress Developer & SEO Marketer"
                 width={400}
                 height={600}
