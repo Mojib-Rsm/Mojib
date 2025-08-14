@@ -32,7 +32,7 @@ export function Contact() {
   return (
     <motion.section 
       id="contact" 
-      className="py-20 md:py-28"
+      className="py-20 md:py-28 bg-muted"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
@@ -47,7 +47,7 @@ export function Contact() {
         </motion.div>
         <div className="grid md:grid-cols-2 gap-12">
           <motion.div variants={itemVariants}>
-            <Card className="glass-card">
+            <Card className="shadow-lg">
               <CardHeader>
                 <CardTitle>{translations.sendMessageTitle}</CardTitle>
               </CardHeader>

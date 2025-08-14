@@ -8,7 +8,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 const FloatingPill = ({ icon, text, className, delay }: { icon: React.ReactNode, text: string, className?: string, delay: number }) => (
     <motion.div 
-        className={`absolute z-20 flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-card/60 backdrop-blur-sm rounded-full shadow-lg ${className}`}
+        className={`absolute z-20 flex items-center gap-2 px-4 py-2 bg-background/80 backdrop-blur-sm rounded-full shadow-lg ${className}`}
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: [20, -10, 20], opacity: 1 }}
         transition={{ 
@@ -75,14 +75,14 @@ export function Hero() {
           >
            {nameParts[0]}
             <motion.span 
-              className="relative inline-block bg-gradient-to-r from-fuchsia-500 to-cyan-500 bg-clip-text text-transparent"
+              className="relative inline-block text-primary"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              Mojib Rsm
+              Mojib Rsm.
               <motion.span 
-                className="absolute left-0 -bottom-1 w-full h-1 bg-gradient-to-r from-fuchsia-500 to-cyan-500"
+                className="absolute left-0 -bottom-1 w-full h-1 bg-primary"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.8, ease: 'easeOut', delay: 0.6 }}
@@ -91,7 +91,7 @@ export function Hero() {
             </motion.span>
           </motion.h1>
            <motion.h2 
-            className="text-3xl md:text-4xl font-bold tracking-tight text-muted-foreground"
+            className="text-2xl md:text-3xl font-bold tracking-tight text-muted-foreground"
             variants={itemVariants}
           >
             {nameParts[1]}
@@ -110,12 +110,10 @@ export function Hero() {
           <div className="absolute inset-0 w-full h-full flex items-center justify-center">
             <div className="relative w-[300px] h-[450px] md:w-[360px] md:h-[540px]">
               <motion.div 
-                className="absolute -top-4 -left-4 w-full h-full border-2 border-primary rounded-lg z-0 p-1"
+                className="absolute -top-4 -left-4 w-full h-full rounded-lg z-0 p-1 bg-gradient-to-br from-primary/20 via-transparent to-accent/20"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-              >
-                 <div className="w-full h-full rounded-lg bg-gradient-to-br from-primary/20 via-transparent to-primary/20"></div>
-              </motion.div>
+              />
               <Image
                 src="/uploads/mojib-hero.png"
                 alt="Portrait of Mojib, a Full-Stack Developer"

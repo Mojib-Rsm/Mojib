@@ -55,9 +55,9 @@ export function Gallery() {
           {galleryImages.map((image, index) => (
             <motion.div 
               key={index} 
-              className="group relative overflow-hidden rounded-lg glass-card"
+              className="group relative overflow-hidden rounded-lg border shadow-sm"
               variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, y: -5 }}
               transition={{ duration: 0.3 }}
             >
               <Image

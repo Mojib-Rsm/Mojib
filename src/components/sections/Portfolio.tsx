@@ -98,7 +98,7 @@ export function Portfolio() {
   return (
     <motion.section 
       id="portfolio" 
-      className="py-20 md:py-28 bg-muted/40"
+      className="py-20 md:py-28 bg-muted"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
@@ -111,8 +111,8 @@ export function Portfolio() {
         </motion.div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {worksData.map((work, index) =>(
-                <motion.div key={index} variants={itemVariants} whileHover={{ y: -8 }}>
-                    <Card className="group overflow-hidden bg-background flex flex-col h-full glass-card">
+                <motion.div key={index} variants={itemVariants} whileHover={{ y: -8, scale: 1.03 }}>
+                    <Card className="group overflow-hidden bg-background flex flex-col h-full border shadow-lg hover:shadow-primary/20">
                         <CardHeader className="p-0">
                             <div className="overflow-hidden">
                                 <Image

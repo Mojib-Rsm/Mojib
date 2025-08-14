@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={`${belleza.variable} ${alegreya.variable} font-body antialiased`} suppressHydrationWarning>
         <LanguageProvider>
           <div className="flex flex-col min-h-screen bg-background">

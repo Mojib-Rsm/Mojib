@@ -70,10 +70,10 @@ export function Pricing() {
             <motion.div 
               key={index}
               variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              className={`flex flex-col ${plan.popular ? 'border-primary border-2 rounded-lg' : ''}`}
+              whileHover={{ scale: 1.05, y: -8 }}
+              className={`flex flex-col`}
             >
-              <Card className="flex flex-col h-full glass-card">
+              <Card className={`flex flex-col h-full bg-background border shadow-lg ${plan.popular ? 'border-primary' : ''}`}>
                 <CardHeader className="text-center">
                   {plan.popular && <div className="text-primary font-semibold mb-2">{translations.popular}</div>}
                   <CardTitle className="text-2xl">{plan.title}</CardTitle>

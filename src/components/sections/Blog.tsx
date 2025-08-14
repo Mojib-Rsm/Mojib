@@ -56,7 +56,7 @@ export function Blog() {
   return (
     <motion.section 
       id="blog" 
-      className="bg-muted/40 py-20 md:py-28"
+      className="bg-muted py-20 md:py-28"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
@@ -69,8 +69,8 @@ export function Blog() {
         </motion.div>
         <div className="grid md:grid-cols-3 gap-8">
           {blogData.map((post, index) => (
-            <motion.div key={index} variants={itemVariants}>
-              <Card className="overflow-hidden h-full flex flex-col glass-card">
+            <motion.div key={index} variants={itemVariants} whileHover={{ y: -5 }}>
+              <Card className="overflow-hidden h-full flex flex-col bg-background border shadow-lg hover:shadow-primary/20">
                 <CardHeader className="p-0">
                    <Image
                       src={post.image}

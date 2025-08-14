@@ -53,7 +53,7 @@ export function About() {
   return (
     <motion.section 
       id="about" 
-      className="py-20 md:py-28"
+      className="py-20 md:py-28 bg-muted"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
@@ -95,17 +95,17 @@ export function About() {
               {translations.aboutDescription}
             </motion.p>
             <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full mt-4" variants={itemVariants}>
-              <motion.div className="p-4 rounded-lg border text-center glass-card" variants={statCardVariants} whileHover="hover">
+              <motion.div className="p-4 rounded-lg border text-center bg-background" variants={statCardVariants} whileHover="hover">
                 <Award className="w-8 h-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold">{translations.experienceLabel}</h3>
                 <p className="text-sm text-muted-foreground">{translations.experienceValue}</p>
               </motion.div>
-              <motion.div className="p-4 rounded-lg border text-center glass-card" variants={statCardVariants} whileHover="hover">
+              <motion.div className="p-4 rounded-lg border text-center bg-background" variants={statCardVariants} whileHover="hover">
                 <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold">{translations.clientsLabel}</h3>
                 <p className="text-sm text-muted-foreground">{translations.clientsValue}</p>
               </motion.div>
-              <motion.div className="p-4 rounded-lg border text-center glass-card" variants={statCardVariants} whileHover="hover">
+              <motion.div className="p-4 rounded-lg border text-center bg-background" variants={statCardVariants} whileHover="hover">
                 <Briefcase className="w-8 h-8 mx-auto mb-2 text-primary" />
                 <h3 className="font-semibold">{translations.projectsLabel}</h3>
                 <p className="text-sm text-muted-foreground">{translations.projectsValue}</p>

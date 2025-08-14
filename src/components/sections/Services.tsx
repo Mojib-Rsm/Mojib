@@ -71,7 +71,7 @@ export function Services() {
   return (
     <motion.section 
       id="services" 
-      className="bg-muted/40 py-20 md:py-28"
+      className="bg-muted py-20 md:py-28"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
@@ -93,7 +93,7 @@ export function Services() {
               className="flex"
             >
               <Card
-                className="flex flex-col text-left glass-card"
+                className="flex flex-col text-left bg-background shadow-lg"
               >
                 <CardHeader>
                   {service.icon}

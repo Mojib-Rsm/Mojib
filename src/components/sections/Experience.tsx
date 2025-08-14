@@ -56,7 +56,7 @@ export function Experience() {
   return (
     <motion.section 
       id="experience" 
-      className="bg-muted/40 py-20 md:py-28"
+      className="bg-muted py-20 md:py-28"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
@@ -77,7 +77,7 @@ export function Experience() {
                   </div>
                    <div className="absolute left-1/2 top-1 w-3 h-3 rounded-full bg-primary -translate-x-1/2"></div>
                    <div>
-                    <Card className="w-full glass-card">
+                    <Card className="w-full bg-background shadow-md">
                         <CardHeader>
                             <CardTitle>{item.role}</CardTitle>
                             <CardDescription>{item.company}</CardDescription>
@@ -91,7 +91,7 @@ export function Experience() {
               ) : (
                 <>
                    <div>
-                     <Card className="w-full glass-card">
+                     <Card className="w-full bg-background shadow-md">
                         <CardHeader>
                             <CardTitle>{item.role}</CardTitle>
                             <CardDescription>{item.company}</CardDescription>

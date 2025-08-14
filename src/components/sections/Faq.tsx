@@ -61,7 +61,7 @@ export function Faq() {
   return (
     <motion.section 
       id="faq" 
-      className="bg-muted/40 py-20 md:py-28"
+      className="bg-muted py-20 md:py-28"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
@@ -77,7 +77,7 @@ export function Faq() {
         <Accordion type="single" collapsible className="w-full">
           {faqData.map((faq, index) => (
             <motion.div key={index} variants={itemVariants}>
-              <AccordionItem value={`item-${index}`} className='glass-card rounded-lg px-4 mb-2'>
+              <AccordionItem value={`item-${index}`} className='bg-background rounded-lg px-4 mb-2 border shadow-sm'>
                 <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">
                   {faq.answer}
