@@ -12,8 +12,14 @@ export function Header() {
 
   const navLinks = [
     { href: '/', label: 'Home' },
+    { href: '#about', label: 'About' },
+    { href: '#services', label: 'Services' },
     { href: '#experience', label: 'Experience' },
-    { href: '#works', label: 'Works' },
+    { href: '#skills', label: 'Skills' },
+    { href: '#portfolio', label: 'Portfolio' },
+    { href: '#gallery', label: 'Gallery' },
+    { href: '#pricing', label: 'Pricing' },
+    { href: '#blog', label: 'Blog' },
   ];
 
   const NavItems = () => (

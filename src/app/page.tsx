@@ -1,13 +1,25 @@
+import { About } from '@/components/sections/About';
+import { Blog } from '@/components/sections/Blog';
 import { Experience } from '@/components/sections/Experience';
+import { Gallery } from '@/components/sections/Gallery';
 import { Hero } from '@/components/sections/Hero';
-import { Works } from '@/components/sections/Works';
+import { Portfolio } from '@/components/sections/Portfolio';
+import { Pricing } from '@/components/sections/Pricing';
+import { Services } from '@/components/sections/Services';
+import { Skills } from '@/components/sections/Skills';
 
 export default function Home() {
   return (
     <div className="flex flex-col">
       <Hero />
+      <About />
+      <Services />
       <Experience />
-      <Works />
+      <Skills />
+      <Portfolio />
+      <Gallery />
+      <Pricing />
+      <Blog />
     </div>
   );
 }

@@ -31,9 +31,9 @@ const worksData = [
     }
 ]
 
-export function Works() {
+export function Portfolio() {
   return (
-    <section id="works" className="py-20 md:py-28">
+    <section id="portfolio" className="py-20 md:py-28 bg-muted/40">
       <div className="container max-w-screen-xl mx-auto">
         <div className="text-center mb-12">
             <h2 className="text-4xl font-bold">My Latest Works</h2>
@@ -41,7 +41,7 @@ export function Works() {
         </div>
         <div className="grid md:grid-cols-2 gap-8">
             {worksData.map((work, index) =>(
-                <div key={index} className="group rounded-lg border overflow-hidden animate-fade-in-up" style={{animationDelay: `${index * 200}ms`}}>
+                <div key={index} className="group rounded-lg border overflow-hidden animate-fade-in-up bg-background" style={{animationDelay: `${index * 200}ms`}}>
                     <div className="overflow-hidden">
                         <Image 
                             src={work.image} 
@@ -52,7 +52,7 @@ export function Works() {
                             data-ai-hint={work.hint}
                         />
                     </div>
-                    <div className="p-6 bg-background">
+                    <div className="p-6">
                         <p className="text-sm text-primary font-medium">{work.category}</p>
                         <h3 className="text-xl font-semibold mt-2 group-hover:text-primary transition-colors">{work.title}</h3>
                     </div>
