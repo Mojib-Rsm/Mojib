@@ -38,25 +38,46 @@ export function Experience() {
             <h2 className="text-4xl font-bold">My Experience</h2>
             <p className="text-muted-foreground mt-2">My professional journey so far.</p>
         </div>
-        <div className="relative grid gap-8 before:absolute before:inset-0 before:left-6 before:md:left-1/2 before:w-px before:bg-border before:-translate-x-1/2">
+        <div className="relative grid gap-8 before:absolute before:inset-0 before:left-1/2 before:w-px before:bg-border before:-translate-x-1/2">
           {experienceData.map((item, index) => (
-            <div key={index} className="relative flex items-start md:grid md:grid-cols-2 md:gap-8 animate-fade-in-up" style={{animationDelay: `${index * 200}ms`}}>
-              <div className="hidden md:flex justify-end text-right">
-                <div className="font-semibold text-primary">{item.dates}</div>
-              </div>
-              <div className="absolute md:relative left-6 top-1 w-3 h-3 rounded-full bg-primary -translate-x-1/2"></div>
-              <div className="pl-12 md:pl-0">
-                <Card className="w-full">
-                    <CardHeader>
-                        <div className="md:hidden font-semibold text-primary mb-1">{item.dates}</div>
-                        <CardTitle>{item.role}</CardTitle>
-                        <CardDescription>{item.company}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-muted-foreground">{item.description}</p>
-                    </CardContent>
-                </Card>
-              </div>
+             <div key={index} className="relative flex items-start md:grid md:grid-cols-2 md:gap-8 animate-fade-in-up" style={{animationDelay: `${index * 200}ms`}}>
+              {index % 2 === 0 ? (
+                <>
+                  <div className="flex flex-col items-end text-right">
+                     <div className="font-semibold text-primary">{item.dates}</div>
+                  </div>
+                   <div className="absolute left-1/2 top-1 w-3 h-3 rounded-full bg-primary -translate-x-1/2"></div>
+                   <div>
+                    <Card className="w-full">
+                        <CardHeader>
+                            <CardTitle>{item.role}</CardTitle>
+                            <CardDescription>{item.company}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground">{item.description}</p>
+                        </CardContent>
+                    </Card>
+                   </div>
+                </>
+              ) : (
+                <>
+                   <div>
+                     <Card className="w-full">
+                        <CardHeader>
+                            <CardTitle>{item.role}</CardTitle>
+                            <CardDescription>{item.company}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground">{item.description}</p>
+                        </CardContent>
+                    </Card>
+                   </div>
+                   <div className="absolute left-1/2 top-1 w-3 h-3 rounded-full bg-primary -translate-x-1/2"></div>
+                   <div className="flex flex-col items-start">
+                     <div className="font-semibold text-primary">{item.dates}</div>
+                   </div>
+                </>
+              )}
             </div>
           ))}
         </div>
