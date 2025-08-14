@@ -42,7 +42,7 @@ export function Hero() {
                 width={400}
                 height={600}
                 className="rounded-lg object-cover w-full h-full relative z-10"
-                data-ai-hint="man suit glasses"
+                data-ai-hint="man suit"
               />
                <FloatingPill icon={<Code size={20} />} text="Clean Code" className="top-20 -right-24 animate-float" delay="400ms" />
                <FloatingPill icon={<Smartphone size={20} />} text="Responsive Design" className="top-40 -left-24 animate-float" delay="600ms" />
