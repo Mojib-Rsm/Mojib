@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Belleza&display=swap');
 
 @tailwind base;
@@ -27,12 +28,12 @@
     --ring: 222.2 84% 4.9%;
     --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222.2 84% 4.9%;
-    --sidebar-border: 214.3 31.8% 91.4%;
-    --sidebar-accent: 210 40% 96.1%;
-    --sidebar-accent-foreground: 222.2 47.4% 11.2%;
-    --sidebar-ring: 222.2 84% 4.9%;
+    --sidebar-background: 240 5% 96%;
+    --sidebar-foreground: 240 4% 16%;
+    --sidebar-border: 240 6% 90%;
+    --sidebar-accent: 240 5% 90%;
+    --sidebar-accent-foreground: 240 4% 16%;
+    --sidebar-ring: 240 4% 16%;
   }
 
   .dark {
@@ -63,6 +64,37 @@
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-ring: 210 40% 98%;
   }
+
+  .admin-theme {
+    --background: 240 10% 97%;
+    --foreground: 240 5% 26%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 5% 26%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 5% 26%;
+    --primary: 262 82% 57%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 4% 16%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 240 5% 92%;
+    --accent-foreground: 240 4% 16%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 262 82% 57%;
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 4% 16%;
+    --sidebar-border: 240 6% 90%;
+    --sidebar-accent: 240 5% 96%;
+    --sidebar-accent-foreground: 240 4% 16%;
+    --sidebar-ring: 240 4% 16%;
+  }
+
 }
 
 @layer base {
@@ -92,3 +124,5 @@
     @apply bg-card/60 backdrop-blur-sm;
   }
 }
+
+    

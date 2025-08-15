@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -15,7 +16,6 @@ export default function LoginPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // This is a mock login. In a real app, you'd call an API.
     if (email === 'admin@example.com' && password === 'password') {
       localStorage.setItem('isAdminLoggedIn', 'true');
       router.push('/admin/dashboard');
@@ -25,7 +25,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-muted">
+    <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Admin Login</CardTitle>
@@ -65,3 +65,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+    
