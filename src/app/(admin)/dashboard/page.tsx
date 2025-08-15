@@ -8,6 +8,7 @@ import { AreaChart, BarChart, FileText, LineChart, MessageCircle, MoreHorizontal
 import Link from "next/link";
 import { ResponsiveContainer, LineChart as RechartsLineChart, XAxis, YAxis, Tooltip, Line, CartesianGrid } from 'recharts';
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 
 const stats = [
     { title: 'Finished', value: '18', change: '+8 tasks', icon: <ThumbsUp className="w-5 h-5 text-primary" /> },
