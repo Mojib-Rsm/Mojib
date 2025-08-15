@@ -82,7 +82,7 @@ export default function TestimonialsManagementPage() {
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Testimonials</h1>
+        <h1 className="text-3xl font-bold">Testimonials Management</h1>
         <Button onClick={openAddDialog}>
             <PlusCircle className="mr-2 h-4 w-4" />
             Add New Testimonial
@@ -95,29 +95,27 @@ export default function TestimonialsManagementPage() {
           <CardDescription>Manage the testimonials displayed on your website.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-            {testimonials.map((testimonial) => (
-              <Card key={testimonial.id} className="flex items-start gap-4 p-4 bg-muted/50">
-                <Avatar className="h-16 w-16 border">
-                    <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                    <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <div className="flex-1">
-                    <div className="flex justify-between items-start">
-                        <div>
-                            <h3 className="font-semibold">{testimonial.name}</h3>
-                            <p className="text-sm text-muted-foreground">{testimonial.position}</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                           <Button variant="outline" size="sm" onClick={() => openEditDialog(testimonial)}>Edit</Button>
-                           <Button variant="ghost" size="icon" onClick={() => handleRemoveTestimonial(testimonial.id)} aria-label="Remove testimonial">
-                               <Trash2 className="h-4 w-4 text-destructive" />
-                           </Button>
-                        </div>
+            <div className="grid md:grid-cols-2 gap-6">
+                {testimonials.map((testimonial) => (
+                  <Card key={testimonial.id} className="bg-muted/50">
+                    <CardContent className="p-6 flex flex-col items-center text-center">
+                        <Avatar className="h-20 w-20 border mb-4">
+                            <AvatarImage src={testimonial.image} alt={testimonial.name} />
+                            <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <h3 className="font-semibold text-lg">{testimonial.name}</h3>
+                        <p className="text-sm text-muted-foreground">{testimonial.position}</p>
+                        <p className="text-sm text-foreground mt-4 italic">"{testimonial.text}"</p>
+                    </CardContent>
+                    <div className="flex items-center justify-center gap-2 p-4 border-t">
+                       <Button variant="outline" size="sm" onClick={() => openEditDialog(testimonial)}>Edit</Button>
+                       <Button variant="ghost" size="icon" onClick={() => handleRemoveTestimonial(testimonial.id)} aria-label="Remove testimonial">
+                           <Trash2 className="h-4 w-4 text-destructive" />
+                       </Button>
                     </div>
-                    <p className="text-sm text-foreground mt-2 italic">"{testimonial.text}"</p>
-                </div>
-              </Card>
-            ))}
+                  </Card>
+                ))}
+            </div>
         </CardContent>
       </Card>
 

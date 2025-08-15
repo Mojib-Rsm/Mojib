@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Bot, Code, Megaphone, Palette, Search, Trash2, Wand2 } from 'lucide-react';
+import { Bot, Code, Megaphone, Palette, PlusCircle, Search, Trash2, Wand2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
 
 const initialServices = [
@@ -106,7 +106,10 @@ export default function ServicesManagementPage() {
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Services Management</h1>
-        <Button onClick={openAddDialog}>Add New Service</Button>
+        <Button onClick={openAddDialog}>
+          <PlusCircle className="mr-2 h-4 w-4" />
+          Add New Service
+        </Button>
       </div>
 
       <Card>
@@ -133,9 +136,6 @@ export default function ServicesManagementPage() {
                   </div>
                 </Card>
               ))}
-            </div>
-            <div className="flex justify-end pt-4">
-                <Button>Save All Changes</Button>
             </div>
         </CardContent>
       </Card>
