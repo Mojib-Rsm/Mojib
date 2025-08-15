@@ -1,7 +1,7 @@
 'use client';
 
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset } from "@/components/ui/sidebar";
-import { Home, LogOut, Settings, User } from "lucide-react";
+import { Briefcase, Home, LogOut, Settings, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -48,6 +48,12 @@ export default function AdminLayout({
               <SidebarMenuButton href="/admin/dashboard" isActive={pathname.startsWith('/admin/dashboard')} tooltip="Dashboard">
                 <Home />
                 <span className="group-data-[collapsible=icon]:hidden">Dashboard</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+               <SidebarMenuButton href="/admin/services" isActive={pathname.startsWith('/admin/services')} tooltip="Services">
+                <Briefcase />
+                 <span className="group-data-[collapsible=icon]:hidden">Services</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
