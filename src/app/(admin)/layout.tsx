@@ -2,7 +2,7 @@
 'use client';
 
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarFooter } from "@/components/ui/sidebar";
-import { Briefcase, FileText, HelpCircle, Home, LogOut, MessageSquare, Newspaper, Settings, Star, Zap } from "lucide-react";
+import { AreaChart, Briefcase, FileText, HelpCircle, History, Home, Image as ImageIcon, LogOut, MailQuestion, MessageSquare, Newspaper, Settings, Zap } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -57,33 +57,51 @@ export default function AdminLayout({
               </SidebarMenuButton>
             </SidebarMenuItem>
              <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/messages" isActive={pathname.startsWith('/admin/messages')} tooltip="Messages">
-                <MessageSquare />
-                 <span className="group-data-[collapsible=icon]:hidden">Messages</span>
+               <SidebarMenuButton href="/admin/analytics" isActive={pathname.startsWith('/admin/analytics')} tooltip="Analytics">
+                <AreaChart />
+                 <span className="group-data-[collapsible=icon]:hidden">Analytics</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/services" isActive={pathname.startsWith('/admin/services')} tooltip="Services">
-                <Briefcase />
-                 <span className="group-data-[collapsible=icon]:hidden">Services</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/portfolio" isActive={pathname.startsWith('/admin/portfolio')} tooltip="Portfolio">
+               <SidebarMenuButton href="/admin/content" isActive={pathname.startsWith('/admin/content')} tooltip="Content">
                 <FileText />
-                 <span className="group-data-[collapsible=icon]:hidden">Portfolio</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/testimonials" isActive={pathname.startsWith('/admin/testimonials')} tooltip="Testimonials">
-                <Star />
-                 <span className="group-data-[collapsible=icon]:hidden">Testimonials</span>
+                 <span className="group-data-[collapsible=icon]:hidden">Content</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
                <SidebarMenuButton href="/admin/blog" isActive={pathname.startsWith('/admin/blog')} tooltip="Blog">
                 <Newspaper />
                  <span className="group-data-[collapsible=icon]:hidden">Blog</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+               <SidebarMenuButton href="/admin/projects" isActive={pathname.startsWith('/admin/projects')} tooltip="Projects">
+                <Briefcase />
+                 <span className="group-data-[collapsible=icon]:hidden">Projects</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+               <SidebarMenuButton href="/admin/media" isActive={pathname.startsWith('/admin/media')} tooltip="Media">
+                <ImageIcon />
+                 <span className="group-data-[collapsible=icon]:hidden">Media</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+               <SidebarMenuButton href="/admin/requests" isActive={pathname.startsWith('/admin/requests')} tooltip="Requests">
+                <MailQuestion />
+                 <span className="group-data-[collapsible=icon]:hidden">Requests</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+               <SidebarMenuButton href="/admin/messages" isActive={pathname.startsWith('/admin/messages')} tooltip="Messages">
+                <MessageSquare />
+                 <span className="group-data-[collapsible=icon]:hidden">Messages</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+               <SidebarMenuButton href="/admin/history" isActive={pathname.startsWith('/admin/history')} tooltip="History">
+                <History />
+                 <span className="group-data-[collapsible=icon]:hidden">History</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -136,5 +154,4 @@ export default function AdminLayout({
     </SidebarProvider>
   );
 }
-
     
