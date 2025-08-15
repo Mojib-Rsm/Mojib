@@ -1,7 +1,7 @@
 'use client';
 
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset } from "@/components/ui/sidebar";
-import { Home, Settings, User } from "lucide-react";
+import { Home, LogOut, Settings, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -26,7 +26,7 @@ export default function AdminLayout({
   }, [router]);
 
   if (isLoading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen bg-background">Loading...</div>;
   }
 
   if (!isAuthenticated) {
@@ -35,41 +35,45 @@ export default function AdminLayout({
 
   return (
     <SidebarProvider>
-      <Sidebar>
+      <Sidebar collapsible="icon">
         <SidebarHeader>
           <div className="flex items-center gap-2">
             <SidebarTrigger />
-            <h2 className="text-lg font-semibold">Admin Panel</h2>
+            <h2 className="text-lg font-semibold group-data-[collapsible=icon]:hidden">Admin Panel</h2>
           </div>
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton href="/admin/dashboard" isActive={pathname === '/admin/dashboard'}>
+              <SidebarMenuButton href="/admin/dashboard" isActive={pathname.startsWith('/admin/dashboard')} tooltip="Dashboard">
                 <Home />
-                Dashboard
+                <span className="group-data-[collapsible=icon]:hidden">Dashboard</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton href="/admin/settings" isActive={pathname === '/admin/settings'}>
+              <SidebarMenuButton href="/admin/settings" isActive={pathname.startsWith('/admin/settings')} tooltip="Settings">
                 <Settings />
-                Settings
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-             <SidebarMenuItem>
-               <SidebarMenuButton onClick={() => {
-                 localStorage.removeItem('isAdminLoggedIn');
-                 router.push('/login');
-               }}>
-                <User />
-                Logout
+                 <span className="group-data-[collapsible=icon]:hidden">Settings</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
+        <SidebarHeader>
+           <SidebarMenu>
+             <SidebarMenuItem>
+               <SidebarMenuButton onClick={() => {
+                 localStorage.removeItem('isAdminLoggedIn');
+                 router.push('/login');
+               }} tooltip="Logout">
+                <LogOut />
+                <span className="group-data-[collapsible=icon]:hidden">Logout</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarHeader>
       </Sidebar>
       <SidebarInset>
-        <div className="p-4 md:p-6">
+        <div className="p-4 md:p-8 bg-muted min-h-screen">
             {children}
         </div>
       </SidebarInset>
