@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 
 const pricingData = [
@@ -32,48 +31,24 @@ const pricingData = [
 
 export function Pricing() {
   const { translations } = useLanguage();
-  const sectionVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5 },
-    },
-  };
 
   return (
-    <motion.section 
+    <section 
       id="pricing" 
       className="py-20 md:py-28"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={sectionVariants}
     >
       <div className="container max-w-screen-xl mx-auto">
-        <motion.div className="text-center mb-12" variants={itemVariants}>
+        <div className="text-center mb-12">
           <h2 className="text-4xl font-bold">{translations.pricingTitle}</h2>
           <p className="text-muted-foreground mt-2">{translations.pricingSubtitle}</p>
-        </motion.div>
+        </div>
         <div className="grid md:grid-cols-3 gap-8">
           {pricingData.map((plan, index) => (
-            <motion.div 
+            <div 
               key={index}
-              variants={itemVariants}
-              whileHover={{ scale: 1.05, y: -8 }}
               className={`flex flex-col`}
             >
-              <Card className={`flex flex-col h-full bg-background border shadow-lg ${plan.popular ? 'border-primary' : ''}`}>
+              <Card className={`flex flex-col h-full bg-background border shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2 ${plan.popular ? 'border-primary' : ''}`}>
                 <CardHeader className="text-center">
                   {plan.popular && <div className="text-primary font-semibold mb-2">{translations.popular}</div>}
                   <CardTitle className="text-2xl">{plan.title}</CardTitle>
@@ -94,10 +69,10 @@ export function Pricing() {
                   <Button className="w-full" variant={plan.popular ? 'default' : 'outline'}>{translations.orderNow}</Button>
                 </CardFooter>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

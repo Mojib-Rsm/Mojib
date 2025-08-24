@@ -10,7 +10,6 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Wand2, Bot, Megaphone, Search, Code, Palette } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { ArrowRight } from 'lucide-react';
 
@@ -49,51 +48,27 @@ const servicesData = [
 
 export function Services() {
   const { translations } = useLanguage();
-  const sectionVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5 },
-    },
-  };
-
+  
   return (
-    <motion.section 
+    <section 
       id="services" 
       className="bg-muted py-20 md:py-28"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={sectionVariants}
     >
       <div className="container max-w-screen-xl mx-auto">
-        <motion.div className="text-center mb-12" variants={itemVariants}>
+        <div className="text-center mb-12">
           <h2 className="text-4xl font-bold">{translations.servicesTitle}</h2>
           <p className="text-muted-foreground mt-2">
             {translations.servicesSubtitle}
           </p>
-        </motion.div>
+        </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesData.map((service, index) => (
-            <motion.div
+            <div
               key={index}
-              variants={itemVariants}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
               className="flex"
             >
               <Card
-                className="flex flex-col text-left bg-background shadow-lg"
+                className="flex flex-col text-left bg-background shadow-lg hover:shadow-primary/20 transition-shadow duration-300 hover:-translate-y-2"
               >
                 <CardHeader>
                   {service.icon}
@@ -110,10 +85,10 @@ export function Services() {
                   </Button>
                 </CardFooter>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

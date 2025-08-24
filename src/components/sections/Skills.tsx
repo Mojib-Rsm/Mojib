@@ -4,7 +4,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Bot, Code, Megaphone, Server, Wand2 } from "lucide-react";
-import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 
 const skillsData = [
@@ -37,43 +36,21 @@ const skillsData = [
 
 export function Skills() {
   const { translations } = useLanguage();
-  const sectionVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5 },
-    },
-  };
-
+  
   return (
-    <motion.section 
+    <section 
       id="skills" 
       className="py-20 md:py-28"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={sectionVariants}
     >
       <div className="container max-w-screen-xl mx-auto">
-        <motion.div className="text-center mb-12" variants={itemVariants}>
+        <div className="text-center mb-12">
           <h2 className="text-4xl font-bold">{translations.skillsTitle}</h2>
           <p className="text-muted-foreground mt-2">{translations.skillsSubtitle}</p>
-        </motion.div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skillsData.map((category, index) => (
-            <motion.div key={index} variants={itemVariants} whileHover={{ y: -5 }}>
-              <Card className="text-left h-full shadow-md border">
+            <div key={index} >
+              <Card className="text-left h-full shadow-md border hover:shadow-primary/20 transition-shadow duration-300 hover:-translate-y-1">
                 <CardHeader>
                   <div className="flex items-center gap-4">
                     {category.icon}
@@ -88,10 +65,10 @@ export function Skills() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }
