@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import Link from 'next/link';
 
 const pricingData = [
   {
@@ -31,6 +32,12 @@ const pricingData = [
 
 export function Pricing() {
   const { translations } = useLanguage();
+  const whatsAppNumber = '8801601519007';
+
+  const generateWhatsAppLink = (planTitle: string) => {
+      const message = `Hello, I am interested in the "${planTitle}" package.`;
+      return `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(message)}`;
+  }
 
   return (
     <section 
@@ -66,7 +73,11 @@ export function Pricing() {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full" variant={plan.popular ? 'default' : 'outline'}>{translations.orderNow}</Button>
+                  <Button className="w-full" variant={plan.popular ? 'default' : 'outline'} asChild>
+                    <Link href={generateWhatsAppLink(plan.title)} target="_blank">
+                        {translations.orderNow}
+                    </Link>
+                  </Button>
                 </CardFooter>
               </Card>
             </div>
