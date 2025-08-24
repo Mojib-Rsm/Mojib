@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { PlusCircle, Star, Trash2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
 const initialTestimonials = [
   {
@@ -109,9 +110,25 @@ export default function TestimonialsManagementPage() {
                     </CardContent>
                     <div className="flex items-center justify-center gap-2 p-4 border-t">
                        <Button variant="outline" size="sm" onClick={() => openEditDialog(testimonial)}>Edit</Button>
-                       <Button variant="ghost" size="icon" onClick={() => handleRemoveTestimonial(testimonial.id)} aria-label="Remove testimonial">
-                           <Trash2 className="h-4 w-4 text-destructive" />
-                       </Button>
+                       <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                           <Button variant="ghost" size="icon" aria-label="Remove testimonial">
+                               <Trash2 className="h-4 w-4 text-destructive" />
+                           </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. This will permanently delete this testimonial.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => handleRemoveTestimonial(testimonial.id)}>Delete</AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </Card>
                 ))}
