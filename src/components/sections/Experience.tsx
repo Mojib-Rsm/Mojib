@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -69,40 +70,34 @@ export function Experience() {
             <p className="text-muted-foreground mt-2">{translations.experienceSubtitle}</p>
         </motion.div>
         <div className="relative">
-          <div className="absolute left-6 md:left-1/2 w-px h-full bg-border -translate-x-1/2"></div>
+          <div className="absolute left-6 md:left-8 w-px h-full bg-border"></div>
           <div className="space-y-12">
             {experienceData.map((item, index) => (
               <motion.div 
                 key={index} 
-                className="relative md:grid md:grid-cols-2 md:gap-8 items-center" 
+                className="relative pl-16 md:pl-20" 
                 variants={itemVariants}
               >
-                <div className="flex flex-col items-start md:items-end text-left md:text-right mb-4 md:mb-0">
-                  <h3 className="font-semibold text-lg">{item.company}</h3>
-                  <p className="text-sm text-muted-foreground">{item.dates}</p>
-                </div>
-
-                <div className="relative">
-                   <div className="absolute -left-[34px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-background -translate-x-1/2 md:left-0"></div>
-                   <motion.div
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    className="md:ml-8"
-                  >
-                    <Card className="w-full bg-muted/50 shadow-md border transition-shadow hover:shadow-primary/20">
-                        <CardHeader>
-                            <div className="flex items-center gap-4">
-                              <Briefcase className="w-6 h-6 text-primary"/>
-                              <div>
-                                <CardTitle>{item.role}</CardTitle>
-                              </div>
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-sm text-muted-foreground">{item.description}</p>
-                        </CardContent>
-                    </Card>
-                  </motion.div>
-                </div>
+                 <div className="absolute left-6 md:left-8 top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-background -translate-x-1/2"></div>
+                 <motion.div
+                  whileHover={{ y: -5, scale: 1.01 }}
+                  className="w-full"
+                >
+                  <Card className="w-full bg-muted/50 shadow-md border transition-shadow hover:shadow-primary/20">
+                      <CardHeader>
+                          <div className="flex flex-col sm:flex-row justify-between sm:items-center">
+                              <CardTitle>{item.role}</CardTitle>
+                              <p className="text-sm text-muted-foreground mt-1 sm:mt-0">{item.dates}</p>
+                          </div>
+                          <CardDescription className="flex items-center gap-2 pt-1">
+                            <Briefcase className="w-4 h-4"/> {item.company}
+                          </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                          <p className="text-sm text-muted-foreground">{item.description}</p>
+                      </CardContent>
+                  </Card>
+                </motion.div>
               </motion.div>
             ))}
           </div>
