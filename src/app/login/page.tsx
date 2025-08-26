@@ -3,7 +3,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -14,17 +14,19 @@ import { Loader2 } from 'lucide-react';
 
 function LoginComponent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { user, loading, login } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('admin@example.com');
+  const [password, setPassword] = useState('password');
   const [error, setError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   useEffect(() => {
     if (!loading && user) {
-      router.replace('/admin/dashboard');
+      const redirectUrl = searchParams.get('redirect') || '/admin/dashboard';
+      router.replace(redirectUrl);
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, searchParams]);
 
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -33,18 +35,25 @@ function LoginComponent() {
     setIsLoggingIn(true);
     try {
       await login(email, password);
-      router.push('/admin/dashboard');
+      // The useEffect hook will handle redirection
     } catch (err: any) {
-      setError(err.message || 'Invalid email or password');
+       console.error("Login failed:", err);
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
+        setError('Invalid email or password. Please try again.');
+      } else {
+        setError('An unexpected error occurred. Please try again later.');
+      }
     } finally {
       setIsLoggingIn(false);
     }
   };
   
+  // While loading or if user is already logged in, show a loader.
+  // The useEffect will handle redirection.
   if (loading || user) {
     return (
         <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
-            <Loader2 className="h-8 w-8 animate-spin" />
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
     )
   }
@@ -94,13 +103,8 @@ function LoginComponent() {
   );
 }
 
-import { AuthProvider } from '@/hooks/useAuth';
-
+// AuthProvider is now in the root layout, so we don't need to wrap it here.
 export default function LoginPage() {
-    return (
-        <AuthProvider>
-            <LoginComponent />
-        </AuthProvider>
-    )
+    return <LoginComponent />;
 }
     

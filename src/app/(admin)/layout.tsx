@@ -6,18 +6,20 @@ import { SidebarProvider, Sidebar, SidebarTrigger, SidebarContent, SidebarHeader
 import { AreaChart, Briefcase, FileText, HelpCircle, History, Home, ImageIcon, LogOut, MailQuestion, MessageSquare, Newspaper, Settings, Users, Zap } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { AuthProvider, useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
+import { Loader2 } from "lucide-react";
 
 const navLinks = [
     { href: "/admin/dashboard", label: "Dashboard", icon: <Home /> },
     { href: "/admin/analytics", label: "Analytics", icon: <AreaChart /> },
-    { href: "/admin/content", label: "Content", icon: <FileText /> },
-    { href: "/admin/blog", label: "Blog", icon: <Newspaper /> },
+    { href: "/admin/services", label: "Services", icon: <Zap />},
     { href: "/admin/projects", label: "Projects", icon: <Briefcase /> },
+    { href: "/admin/blog", label: "Blog", icon: <Newspaper /> },
+    { href: "/admin/testimonials", label: "Testimonials", icon: <Users />},
+    { href: "/admin/messages", label: "Messages", icon: <MessageSquare /> },
+    { href: "/admin/content", label: "Content", icon: <FileText /> },
     { href: "/admin/media", label: "Media", icon: <ImageIcon /> },
     { href: "/admin/requests", label: "Requests", icon: <MailQuestion /> },
-    { href: "/admin/messages", label: "Messages", icon: <MessageSquare /> },
-    { href: "/admin/testimonials", label: "Testimonials", icon: <Users />},
     { href: "/admin/history", label: "History", icon: <History /> },
 ]
 
@@ -27,20 +29,24 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const { user, loading, logout } = useAuth();
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen bg-background">Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen bg-background text-foreground"><Loader2 className="h-8 w-8 animate-spin" /></div>;
   }
 
+  // Fallback if middleware fails, though middleware should handle this.
   if (!user) {
-    // This should be handled by the middleware, but as a fallback
     if (typeof window !== 'undefined') {
         router.replace('/login');
     }
-    return null;
+    return <div className="flex items-center justify-center min-h-screen bg-background text-foreground">Redirecting to login...</div>;
   }
   
-  const handleLogout = () => {
-    logout();
-    router.push('/login');
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push('/login');
+    } catch (error) {
+      console.error("Logout failed:", error)
+    }
   }
 
   return (
@@ -121,10 +127,7 @@ export default function AdminLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <AuthProvider>
-      <AdminLayoutContent>{children}</AdminLayoutContent>
-    </AuthProvider>
-  )
+  // AuthProvider is now in the root layout, so we just render the content
+  return <AdminLayoutContent>{children}</AdminLayoutContent>
 }
     
