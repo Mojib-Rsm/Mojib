@@ -1,3 +1,4 @@
+
 import { About } from '@/components/sections/About';
 import { Blog } from '@/components/sections/Blog';
 import { Contact } from '@/components/sections/Contact';
@@ -9,6 +10,7 @@ import { Portfolio } from '@/components/sections/Portfolio';
 import { Pricing } from '@/components/sections/Pricing';
 import { Services } from '@/components/sections/Services';
 import { Skills } from '@/components/sections/Skills';
+import { SeedDatabaseButton } from '@/components/SeedDatabaseButton';
 
 export default function Home() {
   return (
@@ -24,6 +26,9 @@ export default function Home() {
       <Blog />
       <Faq />
       <Contact />
+      <div className="fixed bottom-4 right-4 z-50">
+        <SeedDatabaseButton />
+      </div>
     </div>
   );
 }
