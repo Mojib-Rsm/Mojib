@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -8,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Trash2 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const initialSkills = [
     { id: 1, label: 'Experience', value: '3+ Years' },
@@ -16,6 +18,7 @@ const initialSkills = [
 ]
 
 export default function SettingsPage() {
+  const { toast } = useToast();
   const [profileImage, setProfileImage] = useState('/uploads/about-sec.jpeg');
   const [bio, setBio] = useState("I am a technology enthusiast with a strong passion for WordPress development, AI, and digital marketing. My goal is to create amazing online experiences that are not only visually appealing but also smart and effective. I enjoy solving problems and constantly learning new things to stay at the forefront of technology.");
   const [skills, setSkills] = useState(initialSkills);
@@ -43,6 +46,20 @@ export default function SettingsPage() {
   const addSkill = () => {
       const newId = skills.length > 0 ? Math.max(...skills.map(s => s.id)) + 1 : 1;
       setSkills([...skills, {id: newId, label: 'New Highlight', value: 'Value'}]);
+  }
+
+  const handleSaveChanges = () => {
+    const settingsData = {
+      profileImage,
+      bio,
+      skills
+    };
+    // In a real app, you would send this to your backend/database
+    console.log("Saving changes:", settingsData); 
+    toast({
+      title: "Settings Saved!",
+      description: "Your changes have been successfully saved.",
+    })
   }
 
 
@@ -107,7 +124,7 @@ export default function SettingsPage() {
           </div>
           
           <div className="flex justify-end pt-4">
-            <Button>Save Changes</Button>
+            <Button onClick={handleSaveChanges}>Save Changes</Button>
           </div>
         </CardContent>
       </Card>
