@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const unsubscribe = onIdTokenChanged(auth, async (newUser) => {
         setUser(newUser);
-        setLoading(false); // Set loading to false once the check is complete.
+        setLoading(false); 
         
         const idToken = newUser ? await newUser.getIdToken() : null;
         await setSessionCookie(idToken);
@@ -59,26 +59,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
         await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
-        // If the user does not exist, create a new user with the same credentials
-        if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/operation-not-allowed' || error.code === 'auth/invalid-credential') {
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
             } catch (createError: any) {
-                 // If creation also fails (e.g., operation not allowed), re-throw original error
                  console.error("User creation failed:", createError);
                  throw error;
             }
         } else {
-            // Re-throw other errors
             throw error;
         }
     }
-    // The onIdTokenChanged listener will handle the rest (setting user and cookie)
   };
 
   const logout = async () => {
     await signOut(auth);
-     // The onIdTokenChanged listener will handle the rest (clearing user and cookie)
   };
   
   const value = { user, loading, login, logout };

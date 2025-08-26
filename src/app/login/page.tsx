@@ -32,8 +32,6 @@ function LoginComponent() {
     setIsLoggingIn(true);
     try {
       await login(email, password);
-      // On successful login, the `user` state will change,
-      // and the useEffect above will trigger the redirect.
     } catch (err: any) {
        console.error("Login failed:", err);
       if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/operation-not-allowed') {
@@ -46,17 +44,7 @@ function LoginComponent() {
     }
   };
   
-  // While checking auth state, show a loader.
-  if (loading) {
-    return (
-        <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
-    )
-  }
-  
-  // If user is already logged in, the useEffect will redirect. Show loader in the meantime.
-  if (user) {
+  if (loading || (!loading && user)) {
     return (
         <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -64,8 +52,6 @@ function LoginComponent() {
     )
   }
 
-
-  // If not loading and no user, show the login form.
   return (
     <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
       <Card className="w-full max-w-sm">
@@ -111,8 +97,6 @@ function LoginComponent() {
   );
 }
 
-// AuthProvider is now in the root layout, so we don't need to wrap it here.
 export default function LoginPage() {
     return <LoginComponent />;
 }
-    
