@@ -1,7 +1,6 @@
 
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, DocumentData, QueryDocumentSnapshot, serverTimestamp, orderBy, query } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
 
 export type Service = {
     id: string;
@@ -57,11 +56,16 @@ const serviceFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Service => {
 }
 
 export const getServices = async (): Promise<Service[]> => {
-    const auth = getAuth();
-    if (!auth.currentUser) {
+    if (typeof window === 'undefined') {
         return initialServices.map((s, i) => ({ ...s, id: `service-${i}`, createdAt: new Date() }));
     }
+    
     try {
+        const { getAuth } = await import('firebase/auth');
+        const auth = getAuth();
+        if (!auth.currentUser) {
+            return initialServices.map((s, i) => ({ ...s, id: `service-${i}`, createdAt: new Date() }));
+        }
         const servicesCol = collection(db, 'services');
         const q = query(servicesCol, orderBy('createdAt', 'asc'));
         const snapshot = await getDocs(q);

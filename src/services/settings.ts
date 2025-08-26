@@ -1,7 +1,6 @@
 
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, DocumentData } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
 
 export type SkillHighlight = {
     id: number;
@@ -28,12 +27,17 @@ const defaultSettings: Settings = {
 }
 
 export const getSettings = async (): Promise<Settings | null> => {
-    const auth = getAuth();
-    if (!auth.currentUser) {
+    if (typeof window === 'undefined') {
         return defaultSettings;
     }
 
     try {
+        const { getAuth } = await import('firebase/auth');
+        const auth = getAuth();
+        if (!auth.currentUser) {
+            return defaultSettings;
+        }
+
         const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
         const docSnap = await getDoc(settingsDocRef);
 
@@ -45,6 +49,7 @@ export const getSettings = async (): Promise<Settings | null> => {
                 skills: data.skills || [],
             };
         } else {
+            // Return default settings if the document doesn't exist, even for logged-in users
             return defaultSettings;
         }
     } catch (error) {

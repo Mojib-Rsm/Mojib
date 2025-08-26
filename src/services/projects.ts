@@ -1,7 +1,6 @@
 
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, DocumentData, QueryDocumentSnapshot, serverTimestamp, orderBy, query } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
 
 export type Project = {
     id: string;
@@ -48,11 +47,16 @@ const projectFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Project => {
 }
 
 export const getProjects = async (): Promise<Project[]> => {
-    const auth = getAuth();
-    if (!auth.currentUser) {
+    if (typeof window === 'undefined') {
         return initialProjects.map((p, i) => ({...p, id: `project-${i}`, createdAt: new Date() }));
     }
+    
     try {
+        const { getAuth } = await import('firebase/auth');
+        const auth = getAuth();
+        if (!auth.currentUser) {
+            return initialProjects.map((p, i) => ({...p, id: `project-${i}`, createdAt: new Date() }));
+        }
         const projectsCol = collection(db, 'projects');
         const q = query(projectsCol, orderBy('createdAt', 'desc'));
         const snapshot = await getDocs(q);

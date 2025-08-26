@@ -1,7 +1,6 @@
 
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, DocumentData, QueryDocumentSnapshot, serverTimestamp, orderBy, query } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
 
 export type Testimonial = {
     id: string;
@@ -41,11 +40,16 @@ const testimonialFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Testimoni
 }
 
 export const getTestimonials = async (): Promise<Testimonial[]> => {
-    const auth = getAuth();
-    if (!auth.currentUser) {
+    if (typeof window === 'undefined') {
         return initialTestimonials.map((t, i) => ({ ...t, id: `testimonial-${i}`, createdAt: new Date() }));
     }
+    
     try {
+        const { getAuth } = await import('firebase/auth');
+        const auth = getAuth();
+        if (!auth.currentUser) {
+            return initialTestimonials.map((t, i) => ({ ...t, id: `testimonial-${i}`, createdAt: new Date() }));
+        }
         const testimonialsCol = collection(db, 'testimonials');
         const q = query(testimonialsCol, orderBy('createdAt', 'desc'));
         const snapshot = await getDocs(q);

@@ -1,7 +1,6 @@
 
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, DocumentData, QueryDocumentSnapshot, serverTimestamp, orderBy, query } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
 
 export type Post = {
     id: string;
@@ -44,11 +43,18 @@ const postFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Post => {
 }
 
 export const getPosts = async (): Promise<Post[]> => {
-    const auth = getAuth();
-    if (!auth.currentUser) {
+    // During build time (SSR), there's no browser environment, so `window` is undefined.
+    // We fall back to initial data to avoid Firebase permission errors during build.
+    if (typeof window === 'undefined') {
         return initialPosts.map((p, i) => ({ ...p, id: `post-${i}`, date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), createdAt: new Date() }));
     }
+    
     try {
+        const { getAuth } = await import('firebase/auth');
+        const auth = getAuth();
+        if (!auth.currentUser) {
+            return initialPosts.map((p, i) => ({ ...p, id: `post-${i}`, date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), createdAt: new Date() }));
+        }
         const postsCol = collection(db, 'posts');
         const q = query(postsCol, orderBy('createdAt', 'desc'));
         const snapshot = await getDocs(q);
