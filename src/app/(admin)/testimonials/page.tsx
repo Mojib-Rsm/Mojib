@@ -12,16 +12,25 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogC
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
-import { getTestimonials, addTestimonial, updateTestimonial, deleteTestimonial, Testimonial } from '@/services/testimonials';
 
-const initialTestimonials = [
+type Testimonial = {
+    id: string;
+    image: string;
+    name: string;
+    position: string;
+    text: string;
+}
+
+const initialTestimonials: Testimonial[] = [
   {
+    id: '1',
     image: "https://placehold.co/100x100.png",
     name: "John Doe",
     position: "CEO, Tech Solutions",
     text: "Working with Mojib was a fantastic experience. He delivered a high-quality website that exceeded our expectations. Highly recommended!",
   },
   {
+    id: '2',
     image: "https://placehold.co/100x100.png",
     name: "Jane Smith",
     position: "Marketing Manager, Creative Co.",
@@ -30,59 +39,12 @@ const initialTestimonials = [
 ];
 
 export default function TestimonialsManagementPage() {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(initialTestimonials);
+  const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState<Partial<Testimonial> | null>(null);
   const { toast } = useToast();
-
-  const fetchAndSeedTestimonials = async () => {
-    setIsLoading(true);
-    try {
-      let fetchedTestimonials = await getTestimonials(true); // Force fetch from server
-      if (fetchedTestimonials.length === 0) {
-        const seedPromises = initialTestimonials.map(t => addTestimonial(t as Omit<Testimonial, 'id' | 'createdAt'>));
-        await Promise.all(seedPromises);
-        fetchedTestimonials = await getTestimonials(true); // Fetch again after seeding
-        toast({
-          title: "Demo testimonials seeded!",
-          description: "Initial testimonials have been added to Firestore.",
-        });
-      }
-      setTestimonials(fetchedTestimonials);
-    } catch (error) {
-      console.error("Error fetching or seeding testimonials: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch testimonials. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAndSeedTestimonials();
-  }, []);
-
-  const fetchTestimonials = async () => {
-    setIsLoading(true);
-    try {
-      const fetchedTestimonials = await getTestimonials(true);
-      setTestimonials(fetchedTestimonials);
-    } catch (error) {
-      console.error("Error fetching testimonials: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch testimonials. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   const openAddDialog = () => {
     setCurrentTestimonial({
@@ -104,15 +66,19 @@ export default function TestimonialsManagementPage() {
       setIsSaving(true);
       try {
         if (currentTestimonial.id) {
-            const { id, ...data } = currentTestimonial;
-            await updateTestimonial(id, data as Omit<Testimonial, 'id' | 'createdAt'>);
+            setTestimonials(testimonials.map(t => t.id === currentTestimonial.id ? currentTestimonial as Testimonial : t));
             toast({ title: "Success", description: "Testimonial updated successfully." });
         } else {
-            const { id, ...data } = currentTestimonial;
-            await addTestimonial(data as Omit<Testimonial, 'id' | 'createdAt'>);
+            const newTestimonial: Testimonial = {
+                id: Date.now().toString(),
+                name: currentTestimonial.name || '',
+                position: currentTestimonial.position || '',
+                image: currentTestimonial.image || '',
+                text: currentTestimonial.text || '',
+            };
+            setTestimonials([newTestimonial, ...testimonials]);
             toast({ title: "Success", description: "Testimonial added successfully." });
         }
-        await fetchTestimonials();
         setIsDialogOpen(false);
         setCurrentTestimonial(null);
       } catch(error) {
@@ -129,9 +95,8 @@ export default function TestimonialsManagementPage() {
 
   const handleRemoveTestimonial = async (id: string) => {
     try {
-        await deleteTestimonial(id);
+        setTestimonials(testimonials.filter(t => t.id !== id));
         toast({ title: "Success", description: "Testimonial deleted successfully." });
-        await fetchTestimonials();
     } catch (error) {
         console.error("Error deleting testimonial: ", error);
         toast({
@@ -142,7 +107,7 @@ export default function TestimonialsManagementPage() {
     }
   }
   
-  const handleTestimonialChange = (field: keyof Omit<Testimonial, 'id' | 'createdAt'>, value: string) => {
+  const handleTestimonialChange = (field: keyof Omit<Testimonial, 'id'>, value: string) => {
       if(currentTestimonial) {
         setCurrentTestimonial({...currentTestimonial, [field]: value});
       }

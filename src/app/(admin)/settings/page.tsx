@@ -10,7 +10,18 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Trash2, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { getSettings, saveSettings, Settings, SkillHighlight } from '@/services/settings';
+
+export type SkillHighlight = {
+    id: number;
+    label: string;
+    value: string;
+}
+
+export type Settings = {
+    profileImage: string;
+    bio: string;
+    skills: SkillHighlight[];
+}
 
 const defaultSettings: Settings = {
     profileImage: '/uploads/about-sec.jpeg',
@@ -24,52 +35,16 @@ const defaultSettings: Settings = {
 
 export default function SettingsPage() {
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [settings, setSettings] = useState<Settings>(defaultSettings);
-  const [profileImage, setProfileImage] = useState(defaultSettings.profileImage);
-  const [bio, setBio] = useState(defaultSettings.bio);
-  const [skills, setSkills] = useState<SkillHighlight[]>(defaultSettings.skills);
-
-  const fetchAndSeedSettings = async () => {
-    setIsLoading(true);
-    try {
-      let fetchedSettings = await getSettings(true); // Force fetch from server
-      if (!fetchedSettings) {
-        // Settings do not exist, let's seed them
-        await saveSettings(defaultSettings);
-        fetchedSettings = defaultSettings;
-        toast({
-          title: "Default settings seeded!",
-          description: "Initial settings have been saved to Firestore.",
-        });
-      }
-      setSettings(fetchedSettings);
-      setProfileImage(fetchedSettings.profileImage);
-      setBio(fetchedSettings.bio);
-      setSkills(fetchedSettings.skills);
-    } catch (error) {
-      console.error("Error fetching or seeding settings: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch settings. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAndSeedSettings();
-  }, []);
-
+  
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result) {
-            setProfileImage(event.target.result as string);
+            setSettings({...settings, profileImage: event.target.result as string});
         }
       };
       reader.readAsDataURL(e.target.files[0]);
@@ -77,30 +52,36 @@ export default function SettingsPage() {
   };
   
   const handleSkillChange = (id: number, field: 'label' | 'value', value: string) => {
-      setSkills(skills.map(skill => skill.id === id ? {...skill, [field]: value} : skill));
+      setSettings({
+          ...settings,
+          skills: settings.skills.map(skill => skill.id === id ? {...skill, [field]: value} : skill)
+      });
   }
 
   const removeSkill = (id: number) => {
-      setSkills(skills.filter(skill => skill.id !== id));
+      setSettings({
+          ...settings,
+          skills: settings.skills.filter(skill => skill.id !== id)
+      });
   }
   
   const addSkill = () => {
-      const newId = skills.length > 0 ? Math.max(...skills.map(s => s.id)) + 1 : 1;
-      setSkills([...skills, {id: newId, label: 'New Highlight', value: 'Value'}]);
+      const newId = settings.skills.length > 0 ? Math.max(...settings.skills.map(s => s.id)) + 1 : 1;
+      setSettings({
+          ...settings,
+          skills: [...settings.skills, {id: newId, label: 'New Highlight', value: 'Value'}]
+      });
   }
 
   const handleSaveChanges = async () => {
     setIsSaving(true);
     try {
-        const settingsData: Settings = {
-            profileImage,
-            bio,
-            skills
-        };
-        await saveSettings(settingsData);
+        // In a real app, you would save the settings state to a database.
+        // For this local version, we'll just show a success message.
+        console.log("Saving settings:", settings);
         toast({
             title: "Settings Saved!",
-            description: "Your changes have been successfully saved.",
+            description: "Your changes have been successfully saved locally.",
         });
     } catch (error) {
         console.error("Error saving settings: ", error);
@@ -135,7 +116,7 @@ export default function SettingsPage() {
                         <Label>Profile Picture</Label>
                         <div className="flex items-center gap-4">
                         <Avatar className="h-20 w-20">
-                            <AvatarImage src={profileImage} alt="Profile Picture" />
+                            <AvatarImage src={settings.profileImage} alt="Profile Picture" />
                             <AvatarFallback>A</AvatarFallback>
                         </Avatar>
                         <Input id="picture" type="file" className="max-w-sm" onChange={handleImageChange} accept="image/*"/>
@@ -146,8 +127,8 @@ export default function SettingsPage() {
                         <Label htmlFor="bio">Bio / Journey</Label>
                         <Textarea
                         id="bio"
-                        value={bio}
-                        onChange={(e) => setBio(e.target.value)}
+                        value={settings.bio}
+                        onChange={(e) => setSettings({...settings, bio: e.target.value})}
                         rows={5}
                         placeholder="Tell us about yourself..."
                         />
@@ -156,7 +137,7 @@ export default function SettingsPage() {
                     <div className="space-y-4">
                         <Label>Skill Highlights</Label>
                         <div className="space-y-4">
-                        {skills.map((skill) => (
+                        {settings.skills.map((skill) => (
                             <div key={skill.id} className="flex items-center gap-4">
                             <Input 
                                 value={skill.label} 

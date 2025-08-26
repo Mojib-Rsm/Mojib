@@ -12,79 +12,42 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogC
 import Image from 'next/image';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
-import { getPosts, addPost, updatePost, deletePost, Post } from '@/services/posts';
 
-const initialPosts = [
+type Post = {
+    id: string;
+    image: string;
+    category: string;
+    title: string;
+    date: string;
+    content: string;
+}
+
+const initialPosts: Post[] = [
   {
+    id: '1',
     image: 'https://placehold.co/600x400.png',
     category: 'UI/UX',
     title: 'The 10 Best UI/UX Design Books to Read in 2024',
+    date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     content: 'This is the full content for the blog post about UI/UX books...'
   },
   {
+    id: '2',
     image: 'https://placehold.co/600x400.png',
     category: 'Productivity',
     title: 'How to Stay Creative and Productive as a Designer',
+    date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     content: 'This is the full content for the blog post about productivity...'
   },
 ];
 
 export default function BlogManagementPage() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [posts, setPosts] = useState<Post[]>(initialPosts);
+  const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [currentPost, setCurrentPost] = useState<Partial<Post> | null>(null);
   const { toast } = useToast();
-
-  const fetchAndSeedPosts = async () => {
-    setIsLoading(true);
-    try {
-      let fetchedPosts = await getPosts(true); // Force fetch from server
-      if (fetchedPosts.length === 0) {
-        // Collection is empty, let's seed it
-        const seedPromises = initialPosts.map(p => addPost(p as Omit<Post, 'id' | 'date' | 'createdAt'>));
-        await Promise.all(seedPromises);
-        // Fetch again after seeding
-        fetchedPosts = await getPosts(true);
-        toast({
-          title: "Demo posts seeded!",
-          description: "Initial blog posts have been added to Firestore.",
-        });
-      }
-      setPosts(fetchedPosts);
-    } catch (error) {
-      console.error("Error fetching or seeding posts: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch posts. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAndSeedPosts();
-  }, []);
-
-  const fetchPosts = async () => {
-    setIsLoading(true);
-    try {
-      const fetchedPosts = await getPosts(true);
-      setPosts(fetchedPosts);
-    } catch (error) {
-      console.error("Error fetching posts: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch posts. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   const openAddDialog = () => {
     setCurrentPost({
@@ -106,15 +69,20 @@ export default function BlogManagementPage() {
       setIsSaving(true);
       try {
         if (currentPost.id) {
-            const { id, ...data } = currentPost;
-            await updatePost(id, data as Omit<Post, 'id' | 'date' | 'createdAt'>);
+            setPosts(posts.map(p => p.id === currentPost.id ? currentPost as Post : p));
             toast({ title: "Success", description: "Post updated successfully." });
         } else {
-            const { id, ...data } = currentPost;
-            await addPost(data as Omit<Post, 'id' | 'date' | 'createdAt'>);
+            const newPost: Post = {
+                id: Date.now().toString(),
+                date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                title: currentPost.title || '',
+                category: currentPost.category || '',
+                image: currentPost.image || '',
+                content: currentPost.content || '',
+            }
+            setPosts([newPost, ...posts]);
             toast({ title: "Success", description: "Post added successfully." });
         }
-        await fetchPosts();
         setIsDialogOpen(false);
         setCurrentPost(null);
       } catch (error) {
@@ -131,9 +99,8 @@ export default function BlogManagementPage() {
 
   const handleRemovePost = async (id: string) => {
     try {
-        await deletePost(id);
+        setPosts(posts.filter(p => p.id !== id));
         toast({ title: "Success", description: "Post deleted successfully." });
-        await fetchPosts();
     } catch (error) {
         console.error("Error deleting post: ", error);
         toast({
@@ -144,7 +111,7 @@ export default function BlogManagementPage() {
     }
   }
   
-  const handlePostChange = (field: keyof Omit<Post, 'id' | 'date' | 'createdAt'>, value: string) => {
+  const handlePostChange = (field: keyof Omit<Post, 'id' | 'date'>, value: string) => {
       if(currentPost) {
         setCurrentPost({...currentPost, [field]: value});
       }

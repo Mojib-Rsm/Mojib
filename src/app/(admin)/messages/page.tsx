@@ -5,69 +5,54 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { getMessages, addMessage, updateMessageStatus, Message } from '@/services/messages';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 
-const initialMessages = [
+type Message = {
+    id: string;
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+    date: string;
+    status: 'Read' | 'Unread';
+}
+
+const initialMessages: Message[] = [
   {
+    id: '1',
     name: 'Alice Johnson',
     email: 'alice@example.com',
     subject: 'Inquiry about WordPress Development',
     message: 'Hello, I was wondering if you are available for a new WordPress project. We need a custom theme developed for our corporate blog. Please let me know your availability and rates. Thanks!',
     status: 'Unread',
+    date: new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
   },
   {
+    id: '2',
     name: 'Bob Williams',
     email: 'bob@example.com',
     subject: 'Question about AI Integration',
     message: 'I am interested in your AI integration services. Can you provide more details on how you integrate chatbots into existing websites? We are looking to improve customer support on our e-commerce site.',
     status: 'Read',
+    date: new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
   },
     {
+    id: '3',
     name: 'Charlie Brown',
     email: 'charlie@example.com',
     subject: 'Digital Marketing Proposal',
     message: 'Could you send over a proposal for a comprehensive digital marketing strategy? Our main goals are to increase brand awareness and generate more leads. Looking forward to hearing from you.',
     status: 'Read',
+    date: new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
   },
 ];
 
 
 export default function MessagesPage() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-
-  const fetchAndSeedMessages = async () => {
-    setIsLoading(true);
-    try {
-      let fetchedMessages = await getMessages(true); // Force fetch from server
-      if (fetchedMessages.length === 0) {
-        const seedPromises = initialMessages.map(m => addMessage(m as Omit<Message, 'id' | 'date' | 'createdAt'>));
-        await Promise.all(seedPromises);
-        fetchedMessages = await getMessages(true); // Fetch again after seeding
-        toast({
-          title: "Demo messages seeded!",
-          description: "Initial messages have been added to Firestore.",
-        });
-      }
-      setMessages(fetchedMessages);
-    } catch (error) {
-      console.error("Error fetching or seeding messages: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch messages. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAndSeedMessages();
-  }, []);
 
   const handleAccordionChange = async (value: string) => {
     if(!value) return;
@@ -75,7 +60,6 @@ export default function MessagesPage() {
     const message = messages.find(m => m.id === messageId);
     if (message && message.status === 'Unread') {
         try {
-            await updateMessageStatus(messageId, 'Read');
             setMessages(messages.map(m => m.id === messageId ? {...m, status: 'Read'} : m));
         } catch (error) {
             console.error("Error updating message status: ", error);

@@ -10,40 +10,52 @@ import { Textarea } from '@/components/ui/textarea';
 import { Bot, Code, Megaphone, Palette, PlusCircle, Search, Trash2, Wand2, Loader2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { getServices, addService, updateService, deleteService, Service } from '@/services/services';
 import { useToast } from '@/hooks/use-toast';
+
+type Service = {
+    id: string;
+    icon: string;
+    title: string;
+    description: string;
+}
 
 const iconComponents: {[key: string]: React.ElementType} = {
     Wand2, Bot, Megaphone, Search, Code, Palette
 }
 
-const initialServices = [
+const initialServices: Service[] = [
   {
+    id: '1',
     icon: 'Wand2',
     title: 'WordPress Development',
     description: 'Creating custom WordPress themes and plugins. I build responsive, fast, and user-friendly websites tailored to your specific needs.',
   },
   {
+    id: '2',
     icon: 'Bot',
     title: 'AI Integration',
     description: 'Integrating AI-powered features like chatbots and content generators into your website to enhance user engagement and automate tasks.',
   },
   {
+    id: '3',
     icon: 'Megaphone',
     title: 'Digital Marketing',
     description: 'Helping your business grow online through strategies like SEO, social media marketing, and content creation to increase your visibility and reach.',
   },
     {
+    id: '4',
     icon: 'Search',
     title: 'SEO Optimization',
     description: 'Improving your website’s ranking on search engines like Google to attract more organic traffic and potential customers.',
   },
   {
+    id: '5',
     icon: 'Palette',
     title: 'UI/UX & Graphics Design',
     description: 'Designing intuitive user interfaces and stunning graphics that provide a great user experience and make your brand stand out.',
   },
    {
+    id: '6',
     icon: 'Code',
     title: 'Basic Web Coding',
     description: 'I have a foundational understanding of coding and can assist with basic customizations using HTML, CSS, and JavaScript for your web projects.',
@@ -51,60 +63,12 @@ const initialServices = [
 ];
 
 export default function ServicesManagementPage() {
-  const [services, setServices] = useState<Service[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [services, setServices] = useState<Service[]>(initialServices);
+  const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [currentService, setCurrentService] = useState<Partial<Service> | null>(null);
   const { toast } = useToast();
-
-  const fetchAndSeedServices = async () => {
-    setIsLoading(true);
-    try {
-      let fetchedServices = await getServices(true); // Force fetch from server
-      if (fetchedServices.length === 0) {
-        // Seed data if collection is empty
-        const seedPromises = initialServices.map(service => addService(service as Omit<Service, 'id' | 'createdAt'>));
-        await Promise.all(seedPromises);
-        fetchedServices = await getServices(true); // Fetch again after seeding
-        toast({
-          title: "Demo services seeded!",
-          description: "Initial services have been added to Firestore.",
-        });
-      }
-      setServices(fetchedServices);
-    } catch (error) {
-      console.error("Error fetching or seeding services: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch services. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAndSeedServices();
-  }, []);
-
-  const fetchServices = async () => {
-    setIsLoading(true);
-    try {
-      const fetchedServices = await getServices(true);
-      setServices(fetchedServices);
-    } catch (error) {
-       console.error("Error fetching services: ", error);
-        toast({
-          title: "Error",
-          description: "Could not fetch services. Please try again.",
-          variant: "destructive",
-        });
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   const openAddDialog = () => {
     setCurrentService({ title: '', description: '', icon: 'Wand2'});
@@ -121,15 +85,18 @@ export default function ServicesManagementPage() {
       setIsSaving(true);
       try {
         if (currentService.id) {
-            const { id, ...data } = currentService;
-            await updateService(id, data as Omit<Service, 'id' | 'createdAt'>);
+            setServices(services.map(s => s.id === currentService.id ? currentService as Service : s));
             toast({ title: "Success", description: "Service updated successfully." });
         } else {
-            const { id, ...data } = currentService;
-            await addService(data as Omit<Service, 'id' | 'createdAt'>);
+            const newService: Service = {
+                id: Date.now().toString(),
+                title: currentService.title || '',
+                description: currentService.description || '',
+                icon: currentService.icon || 'Wand2',
+            }
+            setServices([newService, ...services]);
             toast({ title: "Success", description: "Service added successfully." });
         }
-        await fetchServices();
         setIsDialogOpen(false);
         setCurrentService(null);
       } catch (error) {
@@ -146,9 +113,8 @@ export default function ServicesManagementPage() {
 
   const handleRemoveService = async (id: string) => {
       try {
-        await deleteService(id);
+        setServices(services.filter(s => s.id !== id));
         toast({ title: "Success", description: "Service deleted successfully." });
-        await fetchServices();
       } catch (error) {
         console.error("Error deleting service: ", error);
         toast({
@@ -159,7 +125,7 @@ export default function ServicesManagementPage() {
       }
   }
   
-  const handleServiceChange = (field: keyof Omit<Service, 'id'| 'createdAt'>, value: string) => {
+  const handleServiceChange = (field: keyof Omit<Service, 'id'>, value: string) => {
       if(currentService) {
         setCurrentService({...currentService, [field]: value});
       }

@@ -13,10 +13,20 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
-import { getProjects, addProject, updateProject, deleteProject, Project } from '@/services/projects';
 
-const initialProjects = [
+type Project = {
+    id: string;
+    image: string;
+    title: string;
+    description: string;
+    technologies: string[];
+    link: string;
+    category: string;
+}
+
+const initialProjects: Project[] = [
     {
+        id: '1',
         image: "https://www.mojib.me/uploads/1754959172720-Screenshot-842.webp",
         title: "Oftern News Website",
         description: "A comprehensive news portal with a custom theme and plugins.",
@@ -25,6 +35,7 @@ const initialProjects = [
         category: 'Web'
     },
     {
+        id: '2',
         image: "https://www.mojib.me/uploads/1754959260179-images.jpeg",
         title: "Oftern Shop (E-commerce)",
         description: "A full-featured e-commerce platform with a modern tech stack.",
@@ -35,60 +46,13 @@ const initialProjects = [
 ];
 
 export default function PortfolioManagementPage() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
+  const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [currentProject, setCurrentProject] = useState<Partial<Project> | null>(null);
   const [techInput, setTechInput] = useState('');
   const { toast } = useToast();
-
-  const fetchAndSeedProjects = async () => {
-    setIsLoading(true);
-    try {
-      let fetchedProjects = await getProjects(true); // Force fetch from server
-      if (fetchedProjects.length === 0) {
-        const seedPromises = initialProjects.map(p => addProject(p as Omit<Project, 'id' | 'createdAt'>));
-        await Promise.all(seedPromises);
-        fetchedProjects = await getProjects(true); // Fetch again after seeding
-        toast({
-          title: "Demo projects seeded!",
-          description: "Initial projects have been added to Firestore.",
-        });
-      }
-      setProjects(fetchedProjects);
-    } catch (error) {
-      console.error("Error fetching or seeding projects: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch projects. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAndSeedProjects();
-  }, []);
-
-  const fetchProjects = async () => {
-    setIsLoading(true);
-    try {
-      const fetchedProjects = await getProjects(true);
-      setProjects(fetchedProjects);
-    } catch (error) {
-      console.error("Error fetching projects: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch projects. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   const openAddDialog = () => {
     setCurrentProject({
@@ -114,15 +78,21 @@ export default function PortfolioManagementPage() {
       setIsSaving(true);
       try {
         if (currentProject.id) {
-            const { id, ...data } = currentProject;
-            await updateProject(id, data as Omit<Project, 'id' | 'createdAt'>);
+            setProjects(projects.map(p => p.id === currentProject.id ? currentProject as Project : p));
             toast({ title: "Success", description: "Project updated successfully." });
         } else {
-            const { id, ...data } = currentProject;
-            await addProject(data as Omit<Project, 'id' | 'createdAt'>);
+            const newProject: Project = {
+                id: Date.now().toString(),
+                title: currentProject.title || '',
+                description: currentProject.description || '',
+                image: currentProject.image || '',
+                link: currentProject.link || '',
+                technologies: currentProject.technologies || [],
+                category: currentProject.category || 'Web',
+            };
+            setProjects([newProject, ...projects]);
             toast({ title: "Success", description: "Project added successfully." });
         }
-        await fetchProjects();
         setIsDialogOpen(false);
         setCurrentProject(null);
       } catch (error) {
@@ -139,9 +109,8 @@ export default function PortfolioManagementPage() {
 
   const handleRemoveProject = async (id: string) => {
       try {
-        await deleteProject(id);
+        setProjects(projects.filter(p => p.id !== id));
         toast({ title: "Success", description: "Project deleted successfully." });
-        await fetchProjects();
       } catch (error) {
          console.error("Error deleting project: ", error);
          toast({
@@ -152,7 +121,7 @@ export default function PortfolioManagementPage() {
       }
   }
   
-  const handleProjectChange = (field: keyof Omit<Project, 'id' | 'technologies' | 'createdAt'>, value: string) => {
+  const handleProjectChange = (field: keyof Omit<Project, 'id' | 'technologies'>, value: string) => {
       if(currentProject) {
         setCurrentProject({...currentProject, [field]: value});
       }
