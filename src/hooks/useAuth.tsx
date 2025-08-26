@@ -46,12 +46,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = onIdTokenChanged(auth, async (newUser) => {
+        setUser(newUser);
         if (newUser) {
-            setUser(newUser);
             const idToken = await newUser.getIdToken();
             await setSessionCookie(idToken);
         } else {
-            setUser(null);
             await setSessionCookie(null);
         }
         setLoading(false);
