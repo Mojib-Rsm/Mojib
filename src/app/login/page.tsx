@@ -19,13 +19,9 @@ function LoginComponent() {
   const [error, setError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   
-  // This effect will run when the auth state is resolved.
-  // If the user is logged in, middleware will redirect them from the login page.
   useEffect(() => {
     if (!loading && user) {
-        // user is already logged in, middleware should handle the redirect.
-        // for safety, we can push to dashboard.
-        router.replace('/admin/dashboard');
+      router.replace('/admin/dashboard');
     }
   }, [user, loading, router]);
 
@@ -50,14 +46,24 @@ function LoginComponent() {
     }
   };
   
-  // While checking auth state or if user is logged in and redirecting
-  if (loading || user) {
+  // While checking auth state, show a loader.
+  if (loading) {
     return (
         <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
     )
   }
+  
+  // If user is already logged in, the useEffect will redirect. Show loader in the meantime.
+  if (user) {
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+    )
+  }
+
 
   // If not loading and no user, show the login form.
   return (

@@ -40,7 +40,8 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   }
   
   if (!user) {
-    return <div className="flex items-center justify-center min-h-screen bg-background text-foreground">Redirecting to login...</div>;
+    // Return null or a placeholder while redirecting
+    return null;
   }
   
   const handleLogout = async () => {
