@@ -1,10 +1,36 @@
-
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow read/write access to authenticated users
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+    // Allow public read for collections needed by the public website
+    match /services/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
     }
+    match /posts/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    match /projects/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    match /testimonials/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Allow anyone to submit a message, but only authenticated users to read/manage them.
+    match /messages/{docId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+
+    // Explicitly deny access to other collections unless specified.
+    // This is a good security practice.
+    // The 'users' collection or any other you might add will need rules here.
   }
 }
