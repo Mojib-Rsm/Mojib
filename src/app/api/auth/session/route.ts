@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
             response.cookies.set(options);
             return response;
         } catch (error) {
+            console.error('Session cookie creation failed:', error);
             return NextResponse.json({ status: 'error', message: 'Unauthorized' }, { status: 401 });
         }
     }

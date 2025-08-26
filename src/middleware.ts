@@ -24,32 +24,36 @@ async function isAuthenticated(request: NextRequest): Promise<boolean> {
 
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  const { pathname } = request.nextUrl;
   
-  // We need to exclude the verification api route from auth checks
-  if (pathname.startsWith('/api/auth/verify')) {
+  // Exclude API routes used for auth from the middleware checks themselves
+  if (pathname.startsWith('/api/auth/')) {
       return NextResponse.next();
   }
   
   const isAuthed = await isAuthenticated(request);
 
   const adminRoutes = [
+      '/admin', // Catch the base /admin route as well
       '/admin/dashboard', 
       '/admin/analytics', 
-      '/admin/content', 
-      '/admin/blog',
+      '/admin/services',
       '/admin/projects',
+      '/admin/blog',
+      '/admin/testimonials',
+      '/admin/messages',
+      '/admin/content',
       '/admin/media',
       '/admin/requests',
-      '/admin/messages',
-      '/admin/testimonials',
       '/admin/history',
       '/admin/settings'
     ];
   
   const isPublicRoute = pathname === '/login';
 
-  if (adminRoutes.some(route => pathname.startsWith(route)) && !isAuthed) {
+  const isAccessingAdminRoute = adminRoutes.some(route => pathname.startsWith(route));
+
+  if (isAccessingAdminRoute && !isAuthed) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
