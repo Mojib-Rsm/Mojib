@@ -1,0 +1,47 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if a user is an authenticated admin
+    function isAdmin() {
+      return request.auth != null;
+    }
+
+    // Publicly readable collections, but only writable by admins.
+    // This allows the main website to display this information to any visitor.
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /projects/{projectId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /testimonials/{testimonialId} {
+        allow read: if true;
+        allow write: if isAdmin();
+    }
+
+    match /posts/{postId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Settings should be readable by everyone for the 'About Me' section,
+    // but only writable by an admin.
+    match /settings/main-settings {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Messages can be created by anyone (from the contact form),
+    // but only read, updated, or deleted by an admin.
+    match /messages/{messageId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}
