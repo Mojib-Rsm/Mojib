@@ -3,12 +3,14 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyA6EMUTZfPvXE-44t7QDU0DFNzfm_S8ocU",
+  authDomain: "oftern-shop.firebaseapp.com",
+  databaseURL: "https://oftern-shop-default-rtdb.firebaseio.com",
+  projectId: "oftern-shop",
+  storageBucket: "oftern-shop.firebasestorage.app",
+  messagingSenderId: "365492805811",
+  appId: "1:365492805811:web:5a4483ba84d9f115a810c6",
+  measurementId: "G-XQMMG3MFJH"
 };
 
 // Initialize Firebase
