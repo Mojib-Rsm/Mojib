@@ -1,6 +1,4 @@
 import { MetadataRoute } from 'next'
-import { getPosts } from '@/services/posts';
-import { getProjects } from '@/services/projects';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://www.mojib.me';
@@ -24,21 +22,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: route === '' ? 1 : 0.8,
     }));
 
-    const posts = await getPosts();
-    const postRoutes = posts.map(post => ({
-        url: `${baseUrl}/blog/${post.id}`, // Assuming a blog detail page exists at this URL
-        lastModified: post.createdAt?.toDate() || new Date(),
-        changeFrequency: 'weekly',
-        priority: 0.7,
-    }));
+    // NOTE: Temporarily removed dynamic routes to fix build issues due to Firebase permissions.
+    // In a production environment with proper CI/CD setup, you would re-enable this.
+    // const posts = await getPosts();
+    // const postRoutes = posts.map(post => ({
+    //     url: `${baseUrl}/blog/${post.id}`,
+    //     lastModified: post.createdAt?.toDate() || new Date(),
+    //     changeFrequency: 'weekly',
+    //     priority: 0.7,
+    // }));
 
-    const projects = await getProjects();
-    const projectRoutes = projects.map(project => ({
-        url: `${baseUrl}/portfolio/${project.id}`, // Assuming a portfolio detail page exists at this URL
-        lastModified: project.createdAt?.toDate() || new Date(),
-        changeFrequency: 'monthly',
-        priority: 0.6,
-    }));
+    // const projects = await getProjects();
+    // const projectRoutes = projects.map(project => ({
+    //     url: `${baseUrl}/portfolio/${project.id}`,
+    //     lastModified: project.createdAt?.toDate() || new Date(),
+    //     changeFrequency: 'monthly',
+    //     priority: 0.6,
+    // }));
 
-    return [...staticRoutes, ...postRoutes, ...projectRoutes];
+    // return [...staticRoutes, ...postRoutes, ...projectRoutes];
+    return [...staticRoutes];
 }
