@@ -1,6 +1,6 @@
 
 import { db } from '@/lib/firebase';
-import { collection, getDocs, doc, DocumentData, QueryDocumentSnapshot, updateDoc, serverTimestamp, orderBy, query } from 'firebase/firestore';
+import { collection, getDocs, doc, DocumentData, QueryDocumentSnapshot, updateDoc, serverTimestamp, orderBy, query, addDoc } from 'firebase/firestore';
 
 export type Message = {
     id: string;
@@ -40,6 +40,16 @@ export const getMessages = async (): Promise<Message[]> => {
     const snapshot = await getDocs(q);
     return snapshot.docs.map(messageFromDoc);
 };
+
+
+export const addMessage = async (message: Omit<Message, 'id' | 'date' | 'createdAt'>) => {
+    const messagesCol = collection(db, 'messages');
+    const docRef = await addDoc(messagesCol, {
+        ...message,
+        createdAt: serverTimestamp(),
+    });
+    return docRef.id;
+}
 
 
 export const updateMessageStatus = async (id: string, status: 'Read' | 'Unread') => {

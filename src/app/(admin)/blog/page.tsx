@@ -14,6 +14,20 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { useToast } from '@/hooks/use-toast';
 import { getPosts, addPost, updatePost, deletePost, Post } from '@/services/posts';
 
+const initialPosts = [
+  {
+    image: 'https://placehold.co/600x400.png',
+    category: 'UI/UX',
+    title: 'The 10 Best UI/UX Design Books to Read in 2024',
+    content: 'This is the full content for the blog post about UI/UX books...'
+  },
+  {
+    image: 'https://placehold.co/600x400.png',
+    category: 'Productivity',
+    title: 'How to Stay Creative and Productive as a Designer',
+    content: 'This is the full content for the blog post about productivity...'
+  },
+];
 
 export default function BlogManagementPage() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -24,8 +38,33 @@ export default function BlogManagementPage() {
   const { toast } = useToast();
 
   useEffect(() => {
+    const fetchPosts = async () => {
+      setIsLoading(true);
+      try {
+        let fetchedPosts = await getPosts();
+        if (fetchedPosts.length === 0) {
+            const seedPromises = initialPosts.map(p => addPost(p as Omit<Post, 'id' | 'date' | 'createdAt'>));
+            await Promise.all(seedPromises);
+            fetchedPosts = await getPosts();
+             toast({
+                title: "Demo posts seeded!",
+                description: "Initial blog posts have been added to Firestore.",
+            });
+        }
+        setPosts(fetchedPosts);
+      } catch (error) {
+        console.error("Error fetching posts: ", error);
+        toast({
+          title: "Error",
+          description: "Could not fetch posts. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
     fetchPosts();
-  }, []);
+  }, [toast]);
 
   const fetchPosts = async () => {
     setIsLoading(true);

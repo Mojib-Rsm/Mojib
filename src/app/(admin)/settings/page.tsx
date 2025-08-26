@@ -35,13 +35,20 @@ export default function SettingsPage() {
     const fetchSettings = async () => {
         setIsLoading(true);
         try {
-            const fetchedSettings = await getSettings();
-            if (fetchedSettings) {
-                setSettings(fetchedSettings);
-                setProfileImage(fetchedSettings.profileImage);
-                setBio(fetchedSettings.bio);
-                setSkills(fetchedSettings.skills);
+            let fetchedSettings = await getSettings();
+            if (!fetchedSettings) {
+                // Seed the settings if they don't exist
+                await saveSettings(defaultSettings);
+                fetchedSettings = defaultSettings;
+                toast({
+                    title: "Default settings seeded!",
+                    description: "Initial settings have been saved to Firestore.",
+                });
             }
+            setSettings(fetchedSettings);
+            setProfileImage(fetchedSettings.profileImage);
+            setBio(fetchedSettings.bio);
+            setSkills(fetchedSettings.skills);
         } catch (error) {
             console.error("Error fetching settings: ", error);
             toast({

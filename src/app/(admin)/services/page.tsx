@@ -17,6 +17,40 @@ const iconComponents: {[key: string]: React.ElementType} = {
     Wand2, Bot, Megaphone, Search, Code, Palette
 }
 
+const initialServices = [
+  {
+    icon: 'Wand2',
+    title: 'WordPress Development',
+    description: 'Creating custom WordPress themes and plugins. I build responsive, fast, and user-friendly websites tailored to your specific needs.',
+  },
+  {
+    icon: 'Bot',
+    title: 'AI Integration',
+    description: 'Integrating AI-powered features like chatbots and content generators into your website to enhance user engagement and automate tasks.',
+  },
+  {
+    icon: 'Megaphone',
+    title: 'Digital Marketing',
+    description: 'Helping your business grow online through strategies like SEO, social media marketing, and content creation to increase your visibility and reach.',
+  },
+    {
+    icon: 'Search',
+    title: 'SEO Optimization',
+    description: 'Improving your website’s ranking on search engines like Google to attract more organic traffic and potential customers.',
+  },
+  {
+    icon: 'Palette',
+    title: 'UI/UX & Graphics Design',
+    description: 'Designing intuitive user interfaces and stunning graphics that provide a great user experience and make your brand stand out.',
+  },
+   {
+    id: 6,
+    icon: 'Code',
+    title: 'Basic Web Coding',
+    description: 'I have a foundational understanding of coding and can assist with basic customizations using HTML, CSS, and JavaScript for your web projects.',
+  },
+];
+
 export default function ServicesManagementPage() {
   const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,21 +60,49 @@ export default function ServicesManagementPage() {
   const { toast } = useToast();
 
   useEffect(() => {
+    const fetchServices = async () => {
+      setIsLoading(true);
+      try {
+        let fetchedServices = await getServices();
+        if (fetchedServices.length === 0) {
+            // Seed data if collection is empty
+            const seedPromises = initialServices.map(service => addService(service as Omit<Service, 'id' | 'createdAt'>));
+            await Promise.all(seedPromises);
+            fetchedServices = await getServices();
+             toast({
+                title: "Demo services seeded!",
+                description: "Initial services have been added to Firestore.",
+            });
+        }
+        setServices(fetchedServices);
+      } catch (error) {
+        console.error("Error fetching services: ", error);
+        toast({
+          title: "Error",
+          description: "Could not fetch services. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
     fetchServices();
-  }, []);
+  }, [toast]);
 
   const fetchServices = async () => {
+    // This function is redefined inside useEffect, so this is a placeholder. 
+    // The real fetch is inside useEffect to run on mount.
     setIsLoading(true);
     try {
       const fetchedServices = await getServices();
       setServices(fetchedServices);
     } catch (error) {
-      console.error("Error fetching services: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch services. Please try again.",
-        variant: "destructive",
-      });
+       console.error("Error fetching services: ", error);
+        toast({
+          title: "Error",
+          description: "Could not fetch services. Please try again.",
+          variant: "destructive",
+        });
     } finally {
       setIsLoading(false);
     }
@@ -62,11 +124,11 @@ export default function ServicesManagementPage() {
       try {
         if (currentService.id) {
             const { id, ...data } = currentService;
-            await updateService(id, data);
+            await updateService(id, data as Omit<Service, 'id' | 'createdAt'>);
             toast({ title: "Success", description: "Service updated successfully." });
         } else {
             const { id, ...data } = currentService;
-            await addService(data as Omit<Service, 'id'>);
+            await addService(data as Omit<Service, 'id' | 'createdAt'>);
             toast({ title: "Success", description: "Service added successfully." });
         }
         await fetchServices();
@@ -99,7 +161,7 @@ export default function ServicesManagementPage() {
       }
   }
   
-  const handleServiceChange = (field: keyof Omit<Service, 'id'>, value: string) => {
+  const handleServiceChange = (field: keyof Omit<Service, 'id'| 'createdAt'>, value: string) => {
       if(currentService) {
         setCurrentService({...currentService, [field]: value});
       }

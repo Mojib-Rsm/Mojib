@@ -5,9 +5,34 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { getMessages, updateMessageStatus, Message } from '@/services/messages';
+import { getMessages, addMessage, updateMessageStatus, Message } from '@/services/messages';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
+
+const initialMessages = [
+  {
+    name: 'Alice Johnson',
+    email: 'alice@example.com',
+    subject: 'Inquiry about WordPress Development',
+    message: 'Hello, I was wondering if you are available for a new WordPress project. We need a custom theme developed for our corporate blog. Please let me know your availability and rates. Thanks!',
+    status: 'Unread',
+  },
+  {
+    name: 'Bob Williams',
+    email: 'bob@example.com',
+    subject: 'Question about AI Integration',
+    message: 'I am interested in your AI integration services. Can you provide more details on how you integrate chatbots into existing websites? We are looking to improve customer support on our e-commerce site.',
+    status: 'Read',
+  },
+    {
+    name: 'Charlie Brown',
+    email: 'charlie@example.com',
+    subject: 'Digital Marketing Proposal',
+    message: 'Could you send over a proposal for a comprehensive digital marketing strategy? Our main goals are to increase brand awareness and generate more leads. Looking forward to hearing from you.',
+    status: 'Read',
+  },
+];
+
 
 export default function MessagesPage() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -15,25 +40,33 @@ export default function MessagesPage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchMessages();
-  }, []);
-
-  const fetchMessages = async () => {
-    setIsLoading(true);
-    try {
-      const fetchedMessages = await getMessages();
-      setMessages(fetchedMessages);
-    } catch (error) {
-      console.error("Error fetching messages: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch messages. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
+    const fetchMessages = async () => {
+      setIsLoading(true);
+      try {
+        let fetchedMessages = await getMessages();
+        if (fetchedMessages.length === 0) {
+            const seedPromises = initialMessages.map(m => addMessage(m as Omit<Message, 'id' | 'date' | 'createdAt'>));
+            await Promise.all(seedPromises);
+            fetchedMessages = await getMessages();
+             toast({
+                title: "Demo messages seeded!",
+                description: "Initial messages have been added to Firestore.",
+            });
+        }
+        setMessages(fetchedMessages);
+      } catch (error) {
+        console.error("Error fetching messages: ", error);
+        toast({
+          title: "Error",
+          description: "Could not fetch messages. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }
+    fetchMessages();
+  }, [toast]);
 
   const handleAccordionChange = async (value: string) => {
     if(!value) return;

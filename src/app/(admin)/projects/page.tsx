@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -16,6 +15,25 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { useToast } from '@/hooks/use-toast';
 import { getProjects, addProject, updateProject, deleteProject, Project } from '@/services/projects';
 
+const initialProjects = [
+    {
+        image: "https://www.mojib.me/uploads/1754959172720-Screenshot-842.webp",
+        title: "Oftern News Website",
+        description: "A comprehensive news portal with a custom theme and plugins.",
+        technologies: ["WordPress", "PHP", "MySQL"],
+        link: "#",
+        category: 'Web'
+    },
+    {
+        image: "https://www.mojib.me/uploads/1754959260179-images.jpeg",
+        title: "Oftern Shop (E-commerce)",
+        description: "A full-featured e-commerce platform with a modern tech stack.",
+        technologies: ["React", "Firebase", "Node.js"],
+        link: "#",
+        category: 'Web'
+    },
+];
+
 export default function PortfolioManagementPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,8 +44,33 @@ export default function PortfolioManagementPage() {
   const { toast } = useToast();
 
   useEffect(() => {
+    const fetchProjects = async () => {
+      setIsLoading(true);
+      try {
+        let fetchedProjects = await getProjects();
+        if (fetchedProjects.length === 0) {
+            const seedPromises = initialProjects.map(p => addProject(p as Omit<Project, 'id' | 'createdAt'>));
+            await Promise.all(seedPromises);
+            fetchedProjects = await getProjects();
+            toast({
+                title: "Demo projects seeded!",
+                description: "Initial projects have been added to Firestore.",
+            });
+        }
+        setProjects(fetchedProjects);
+      } catch (error) {
+        console.error("Error fetching projects: ", error);
+        toast({
+          title: "Error",
+          description: "Could not fetch projects. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
     fetchProjects();
-  }, []);
+  }, [toast]);
 
   const fetchProjects = async () => {
     setIsLoading(true);
