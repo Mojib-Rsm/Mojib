@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -13,20 +13,21 @@ import { Loader2 } from 'lucide-react';
 
 function LoginComponent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { user, loading, login } = useAuth();
   const [email, setEmail] = useState('admin@example.com');
   const [password, setPassword] = useState('password');
   const [error, setError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-
+  
+  // This effect will run when the auth state is resolved.
+  // If the user is logged in, middleware will redirect them from the login page.
   useEffect(() => {
-    // Redirect if loading is finished and user is logged in.
     if (!loading && user) {
-      const redirectUrl = searchParams.get('redirect') || '/admin/dashboard';
-      router.replace(redirectUrl);
+        // user is already logged in, middleware should handle the redirect.
+        // for safety, we can push to dashboard.
+        router.replace('/admin/dashboard');
     }
-  }, [user, loading, router, searchParams]);
+  }, [user, loading, router]);
 
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -35,7 +36,8 @@ function LoginComponent() {
     setIsLoggingIn(true);
     try {
       await login(email, password);
-      // The useEffect hook will handle redirection on successful login
+      // On successful login, the `user` state will change,
+      // and the useEffect above will trigger the redirect.
     } catch (err: any) {
        console.error("Login failed:", err);
       if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/operation-not-allowed') {
@@ -48,24 +50,14 @@ function LoginComponent() {
     }
   };
   
-  // Show a loader while the auth state is being determined.
-  if (loading) {
+  // While checking auth state or if user is logged in and redirecting
+  if (loading || user) {
     return (
         <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
     )
   }
-
-  // If user is already logged in, show loader while redirecting
-  if (user) {
-     return (
-        <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
-    )
-  }
-
 
   // If not loading and no user, show the login form.
   return (
