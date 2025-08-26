@@ -1,12 +1,13 @@
 
 import { db } from '@/lib/firebase';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, DocumentData, QueryDocumentSnapshot, serverTimestamp, orderBy, query } from 'firebase/firestore';
 
 export type Service = {
     id: string;
     icon: string;
     title: string;
     description: string;
+    createdAt: any;
 }
 
 const serviceFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Service => {
@@ -16,22 +17,27 @@ const serviceFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Service => {
         icon: data.icon,
         title: data.title,
         description: data.description,
+        createdAt: data.createdAt,
     };
 }
 
 export const getServices = async (): Promise<Service[]> => {
     const servicesCol = collection(db, 'services');
-    const snapshot = await getDocs(servicesCol);
+    const q = query(servicesCol, orderBy('createdAt', 'asc'));
+    const snapshot = await getDocs(q);
     return snapshot.docs.map(serviceFromDoc);
 };
 
-export const addService = async (service: Omit<Service, 'id'>) => {
+export const addService = async (service: Omit<Service, 'id' | 'createdAt'>) => {
     const servicesCol = collection(db, 'services');
-    const docRef = await addDoc(servicesCol, service);
+    const docRef = await addDoc(servicesCol, {
+        ...service,
+        createdAt: serverTimestamp(),
+    });
     return docRef.id;
 }
 
-export const updateService = async (id: string, service: Partial<Omit<Service, 'id'>>) => {
+export const updateService = async (id: string, service: Partial<Omit<Service, 'id' | 'createdAt'>>) => {
     const serviceDoc = doc(db, 'services', id);
     await updateDoc(serviceDoc, service);
 }
