@@ -1,15 +1,14 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getAuth, DecodedIdToken } from 'firebase-admin/auth';
+import { getAuth } from 'firebase-admin/auth';
 import { getApp, getApps, initializeApp, App } from 'firebase-admin/app';
 import { serviceAccount } from '@/lib/firebase-admin';
 
-let adminApp: App;
-
-try {
-    adminApp = getApp();
-} catch (e) {
-    adminApp = initializeApp({
+function initializeAdminApp() {
+    if (getApps().length > 0) {
+        return getApp();
+    }
+    return initializeApp({
         credential: {
             projectId: serviceAccount.project_id,
             clientEmail: serviceAccount.client_email,
@@ -18,8 +17,8 @@ try {
     });
 }
 
-
 export async function POST(request: NextRequest) {
+    const adminApp = initializeAdminApp();
     const authorization = request.headers.get('Authorization');
     if (authorization?.startsWith('Bearer ')) {
         const idToken = authorization.split('Bearer ')[1];
