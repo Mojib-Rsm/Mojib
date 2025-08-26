@@ -32,6 +32,7 @@ function LoginComponent() {
     setIsLoggingIn(true);
     try {
       await login(email, password);
+      // On successful login, the useEffect above will handle the redirect.
     } catch (err: any) {
        console.error("Login failed:", err);
       if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/operation-not-allowed') {
