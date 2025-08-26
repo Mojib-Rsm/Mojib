@@ -2,7 +2,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { getAuth, signInWithEmailAndPassword, onIdTokenChanged, User, signOut, IdTokenResult, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, onIdTokenChanged, User, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
 import { app } from '@/lib/firebase';
 
 interface AuthContextType {
@@ -19,19 +19,23 @@ const auth = getAuth(app);
 // This function sends the ID token to a server-side endpoint to create a session cookie.
 async function setSessionCookie(idToken: string | null) {
     const endpoint = '/api/auth/session';
-    if (idToken) {
-        // User is logging in, create a session
-        await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${idToken}`,
-            },
-        });
-    } else {
-        // User is logging out, destroy the session
-        await fetch(endpoint, {
-            method: 'DELETE',
-        });
+    try {
+        if (idToken) {
+            // User is logging in, create a session
+            await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`,
+                },
+            });
+        } else {
+            // User is logging out, destroy the session
+            await fetch(endpoint, {
+                method: 'DELETE',
+            });
+        }
+    } catch (error) {
+        console.error("Failed to set session cookie:", error);
     }
 }
 
@@ -50,7 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setUser(null);
             await setSessionCookie(null);
         }
-        setLoading(false);
+        setLoading(false); // This is the key change
     });
     return () => unsubscribe();
   }, []);

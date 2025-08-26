@@ -22,6 +22,7 @@ function LoginComponent() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   useEffect(() => {
+    // If done loading and user is logged in, redirect.
     if (!loading && user) {
       const redirectUrl = searchParams.get('redirect') || '/admin/dashboard';
       router.replace(redirectUrl);
@@ -35,11 +36,11 @@ function LoginComponent() {
     setIsLoggingIn(true);
     try {
       await login(email, password);
-      // The useEffect hook will handle redirection
+      // The useEffect hook will handle redirection on successful login
     } catch (err: any) {
        console.error("Login failed:", err);
-      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
-        setError('Invalid email or password. Please try again.');
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/operation-not-allowed') {
+        setError('Invalid email or password. Please try again or check Firebase settings.');
       } else {
         setError('An unexpected error occurred. Please try again later.');
       }
@@ -48,9 +49,8 @@ function LoginComponent() {
     }
   };
   
-  // While loading or if user is already logged in, show a loader.
-  // The useEffect will handle redirection.
-  if (loading || user) {
+  // While checking auth state, show a loader.
+  if (loading) {
     return (
         <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -58,6 +58,17 @@ function LoginComponent() {
     )
   }
 
+  // If not loading and user is logged in, redirect (handled by useEffect, but this prevents flashing the form).
+  if (user) {
+     return (
+        <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+    )
+  }
+
+
+  // If not loading and no user, show the login form.
   return (
     <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
       <Card className="w-full max-w-sm">
