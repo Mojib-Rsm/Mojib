@@ -40,13 +40,13 @@ export default function BlogManagementPage() {
   const fetchAndSeedPosts = async () => {
     setIsLoading(true);
     try {
-      let fetchedPosts = await getPosts();
+      let fetchedPosts = await getPosts(true); // Force fetch from server
       if (fetchedPosts.length === 0) {
         // Collection is empty, let's seed it
         const seedPromises = initialPosts.map(p => addPost(p as Omit<Post, 'id' | 'date' | 'createdAt'>));
         await Promise.all(seedPromises);
         // Fetch again after seeding
-        fetchedPosts = await getPosts();
+        fetchedPosts = await getPosts(true);
         toast({
           title: "Demo posts seeded!",
           description: "Initial blog posts have been added to Firestore.",
@@ -72,7 +72,7 @@ export default function BlogManagementPage() {
   const fetchPosts = async () => {
     setIsLoading(true);
     try {
-      const fetchedPosts = await getPosts();
+      const fetchedPosts = await getPosts(true);
       setPosts(fetchedPosts);
     } catch (error) {
       console.error("Error fetching posts: ", error);

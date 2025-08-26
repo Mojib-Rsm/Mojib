@@ -40,11 +40,11 @@ export default function TestimonialsManagementPage() {
   const fetchAndSeedTestimonials = async () => {
     setIsLoading(true);
     try {
-      let fetchedTestimonials = await getTestimonials();
+      let fetchedTestimonials = await getTestimonials(true); // Force fetch from server
       if (fetchedTestimonials.length === 0) {
         const seedPromises = initialTestimonials.map(t => addTestimonial(t as Omit<Testimonial, 'id' | 'createdAt'>));
         await Promise.all(seedPromises);
-        fetchedTestimonials = await getTestimonials();
+        fetchedTestimonials = await getTestimonials(true); // Fetch again after seeding
         toast({
           title: "Demo testimonials seeded!",
           description: "Initial testimonials have been added to Firestore.",
@@ -70,7 +70,7 @@ export default function TestimonialsManagementPage() {
   const fetchTestimonials = async () => {
     setIsLoading(true);
     try {
-      const fetchedTestimonials = await getTestimonials();
+      const fetchedTestimonials = await getTestimonials(true);
       setTestimonials(fetchedTestimonials);
     } catch (error) {
       console.error("Error fetching testimonials: ", error);

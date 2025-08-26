@@ -27,17 +27,13 @@ const projectFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Project => {
     };
 }
 
-export const getProjects = async (): Promise<Project[]> => {
+export const getProjects = async (forceFetch = false): Promise<Project[]> => {
+    if (!forceFetch && typeof window === 'undefined') {
+        return []; // Don't fetch during server-side build
+    }
     const projectsCol = collection(db, 'projects');
     const q = query(projectsCol, orderBy('createdAt', 'desc'));
     const snapshot = await getDocs(q);
-     if (snapshot.empty && typeof window !== 'undefined') {
-        const { getAuth } = await import('firebase/auth');
-        const auth = getAuth();
-        if (!auth.currentUser) {
-            return [];
-        }
-    }
     return snapshot.docs.map(projectFromDoc);
 };
 

@@ -16,7 +16,10 @@ export type Settings = {
 
 const SETTINGS_DOC_ID = "main-settings";
 
-export const getSettings = async (): Promise<Settings | null> => {
+export const getSettings = async (forceFetch = false): Promise<Settings | null> => {
+    if (!forceFetch && typeof window === 'undefined') {
+        return null; // Don't fetch during server-side build
+    }
     const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
     const docSnap = await getDoc(settingsDocRef);
 

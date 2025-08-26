@@ -44,7 +44,6 @@ const initialServices = [
     description: 'Designing intuitive user interfaces and stunning graphics that provide a great user experience and make your brand stand out.',
   },
    {
-    id: 6,
     icon: 'Code',
     title: 'Basic Web Coding',
     description: 'I have a foundational understanding of coding and can assist with basic customizations using HTML, CSS, and JavaScript for your web projects.',
@@ -62,12 +61,12 @@ export default function ServicesManagementPage() {
   const fetchAndSeedServices = async () => {
     setIsLoading(true);
     try {
-      let fetchedServices = await getServices();
+      let fetchedServices = await getServices(true); // Force fetch from server
       if (fetchedServices.length === 0) {
         // Seed data if collection is empty
         const seedPromises = initialServices.map(service => addService(service as Omit<Service, 'id' | 'createdAt'>));
         await Promise.all(seedPromises);
-        fetchedServices = await getServices();
+        fetchedServices = await getServices(true); // Fetch again after seeding
         toast({
           title: "Demo services seeded!",
           description: "Initial services have been added to Firestore.",
@@ -93,7 +92,7 @@ export default function ServicesManagementPage() {
   const fetchServices = async () => {
     setIsLoading(true);
     try {
-      const fetchedServices = await getServices();
+      const fetchedServices = await getServices(true);
       setServices(fetchedServices);
     } catch (error) {
        console.error("Error fetching services: ", error);

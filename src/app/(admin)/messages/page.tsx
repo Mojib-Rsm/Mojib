@@ -42,11 +42,11 @@ export default function MessagesPage() {
   const fetchAndSeedMessages = async () => {
     setIsLoading(true);
     try {
-      let fetchedMessages = await getMessages();
+      let fetchedMessages = await getMessages(true); // Force fetch from server
       if (fetchedMessages.length === 0) {
         const seedPromises = initialMessages.map(m => addMessage(m as Omit<Message, 'id' | 'date' | 'createdAt'>));
         await Promise.all(seedPromises);
-        fetchedMessages = await getMessages();
+        fetchedMessages = await getMessages(true); // Fetch again after seeding
         toast({
           title: "Demo messages seeded!",
           description: "Initial messages have been added to Firestore.",

@@ -26,19 +26,13 @@ const postFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Post => {
     };
 }
 
-export const getPosts = async (): Promise<Post[]> => {
+export const getPosts = async (forceFetch = false): Promise<Post[]> => {
+    if (!forceFetch && typeof window === 'undefined') {
+        return []; // Don't fetch during server-side build
+    }
     const postsCol = collection(db, 'posts');
     const q = query(postsCol, orderBy('createdAt', 'desc'));
     const snapshot = await getDocs(q);
-    if (snapshot.empty && typeof window !== 'undefined') {
-        const { getAuth } = await import('firebase/auth');
-        const auth = getAuth();
-        if (!auth.currentUser) {
-            // Return empty array if not logged in and collection is empty,
-            // allowing the frontend to decide to seed.
-            return [];
-        }
-    }
     return snapshot.docs.map(postFromDoc);
 };
 

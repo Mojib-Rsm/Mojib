@@ -34,7 +34,7 @@ export default function SettingsPage() {
   const fetchAndSeedSettings = async () => {
     setIsLoading(true);
     try {
-      let fetchedSettings = await getSettings();
+      let fetchedSettings = await getSettings(true); // Force fetch from server
       if (!fetchedSettings) {
         // Settings do not exist, let's seed them
         await saveSettings(defaultSettings);

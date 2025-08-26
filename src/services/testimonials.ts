@@ -23,17 +23,13 @@ const testimonialFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Testimoni
     };
 }
 
-export const getTestimonials = async (): Promise<Testimonial[]> => {
+export const getTestimonials = async (forceFetch = false): Promise<Testimonial[]> => {
+    if (!forceFetch && typeof window === 'undefined') {
+        return []; // Don't fetch during server-side build
+    }
     const testimonialsCol = collection(db, 'testimonials');
     const q = query(testimonialsCol, orderBy('createdAt', 'desc'));
     const snapshot = await getDocs(q);
-    if (snapshot.empty && typeof window !== 'undefined') {
-        const { getAuth } = await import('firebase/auth');
-        const auth = getAuth();
-        if (!auth.currentUser) {
-            return [];
-        }
-    }
     return snapshot.docs.map(testimonialFromDoc);
 };
 

@@ -21,17 +21,13 @@ const serviceFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Service => {
     };
 }
 
-export const getServices = async (): Promise<Service[]> => {
+export const getServices = async (forceFetch = false): Promise<Service[]> => {
+    if (!forceFetch && typeof window === 'undefined') {
+        return []; // Don't fetch during server-side build
+    }
     const servicesCol = collection(db, 'services');
     const q = query(servicesCol, orderBy('createdAt', 'asc'));
     const snapshot = await getDocs(q);
-    if (snapshot.empty && typeof window !== 'undefined') {
-        const { getAuth } = await import('firebase/auth');
-        const auth = getAuth();
-        if (!auth.currentUser) {
-            return [];
-        }
-    }
     return snapshot.docs.map(serviceFromDoc);
 };
 

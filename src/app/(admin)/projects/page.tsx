@@ -46,11 +46,11 @@ export default function PortfolioManagementPage() {
   const fetchAndSeedProjects = async () => {
     setIsLoading(true);
     try {
-      let fetchedProjects = await getProjects();
+      let fetchedProjects = await getProjects(true); // Force fetch from server
       if (fetchedProjects.length === 0) {
         const seedPromises = initialProjects.map(p => addProject(p as Omit<Project, 'id' | 'createdAt'>));
         await Promise.all(seedPromises);
-        fetchedProjects = await getProjects();
+        fetchedProjects = await getProjects(true); // Fetch again after seeding
         toast({
           title: "Demo projects seeded!",
           description: "Initial projects have been added to Firestore.",
@@ -76,7 +76,7 @@ export default function PortfolioManagementPage() {
   const fetchProjects = async () => {
     setIsLoading(true);
     try {
-      const fetchedProjects = await getProjects();
+      const fetchedProjects = await getProjects(true);
       setProjects(fetchedProjects);
     } catch (error) {
       console.error("Error fetching projects: ", error);
