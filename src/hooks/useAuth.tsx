@@ -2,7 +2,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { getAuth, signInWithEmailAndPassword, onIdTokenChanged, User, signOut, IdTokenResult } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, onIdTokenChanged, User, signOut, IdTokenResult, createUserWithEmailAndPassword } from 'firebase/auth';
 import { app } from '@/lib/firebase';
 
 interface AuthContextType {
@@ -53,7 +53,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email, password);
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+    } catch (error: any) {
+        // If the user does not exist, create a new user with the same credentials
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+            await createUserWithEmailAndPassword(auth, email, password);
+        } else {
+            // Re-throw other errors
+            throw error;
+        }
+    }
     // The onIdTokenChanged listener will handle the rest (setting user and cookie)
   };
 
