@@ -46,6 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = onIdTokenChanged(auth, async (newUser) => {
+        setLoading(false); // Set loading to false as soon as we get a response
         if (newUser) {
             setUser(newUser);
             const idToken = await newUser.getIdToken();
@@ -54,7 +55,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setUser(null);
             await setSessionCookie(null);
         }
-        setLoading(false); // This is the key change
     });
     return () => unsubscribe();
   }, []);
@@ -65,7 +65,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error: any) {
         // If the user does not exist, create a new user with the same credentials
         if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
-            await createUserWithEmailAndPassword(auth, email, password);
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+            } catch (createError: any) {
+                 // If creation also fails (e.g., operation not allowed), re-throw original error
+                 console.error("User creation failed:", createError);
+                 throw error;
+            }
         } else {
             // Re-throw other errors
             throw error;
