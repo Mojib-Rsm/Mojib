@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
 
 const navLinks = [
     { href: "/admin/dashboard", label: "Dashboard", icon: <Home /> },
@@ -28,15 +29,17 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user, loading, logout } = useAuth();
 
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace('/login');
+    }
+  }, [user, loading, router]);
+  
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen bg-background text-foreground"><Loader2 className="h-8 w-8 animate-spin" /></div>;
   }
-
-  // Fallback if middleware fails, though middleware should handle this.
+  
   if (!user) {
-    if (typeof window !== 'undefined') {
-        router.replace('/login');
-    }
     return <div className="flex items-center justify-center min-h-screen bg-background text-foreground">Redirecting to login...</div>;
   }
   
