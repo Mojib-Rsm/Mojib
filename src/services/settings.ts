@@ -1,6 +1,7 @@
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, updateDoc, DocumentData } from 'firebase/firestore';
+import { doc, getDoc, setDoc, DocumentData } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 export type SkillHighlight = {
     id: number;
@@ -16,26 +17,43 @@ export type Settings = {
 
 const SETTINGS_DOC_ID = "main-settings";
 
-export const getSettings = async (): Promise<Settings | null> => {
-    const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
-    const docSnap = await getDoc(settingsDocRef);
+const defaultSettings: Settings = {
+    profileImage: '/uploads/about-sec.jpeg',
+    bio: "I am a technology enthusiast with a strong passion for WordPress development, AI, and digital marketing. My goal is to create amazing online experiences that are not only visually appealing but also smart and effective. I enjoy solving problems and constantly learning new things to stay at the forefront of technology.",
+    skills: [
+        { id: 1, label: 'Experience', value: '3+ Years' },
+        { id: 2, label: 'Projects', value: '50+ Completed' },
+        { id: 3, label: 'Happy Clients', value: '40+' },
+    ]
+}
 
-    if (docSnap.exists()) {
-        const data = docSnap.data() as DocumentData;
-        return {
-            profileImage: data.profileImage,
-            bio: data.bio,
-            skills: data.skills || [],
-        };
-    } else {
-        // You might want to return default settings or null if it doesn't exist
-        return null;
+export const getSettings = async (): Promise<Settings | null> => {
+    const auth = getAuth();
+    if (!auth.currentUser) {
+        return defaultSettings;
+    }
+
+    try {
+        const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
+        const docSnap = await getDoc(settingsDocRef);
+
+        if (docSnap.exists()) {
+            const data = docSnap.data() as DocumentData;
+            return {
+                profileImage: data.profileImage,
+                bio: data.bio,
+                skills: data.skills || [],
+            };
+        } else {
+            return defaultSettings;
+        }
+    } catch (error) {
+        console.error("Permission error fetching settings, returning default values.", error);
+        return defaultSettings;
     }
 };
 
 export const saveSettings = async (settings: Settings): Promise<void> => {
     const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
-    // Use setDoc with merge: true to create the document if it doesn't exist,
-    // or update it if it does.
     await setDoc(settingsDocRef, settings, { merge: true });
 };

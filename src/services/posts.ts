@@ -1,6 +1,7 @@
 
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, DocumentData, QueryDocumentSnapshot, serverTimestamp, orderBy, query } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 export type Post = {
     id: string;
@@ -11,6 +12,22 @@ export type Post = {
     content: string;
     createdAt: any;
 }
+
+const initialPosts = [
+  {
+    image: 'https://placehold.co/600x400.png',
+    category: 'UI/UX',
+    title: 'The 10 Best UI/UX Design Books to Read in 2024',
+    content: 'This is the full content for the blog post about UI/UX books...'
+  },
+  {
+    image: 'https://placehold.co/600x400.png',
+    category: 'Productivity',
+    title: 'How to Stay Creative and Productive as a Designer',
+    content: 'This is the full content for the blog post about productivity...'
+  },
+];
+
 
 const postFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Post => {
     const data = doc.data();
@@ -27,10 +44,19 @@ const postFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Post => {
 }
 
 export const getPosts = async (): Promise<Post[]> => {
-    const postsCol = collection(db, 'posts');
-    const q = query(postsCol, orderBy('createdAt', 'desc'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(postFromDoc);
+    const auth = getAuth();
+    if (!auth.currentUser) {
+        return initialPosts.map((p, i) => ({ ...p, id: `post-${i}`, date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), createdAt: new Date() }));
+    }
+    try {
+        const postsCol = collection(db, 'posts');
+        const q = query(postsCol, orderBy('createdAt', 'desc'));
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map(postFromDoc);
+    } catch (error) {
+        console.error("Permission error fetching posts, returning initial data", error);
+        return initialPosts.map((p, i) => ({ ...p, id: `post-${i}`, date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), createdAt: new Date() }));
+    }
 };
 
 export const addPost = async (post: Omit<Post, 'id' | 'date' | 'createdAt'>) => {
