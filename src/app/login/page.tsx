@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -22,7 +21,7 @@ function LoginComponent() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   useEffect(() => {
-    // If done loading and user is logged in, redirect.
+    // Redirect if loading is finished and user is logged in.
     if (!loading && user) {
       const redirectUrl = searchParams.get('redirect') || '/admin/dashboard';
       router.replace(redirectUrl);
@@ -49,7 +48,7 @@ function LoginComponent() {
     }
   };
   
-  // While checking auth state, show a loader.
+  // Show a loader while the auth state is being determined.
   if (loading) {
     return (
         <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
@@ -58,7 +57,7 @@ function LoginComponent() {
     )
   }
 
-  // If not loading and user is logged in, redirect (handled by useEffect, but this prevents flashing the form).
+  // If still loading or user is logged in, show loader (will be redirected by useEffect).
   if (user) {
      return (
         <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
