@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -33,43 +34,20 @@ const blogData = [
 
 export function Blog() {
   const { translations } = useLanguage();
-  const sectionVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5 },
-    },
-  };
 
   return (
-    <motion.section 
+    <section 
       id="blog" 
       className="bg-muted py-20 md:py-28"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={sectionVariants}
     >
       <div className="container max-w-screen-xl mx-auto">
-        <motion.div className="text-center mb-12" variants={itemVariants}>
+        <div className="text-center mb-12">
           <h2 className="text-4xl font-bold">{translations.blogTitle}</h2>
           <p className="text-muted-foreground mt-2">{translations.blogSubtitle}</p>
-        </motion.div>
+        </div>
         <div className="grid md:grid-cols-3 gap-8">
           {blogData.map((post, index) => (
-            <motion.div key={index} variants={itemVariants} whileHover={{ y: -5 }}>
+            <div key={index}>
               <Card className="overflow-hidden h-full flex flex-col bg-background border shadow-lg hover:shadow-primary/20">
                 <CardHeader className="p-0">
                    <Image
@@ -91,10 +69,10 @@ export function Blog() {
                   <Button variant="link" className="p-0">{translations.readMore}</Button>
                 </CardFooter>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

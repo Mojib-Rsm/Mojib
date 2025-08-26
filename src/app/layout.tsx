@@ -39,10 +39,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
         <head>
-            <title>Mojib Rsm - Professional Portfolio</title>
-            <meta name="description" content="The professional portfolio of Mojib Rsm, showcasing software development projects, skills, and experience." />
+            <title>Mojib Rsm - WordPress Developer, AI Specialist & Digital Marketer</title>
+            <meta name="description" content="Welcome to the portfolio of Mojib Rsm. Discover my projects in WordPress, AI, and digital marketing. Let's build something amazing together." />
+            <meta name="keywords" content="Mojib Rsm, WordPress Developer, AI Specialist, Digital Marketer, Web Developer, SEO Expert, Freelancer Bangladesh" />
+            <meta property="og:title" content="Mojib Rsm - Professional Portfolio" />
+            <meta property="og:description" content="Showcasing software development projects, skills, and experience in WordPress, AI, and more." />
+            <meta property="og:image" content="/uploads/mojib-hero.png" />
+            <meta property="og:url" content="https://www.mojib.me" />
+            <meta name="twitter:card" content="summary_large_image" />
         </head>
-      <body className={cn(`${belleza.variable} ${alegreya.variable} font-body antialiased`, isAdminRoute && 'admin-theme')} suppressHydrationWarning>
+      <body className={cn(`${belleza.variable} ${alegreya.variable} 'font-body antialiased'`, isAdminRoute && 'admin-theme')} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -66,5 +72,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-    
