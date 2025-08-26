@@ -1,16 +1,22 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getAuth } from 'firebase-admin/auth';
-import { getApp, getApps, initializeApp } from 'firebase-admin/app';
+import { getAuth, DecodedIdToken } from 'firebase-admin/auth';
+import { getApp, getApps, initializeApp, App } from 'firebase-admin/app';
 import { serviceAccount } from '@/lib/firebase-admin';
 
-const adminApp = !getApps().length ? initializeApp({
-    credential: {
-        projectId: serviceAccount.project_id,
-        clientEmail: serviceAccount.client_email,
-        privateKey: serviceAccount.private_key,
-    }
-}) : getApp();
+let adminApp: App;
+
+try {
+    adminApp = getApp();
+} catch (e) {
+    adminApp = initializeApp({
+        credential: {
+            projectId: serviceAccount.project_id,
+            clientEmail: serviceAccount.client_email,
+            privateKey: serviceAccount.private_key,
+        }
+    });
+}
 
 
 export async function POST(request: NextRequest) {
