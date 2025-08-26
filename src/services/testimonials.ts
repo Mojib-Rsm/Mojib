@@ -11,22 +11,6 @@ export type Testimonial = {
     createdAt: any;
 }
 
-const initialTestimonials = [
-  {
-    image: "https://placehold.co/100x100.png",
-    name: "John Doe",
-    position: "CEO, Tech Solutions",
-    text: "Working with Mojib was a fantastic experience. He delivered a high-quality website that exceeded our expectations. Highly recommended!",
-  },
-  {
-    image: "https://placehold.co/100x100.png",
-    name: "Jane Smith",
-    position: "Marketing Manager, Creative Co.",
-    text: "His expertise in digital marketing helped us double our online presence in just three months. A true professional with great insights.",
-  },
-];
-
-
 const testimonialFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Testimonial => {
     const data = doc.data();
     return {
@@ -40,24 +24,17 @@ const testimonialFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Testimoni
 }
 
 export const getTestimonials = async (): Promise<Testimonial[]> => {
-    if (typeof window === 'undefined') {
-        return initialTestimonials.map((t, i) => ({ ...t, id: `testimonial-${i}`, createdAt: new Date() }));
-    }
-    
-    try {
+    const testimonialsCol = collection(db, 'testimonials');
+    const q = query(testimonialsCol, orderBy('createdAt', 'desc'));
+    const snapshot = await getDocs(q);
+    if (snapshot.empty && typeof window !== 'undefined') {
         const { getAuth } = await import('firebase/auth');
         const auth = getAuth();
         if (!auth.currentUser) {
-            return initialTestimonials.map((t, i) => ({ ...t, id: `testimonial-${i}`, createdAt: new Date() }));
+            return [];
         }
-        const testimonialsCol = collection(db, 'testimonials');
-        const q = query(testimonialsCol, orderBy('createdAt', 'desc'));
-        const snapshot = await getDocs(q);
-        return snapshot.docs.map(testimonialFromDoc);
-    } catch (error) {
-        console.error("Permission error fetching testimonials, returning initial data", error);
-        return initialTestimonials.map((t, i) => ({ ...t, id: `testimonial-${i}`, createdAt: new Date() }));
     }
+    return snapshot.docs.map(testimonialFromDoc);
 };
 
 export const addTestimonial = async (testimonial: Omit<Testimonial, 'id' | 'createdAt'>) => {

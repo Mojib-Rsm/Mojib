@@ -38,6 +38,13 @@ export const getMessages = async (): Promise<Message[]> => {
     const messagesCol = collection(db, 'messages');
     const q = query(messagesCol, orderBy('createdAt', 'desc'));
     const snapshot = await getDocs(q);
+    if (snapshot.empty && typeof window !== 'undefined') {
+        const { getAuth } = await import('firebase/auth');
+        const auth = getAuth();
+        if (!auth.currentUser) {
+            return [];
+        }
+    }
     return snapshot.docs.map(messageFromDoc);
 };
 

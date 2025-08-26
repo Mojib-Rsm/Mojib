@@ -12,22 +12,6 @@ export type Post = {
     createdAt: any;
 }
 
-const initialPosts = [
-  {
-    image: 'https://placehold.co/600x400.png',
-    category: 'UI/UX',
-    title: 'The 10 Best UI/UX Design Books to Read in 2024',
-    content: 'This is the full content for the blog post about UI/UX books...'
-  },
-  {
-    image: 'https://placehold.co/600x400.png',
-    category: 'Productivity',
-    title: 'How to Stay Creative and Productive as a Designer',
-    content: 'This is the full content for the blog post about productivity...'
-  },
-];
-
-
 const postFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Post => {
     const data = doc.data();
     const date = data.createdAt?.toDate() ?? new Date();
@@ -43,26 +27,19 @@ const postFromDoc = (doc: QueryDocumentSnapshot<DocumentData>): Post => {
 }
 
 export const getPosts = async (): Promise<Post[]> => {
-    // During build time (SSR), there's no browser environment, so `window` is undefined.
-    // We fall back to initial data to avoid Firebase permission errors during build.
-    if (typeof window === 'undefined') {
-        return initialPosts.map((p, i) => ({ ...p, id: `post-${i}`, date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), createdAt: new Date() }));
-    }
-    
-    try {
+    const postsCol = collection(db, 'posts');
+    const q = query(postsCol, orderBy('createdAt', 'desc'));
+    const snapshot = await getDocs(q);
+    if (snapshot.empty && typeof window !== 'undefined') {
         const { getAuth } = await import('firebase/auth');
         const auth = getAuth();
         if (!auth.currentUser) {
-            return initialPosts.map((p, i) => ({ ...p, id: `post-${i}`, date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), createdAt: new Date() }));
+            // Return empty array if not logged in and collection is empty,
+            // allowing the frontend to decide to seed.
+            return [];
         }
-        const postsCol = collection(db, 'posts');
-        const q = query(postsCol, orderBy('createdAt', 'desc'));
-        const snapshot = await getDocs(q);
-        return snapshot.docs.map(postFromDoc);
-    } catch (error) {
-        console.error("Permission error fetching posts, returning initial data", error);
-        return initialPosts.map((p, i) => ({ ...p, id: `post-${i}`, date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), createdAt: new Date() }));
     }
+    return snapshot.docs.map(postFromDoc);
 };
 
 export const addPost = async (post: Omit<Post, 'id' | 'date' | 'createdAt'>) => {
