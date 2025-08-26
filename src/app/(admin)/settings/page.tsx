@@ -31,37 +31,38 @@ export default function SettingsPage() {
   const [bio, setBio] = useState(defaultSettings.bio);
   const [skills, setSkills] = useState<SkillHighlight[]>(defaultSettings.skills);
 
+  const fetchAndSeedSettings = async () => {
+    setIsLoading(true);
+    try {
+      let fetchedSettings = await getSettings();
+      if (!fetchedSettings) {
+        // Settings do not exist, let's seed them
+        await saveSettings(defaultSettings);
+        fetchedSettings = defaultSettings;
+        toast({
+          title: "Default settings seeded!",
+          description: "Initial settings have been saved to Firestore.",
+        });
+      }
+      setSettings(fetchedSettings);
+      setProfileImage(fetchedSettings.profileImage);
+      setBio(fetchedSettings.bio);
+      setSkills(fetchedSettings.skills);
+    } catch (error) {
+      console.error("Error fetching or seeding settings: ", error);
+      toast({
+        title: "Error",
+        description: "Could not fetch settings. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchSettings = async () => {
-        setIsLoading(true);
-        try {
-            let fetchedSettings = await getSettings();
-            if (!fetchedSettings) {
-                // Seed the settings if they don't exist
-                await saveSettings(defaultSettings);
-                fetchedSettings = defaultSettings;
-                toast({
-                    title: "Default settings seeded!",
-                    description: "Initial settings have been saved to Firestore.",
-                });
-            }
-            setSettings(fetchedSettings);
-            setProfileImage(fetchedSettings.profileImage);
-            setBio(fetchedSettings.bio);
-            setSkills(fetchedSettings.skills);
-        } catch (error) {
-            console.error("Error fetching settings: ", error);
-            toast({
-                title: "Error",
-                description: "Could not fetch settings. Using default values.",
-                variant: "destructive",
-            });
-        } finally {
-            setIsLoading(false);
-        }
-    };
-    fetchSettings();
-  }, [toast]);
+    fetchAndSeedSettings();
+  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {

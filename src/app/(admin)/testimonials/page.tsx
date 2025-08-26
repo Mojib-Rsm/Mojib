@@ -37,34 +37,35 @@ export default function TestimonialsManagementPage() {
   const [currentTestimonial, setCurrentTestimonial] = useState<Partial<Testimonial> | null>(null);
   const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-        setIsLoading(true);
-        try {
-            let fetchedTestimonials = await getTestimonials();
-            if (fetchedTestimonials.length === 0) {
-                const seedPromises = initialTestimonials.map(t => addTestimonial(t as Omit<Testimonial, 'id' | 'createdAt'>));
-                await Promise.all(seedPromises);
-                fetchedTestimonials = await getTestimonials();
-                toast({
-                    title: "Demo testimonials seeded!",
-                    description: "Initial testimonials have been added to Firestore.",
-                });
-            }
-            setTestimonials(fetchedTestimonials);
-        } catch (error) {
-            console.error("Error fetching testimonials: ", error);
-            toast({
-                title: "Error",
-                description: "Could not fetch testimonials. Please try again.",
-                variant: "destructive",
-            });
-        } finally {
-            setIsLoading(false);
-        }
+  const fetchAndSeedTestimonials = async () => {
+    setIsLoading(true);
+    try {
+      let fetchedTestimonials = await getTestimonials();
+      if (fetchedTestimonials.length === 0) {
+        const seedPromises = initialTestimonials.map(t => addTestimonial(t as Omit<Testimonial, 'id' | 'createdAt'>));
+        await Promise.all(seedPromises);
+        fetchedTestimonials = await getTestimonials();
+        toast({
+          title: "Demo testimonials seeded!",
+          description: "Initial testimonials have been added to Firestore.",
+        });
+      }
+      setTestimonials(fetchedTestimonials);
+    } catch (error) {
+      console.error("Error fetching or seeding testimonials: ", error);
+      toast({
+        title: "Error",
+        description: "Could not fetch testimonials. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-    fetchTestimonials();
-  }, [toast]);
+  };
+
+  useEffect(() => {
+    fetchAndSeedTestimonials();
+  }, []);
 
   const fetchTestimonials = async () => {
     setIsLoading(true);

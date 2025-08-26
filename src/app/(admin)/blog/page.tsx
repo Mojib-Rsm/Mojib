@@ -37,34 +37,37 @@ export default function BlogManagementPage() {
   const [currentPost, setCurrentPost] = useState<Partial<Post> | null>(null);
   const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setIsLoading(true);
-      try {
-        let fetchedPosts = await getPosts();
-        if (fetchedPosts.length === 0) {
-            const seedPromises = initialPosts.map(p => addPost(p as Omit<Post, 'id' | 'date' | 'createdAt'>));
-            await Promise.all(seedPromises);
-            fetchedPosts = await getPosts();
-             toast({
-                title: "Demo posts seeded!",
-                description: "Initial blog posts have been added to Firestore.",
-            });
-        }
-        setPosts(fetchedPosts);
-      } catch (error) {
-        console.error("Error fetching posts: ", error);
+  const fetchAndSeedPosts = async () => {
+    setIsLoading(true);
+    try {
+      let fetchedPosts = await getPosts();
+      if (fetchedPosts.length === 0) {
+        // Collection is empty, let's seed it
+        const seedPromises = initialPosts.map(p => addPost(p as Omit<Post, 'id' | 'date' | 'createdAt'>));
+        await Promise.all(seedPromises);
+        // Fetch again after seeding
+        fetchedPosts = await getPosts();
         toast({
-          title: "Error",
-          description: "Could not fetch posts. Please try again.",
-          variant: "destructive",
+          title: "Demo posts seeded!",
+          description: "Initial blog posts have been added to Firestore.",
         });
-      } finally {
-        setIsLoading(false);
       }
+      setPosts(fetchedPosts);
+    } catch (error) {
+      console.error("Error fetching or seeding posts: ", error);
+      toast({
+        title: "Error",
+        description: "Could not fetch posts. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-    fetchPosts();
-  }, [toast]);
+  };
+
+  useEffect(() => {
+    fetchAndSeedPosts();
+  }, []);
 
   const fetchPosts = async () => {
     setIsLoading(true);

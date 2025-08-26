@@ -39,34 +39,35 @@ export default function MessagesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      setIsLoading(true);
-      try {
-        let fetchedMessages = await getMessages();
-        if (fetchedMessages.length === 0) {
-            const seedPromises = initialMessages.map(m => addMessage(m as Omit<Message, 'id' | 'date' | 'createdAt'>));
-            await Promise.all(seedPromises);
-            fetchedMessages = await getMessages();
-             toast({
-                title: "Demo messages seeded!",
-                description: "Initial messages have been added to Firestore.",
-            });
-        }
-        setMessages(fetchedMessages);
-      } catch (error) {
-        console.error("Error fetching messages: ", error);
+  const fetchAndSeedMessages = async () => {
+    setIsLoading(true);
+    try {
+      let fetchedMessages = await getMessages();
+      if (fetchedMessages.length === 0) {
+        const seedPromises = initialMessages.map(m => addMessage(m as Omit<Message, 'id' | 'date' | 'createdAt'>));
+        await Promise.all(seedPromises);
+        fetchedMessages = await getMessages();
         toast({
-          title: "Error",
-          description: "Could not fetch messages. Please try again.",
-          variant: "destructive",
+          title: "Demo messages seeded!",
+          description: "Initial messages have been added to Firestore.",
         });
-      } finally {
-        setIsLoading(false);
       }
+      setMessages(fetchedMessages);
+    } catch (error) {
+      console.error("Error fetching or seeding messages: ", error);
+      toast({
+        title: "Error",
+        description: "Could not fetch messages. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-    fetchMessages();
-  }, [toast]);
+  };
+
+  useEffect(() => {
+    fetchAndSeedMessages();
+  }, []);
 
   const handleAccordionChange = async (value: string) => {
     if(!value) return;

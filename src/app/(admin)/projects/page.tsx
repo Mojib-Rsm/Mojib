@@ -43,34 +43,35 @@ export default function PortfolioManagementPage() {
   const [techInput, setTechInput] = useState('');
   const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      setIsLoading(true);
-      try {
-        let fetchedProjects = await getProjects();
-        if (fetchedProjects.length === 0) {
-            const seedPromises = initialProjects.map(p => addProject(p as Omit<Project, 'id' | 'createdAt'>));
-            await Promise.all(seedPromises);
-            fetchedProjects = await getProjects();
-            toast({
-                title: "Demo projects seeded!",
-                description: "Initial projects have been added to Firestore.",
-            });
-        }
-        setProjects(fetchedProjects);
-      } catch (error) {
-        console.error("Error fetching projects: ", error);
+  const fetchAndSeedProjects = async () => {
+    setIsLoading(true);
+    try {
+      let fetchedProjects = await getProjects();
+      if (fetchedProjects.length === 0) {
+        const seedPromises = initialProjects.map(p => addProject(p as Omit<Project, 'id' | 'createdAt'>));
+        await Promise.all(seedPromises);
+        fetchedProjects = await getProjects();
         toast({
-          title: "Error",
-          description: "Could not fetch projects. Please try again.",
-          variant: "destructive",
+          title: "Demo projects seeded!",
+          description: "Initial projects have been added to Firestore.",
         });
-      } finally {
-        setIsLoading(false);
       }
+      setProjects(fetchedProjects);
+    } catch (error) {
+      console.error("Error fetching or seeding projects: ", error);
+      toast({
+        title: "Error",
+        description: "Could not fetch projects. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-    fetchProjects();
-  }, [toast]);
+  };
+
+  useEffect(() => {
+    fetchAndSeedProjects();
+  }, []);
 
   const fetchProjects = async () => {
     setIsLoading(true);

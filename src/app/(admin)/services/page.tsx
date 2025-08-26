@@ -59,39 +59,38 @@ export default function ServicesManagementPage() {
   const [currentService, setCurrentService] = useState<Partial<Service> | null>(null);
   const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      setIsLoading(true);
-      try {
-        let fetchedServices = await getServices();
-        if (fetchedServices.length === 0) {
-            // Seed data if collection is empty
-            const seedPromises = initialServices.map(service => addService(service as Omit<Service, 'id' | 'createdAt'>));
-            await Promise.all(seedPromises);
-            fetchedServices = await getServices();
-             toast({
-                title: "Demo services seeded!",
-                description: "Initial services have been added to Firestore.",
-            });
-        }
-        setServices(fetchedServices);
-      } catch (error) {
-        console.error("Error fetching services: ", error);
+  const fetchAndSeedServices = async () => {
+    setIsLoading(true);
+    try {
+      let fetchedServices = await getServices();
+      if (fetchedServices.length === 0) {
+        // Seed data if collection is empty
+        const seedPromises = initialServices.map(service => addService(service as Omit<Service, 'id' | 'createdAt'>));
+        await Promise.all(seedPromises);
+        fetchedServices = await getServices();
         toast({
-          title: "Error",
-          description: "Could not fetch services. Please try again.",
-          variant: "destructive",
+          title: "Demo services seeded!",
+          description: "Initial services have been added to Firestore.",
         });
-      } finally {
-        setIsLoading(false);
       }
+      setServices(fetchedServices);
+    } catch (error) {
+      console.error("Error fetching or seeding services: ", error);
+      toast({
+        title: "Error",
+        description: "Could not fetch services. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-    fetchServices();
-  }, [toast]);
+  };
+
+  useEffect(() => {
+    fetchAndSeedServices();
+  }, []);
 
   const fetchServices = async () => {
-    // This function is redefined inside useEffect, so this is a placeholder. 
-    // The real fetch is inside useEffect to run on mount.
     setIsLoading(true);
     try {
       const fetchedServices = await getServices();
