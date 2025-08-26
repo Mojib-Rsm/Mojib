@@ -57,7 +57,7 @@ function LoginComponent() {
     )
   }
 
-  // If still loading or user is logged in, show loader (will be redirected by useEffect).
+  // If user is already logged in, show loader while redirecting
   if (user) {
      return (
         <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">

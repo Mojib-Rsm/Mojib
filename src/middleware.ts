@@ -60,13 +60,13 @@ export async function middleware(request: NextRequest) {
   }
 
   if (isPublicRoute && isAuthed) {
-    const redirectUrl = request.nextUrl.searchParams.get('redirect') || '/admin/dashboard';
-    return NextResponse.redirect(new URL(redirectUrl, request.url))
+    return NextResponse.redirect(new URL('/admin/dashboard', request.url))
   }
  
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/login', '/api/auth/verify'],
+  matcher: ['/admin/:path*', '/login'],
 }
+
