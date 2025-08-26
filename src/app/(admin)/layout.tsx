@@ -1,37 +1,46 @@
 
+
 'use client';
 
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarFooter } from "@/components/ui/sidebar";
-import { AreaChart, Briefcase, FileText, HelpCircle, History, Home, Image as ImageIcon, LogOut, MailQuestion, MessageSquare, Newspaper, Settings, Zap } from "lucide-react";
+import { AreaChart, Briefcase, FileText, HelpCircle, History, Home, ImageIcon, LogOut, MailQuestion, MessageSquare, Newspaper, Settings, Users, Zap } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { AuthProvider, useAuth } from "@/hooks/useAuth";
 
-export default function AdminLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const navLinks = [
+    { href: "/admin/dashboard", label: "Dashboard", icon: <Home /> },
+    { href: "/admin/analytics", label: "Analytics", icon: <AreaChart /> },
+    { href: "/admin/content", label: "Content", icon: <FileText /> },
+    { href: "/admin/blog", label: "Blog", icon: <Newspaper /> },
+    { href: "/admin/projects", label: "Projects", icon: <Briefcase /> },
+    { href: "/admin/media", label: "Media", icon: <ImageIcon /> },
+    { href: "/admin/requests", label: "Requests", icon: <MailQuestion /> },
+    { href: "/admin/messages", label: "Messages", icon: <MessageSquare /> },
+    { href: "/admin/testimonials", label: "Testimonials", icon: <Users />},
+    { href: "/admin/history", label: "History", icon: <History /> },
+]
+
+function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, loading, logout } = useAuth();
 
-  useEffect(() => {
-    const loggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
-    setIsAuthenticated(loggedIn);
-    setIsLoading(false);
-    if (!loggedIn) {
-      router.push('/login');
-    }
-  }, [router]);
-
-  if (isLoading) {
+  if (loading) {
     return <div className="flex items-center justify-center min-h-screen bg-background">Loading...</div>;
   }
 
-  if (!isAuthenticated) {
+  if (!user) {
+    // This should be handled by the middleware, but as a fallback
+    if (typeof window !== 'undefined') {
+        router.replace('/login');
+    }
     return null;
+  }
+  
+  const handleLogout = () => {
+    logout();
+    router.push('/login');
   }
 
   return (
@@ -50,60 +59,14 @@ export default function AdminLayout({
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton href="/admin/dashboard" isActive={pathname === '/admin/dashboard'} tooltip="Dashboard">
-                <Home />
-                <span className="group-data-[collapsible=icon]:hidden">Dashboard</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-             <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/analytics" isActive={pathname.startsWith('/admin/analytics')} tooltip="Analytics">
-                <AreaChart />
-                 <span className="group-data-[collapsible=icon]:hidden">Analytics</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/content" isActive={pathname.startsWith('/admin/content')} tooltip="Content">
-                <FileText />
-                 <span className="group-data-[collapsible=icon]:hidden">Content</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/blog" isActive={pathname.startsWith('/admin/blog')} tooltip="Blog">
-                <Newspaper />
-                 <span className="group-data-[collapsible=icon]:hidden">Blog</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/projects" isActive={pathname.startsWith('/admin/projects')} tooltip="Projects">
-                <Briefcase />
-                 <span className="group-data-[collapsible=icon]:hidden">Projects</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/media" isActive={pathname.startsWith('/admin/media')} tooltip="Media">
-                <ImageIcon />
-                 <span className="group-data-[collapsible=icon]:hidden">Media</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-             <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/requests" isActive={pathname.startsWith('/admin/requests')} tooltip="Requests">
-                <MailQuestion />
-                 <span className="group-data-[collapsible=icon]:hidden">Requests</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-             <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/messages" isActive={pathname.startsWith('/admin/messages')} tooltip="Messages">
-                <MessageSquare />
-                 <span className="group-data-[collapsible=icon]:hidden">Messages</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-               <SidebarMenuButton href="/admin/history" isActive={pathname.startsWith('/admin/history')} tooltip="History">
-                <History />
-                 <span className="group-data-[collapsible=icon]:hidden">History</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+             {navLinks.map((link) => (
+                <SidebarMenuItem key={link.href}>
+                    <SidebarMenuButton href={link.href} isActive={pathname === link.href} tooltip={link.label}>
+                        {link.icon}
+                        <span className="group-data-[collapsible=icon]:hidden">{link.label}</span>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+             ))}
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter>
@@ -126,10 +89,7 @@ export default function AdminLayout({
                 </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => {
-                    localStorage.removeItem('isAdminLoggedIn');
-                    router.push('/login');
-                }} tooltip="Logout">
+                <SidebarMenuButton onClick={handleLogout} tooltip="Logout" href="#">
                     <LogOut />
                     <span className="group-data-[collapsible=icon]:hidden">Logout</span>
                 </SidebarMenuButton>
@@ -153,5 +113,18 @@ export default function AdminLayout({
       </SidebarInset>
     </SidebarProvider>
   );
+}
+
+
+export default function AdminLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <AuthProvider>
+      <AdminLayoutContent>{children}</AdminLayoutContent>
+    </AuthProvider>
+  )
 }
     

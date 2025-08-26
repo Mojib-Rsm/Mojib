@@ -1,28 +1,53 @@
 
+
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useAuth } from '@/hooks/useAuth';
+import { Loader2 } from 'lucide-react';
 
-export default function LoginPage() {
+
+function LoginComponent() {
   const router = useRouter();
+  const { user, loading, login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (!loading && user) {
+      router.replace('/admin/dashboard');
+    }
+  }, [user, loading, router]);
+
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === 'admin@example.com' && password === 'password') {
-      localStorage.setItem('isAdminLoggedIn', 'true');
+    setError('');
+    setIsLoggingIn(true);
+    try {
+      await login(email, password);
       router.push('/admin/dashboard');
-    } else {
-      setError('Invalid email or password');
+    } catch (err: any) {
+      setError(err.message || 'Invalid email or password');
+    } finally {
+      setIsLoggingIn(false);
     }
   };
+  
+  if (loading || user) {
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
+            <Loader2 className="h-8 w-8 animate-spin" />
+        </div>
+    )
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-muted admin-theme">
@@ -42,6 +67,7 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoggingIn}
               />
             </div>
             <div className="space-y-2">
@@ -53,10 +79,12 @@ export default function LoginPage() {
                 value={password}
                 placeholder="password"
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoggingIn}
               />
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={isLoggingIn}>
+              {isLoggingIn && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Login
             </Button>
           </form>
@@ -66,4 +94,13 @@ export default function LoginPage() {
   );
 }
 
+import { AuthProvider } from '@/hooks/useAuth';
+
+export default function LoginPage() {
+    return (
+        <AuthProvider>
+            <LoginComponent />
+        </AuthProvider>
+    )
+}
     

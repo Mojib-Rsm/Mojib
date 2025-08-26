@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import type { Metadata } from 'next';
@@ -11,6 +12,7 @@ import { LanguageProvider } from '@/context/LanguageContext';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { AuthProvider } from '@/hooks/useAuth';
 
 const belleza = Belleza({
   subsets: ['latin'],
@@ -34,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const isAdminRoute = pathname.startsWith('/admin');
+  const isAdminRoute = pathname.startsWith('/admin') || pathname === '/login';
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -56,6 +58,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <LanguageProvider>
+            <AuthProvider>
               {isAdminRoute ? (
                 children
               ) : (
@@ -65,6 +68,7 @@ export default function RootLayout({
                     <Footer />
                 </div>
               )}
+            </AuthProvider>
             <Toaster />
           </LanguageProvider>
         </ThemeProvider>
@@ -72,3 +76,4 @@ export default function RootLayout({
     </html>
   );
 }
+
