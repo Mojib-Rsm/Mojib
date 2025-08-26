@@ -41,13 +41,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // onIdTokenChanged is more appropriate than onAuthStateChanged for session management
     const unsubscribe = onIdTokenChanged(auth, async (newUser) => {
-      setLoading(true);
-      setUser(newUser);
-      const idToken = newUser ? await newUser.getIdToken() : null;
-      await setSessionCookie(idToken);
-      setLoading(false);
+        if (newUser) {
+            setUser(newUser);
+            const idToken = await newUser.getIdToken();
+            await setSessionCookie(idToken);
+        } else {
+            setUser(null);
+            await setSessionCookie(null);
+        }
+        setLoading(false);
     });
     return () => unsubscribe();
   }, []);
