@@ -1,25 +1,23 @@
 
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getAuth } from 'firebase-admin/auth';
-import { getApp, getApps, initializeApp } from 'firebase-admin/app';
-import { serviceAccount } from '@/lib/firebase-admin';
-
-const adminApp = !getApps().length ? initializeApp({
-    credential: {
-        projectId: serviceAccount.project_id,
-        clientEmail: serviceAccount.client_email,
-        privateKey: serviceAccount.private_key,
-    }
-}) : getApp();
 
 async function isAuthenticated(request: NextRequest): Promise<boolean> {
     try {
         const session = request.cookies.get('session')?.value;
         if (!session) return false;
-        await getAuth(adminApp).verifySessionCookie(session, true);
-        return true;
+
+        // Instead of using firebase-admin in middleware, we call an API route
+        // that runs in the Node.js runtime and can use firebase-admin.
+        const response = await fetch(new URL('/api/auth/verify', request.url), {
+            headers: {
+                Cookie: `session=${session}`
+            }
+        });
+
+        return response.ok;
     } catch (error) {
+        console.error('Authentication check failed:', error);
         return false;
     }
 }
@@ -27,6 +25,12 @@ async function isAuthenticated(request: NextRequest): Promise<boolean> {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  
+  // We need to exclude the verification api route from auth checks
+  if (pathname.startsWith('/api/auth/verify')) {
+      return NextResponse.next();
+  }
+  
   const isAuthed = await isAuthenticated(request);
 
   const adminRoutes = [
@@ -60,5 +64,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/login'],
+  matcher: ['/admin/:path*', '/login', '/api/auth/verify'],
 }
