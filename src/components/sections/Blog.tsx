@@ -5,35 +5,22 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
-import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
-
-const blogData = [
-  {
-    image: 'https://placehold.co/600x400.png',
-    category: 'UI/UX',
-    title: 'The 10 Best UI/UX Design Books to Read in 2024',
-    date: 'July 19, 2024',
-    hint: 'books stack'
-  },
-  {
-    image: 'https://placehold.co/600x400.png',
-    category: 'Productivity',
-    title: 'How to Stay Creative and Productive as a Designer',
-    date: 'July 15, 2024',
-    hint: 'desk setup'
-  },
-  {
-    image: 'https://placehold.co/600x400.png',
-    category: 'Web Design',
-    title: 'The Future of Web Design: Trends to Watch',
-    date: 'July 10, 2024',
-    hint: 'futuristic interface'
-  },
-];
+import { getBlogPosts, BlogPost } from '@/services/blog';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export function Blog() {
   const { translations } = useLanguage();
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    setPosts(getBlogPosts());
+  }, []);
+
+  if (posts.length === 0) {
+    return null; // Don't render the section if there are no posts
+  }
 
   return (
     <section 
@@ -46,27 +33,29 @@ export function Blog() {
           <p className="text-muted-foreground mt-2">{translations.blogSubtitle}</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
-          {blogData.map((post, index) => (
-            <div key={index}>
+          {posts.slice(0, 3).map((post) => (
+            <div key={post.id}>
               <Card className="overflow-hidden h-full flex flex-col bg-background border shadow-lg hover:shadow-primary/20">
                 <CardHeader className="p-0">
                    <Image
-                      src={post.image}
+                      src={post.image || 'https://placehold.co/600x400.png'}
                       alt={post.title}
                       width={600}
                       height={400}
-                      className="w-full h-auto object-cover"
-                      data-ai-hint={post.hint}
+                      className="w-full h-auto object-cover aspect-[3/2]"
+                      data-ai-hint="blog post"
                       loading="lazy"
                     />
                 </CardHeader>
                 <CardContent className="p-6 flex-grow">
                   <Badge variant="secondary" className="mb-2">{post.category}</Badge>
                   <CardTitle className="text-lg mb-2">{post.title}</CardTitle>
-                  <p className="text-sm text-muted-foreground">{post.date}</p>
+                  <p className="text-sm text-muted-foreground">{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 </CardContent>
                 <CardFooter className="p-6 pt-0">
-                  <Button variant="link" className="p-0">{translations.readMore}</Button>
+                  <Button variant="link" className="p-0" asChild>
+                    <Link href={`/blog/${post.id}`}>{translations.readMore}</Link>
+                  </Button>
                 </CardFooter>
               </Card>
             </div>

@@ -12,42 +12,35 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogC
 import Image from 'next/image';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
-
-type Post = {
-    id: string;
-    image: string;
-    category: string;
-    title: string;
-    date: string;
-    content: string;
-}
-
-const initialPosts: Post[] = [
-  {
-    id: '1',
-    image: 'https://placehold.co/600x400.png',
-    category: 'UI/UX',
-    title: 'The 10 Best UI/UX Design Books to Read in 2024',
-    date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-    content: 'This is the full content for the blog post about UI/UX books...'
-  },
-  {
-    id: '2',
-    image: 'https://placehold.co/600x400.png',
-    category: 'Productivity',
-    title: 'How to Stay Creative and Productive as a Designer',
-    date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-    content: 'This is the full content for the blog post about productivity...'
-  },
-];
+import { getBlogPosts, saveBlogPosts, type BlogPost } from '@/services/blog';
 
 export default function BlogManagementPage() {
-  const [posts, setPosts] = useState<Post[]>(initialPosts);
-  const [isLoading, setIsLoading] = useState(false);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [currentPost, setCurrentPost] = useState<Partial<Post> | null>(null);
+  const [currentPost, setCurrentPost] = useState<Partial<BlogPost> | null>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const loadPosts = () => {
+      setIsLoading(true);
+      try {
+        const loadedPosts = getBlogPosts();
+        setPosts(loadedPosts);
+      } catch (error) {
+        console.error("Error loading posts:", error);
+        toast({
+          title: "Error",
+          description: "Could not load posts.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadPosts();
+  }, [toast]);
 
   const openAddDialog = () => {
     setCurrentPost({
@@ -59,7 +52,7 @@ export default function BlogManagementPage() {
     setIsDialogOpen(true);
   }
 
-  const openEditDialog = (post: Post) => {
+  const openEditDialog = (post: BlogPost) => {
       setCurrentPost(post);
       setIsDialogOpen(true);
   }
@@ -68,21 +61,24 @@ export default function BlogManagementPage() {
       if (!currentPost) return;
       setIsSaving(true);
       try {
+        let updatedPosts;
         if (currentPost.id) {
-            setPosts(posts.map(p => p.id === currentPost.id ? currentPost as Post : p));
+            updatedPosts = posts.map(p => p.id === currentPost.id ? currentPost as BlogPost : p);
             toast({ title: "Success", description: "Post updated successfully." });
         } else {
-            const newPost: Post = {
+            const newPost: BlogPost = {
                 id: Date.now().toString(),
-                date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                date: new Date().toISOString(),
                 title: currentPost.title || '',
                 category: currentPost.category || '',
-                image: currentPost.image || '',
+                image: currentPost.image || 'https://placehold.co/600x400.png',
                 content: currentPost.content || '',
             }
-            setPosts([newPost, ...posts]);
+            updatedPosts = [newPost, ...posts];
             toast({ title: "Success", description: "Post added successfully." });
         }
+        setPosts(updatedPosts);
+        saveBlogPosts(updatedPosts);
         setIsDialogOpen(false);
         setCurrentPost(null);
       } catch (error) {
@@ -99,7 +95,9 @@ export default function BlogManagementPage() {
 
   const handleRemovePost = async (id: string) => {
     try {
-        setPosts(posts.filter(p => p.id !== id));
+        const updatedPosts = posts.filter(p => p.id !== id);
+        setPosts(updatedPosts);
+        saveBlogPosts(updatedPosts);
         toast({ title: "Success", description: "Post deleted successfully." });
     } catch (error) {
         console.error("Error deleting post: ", error);
@@ -111,7 +109,7 @@ export default function BlogManagementPage() {
     }
   }
   
-  const handlePostChange = (field: keyof Omit<Post, 'id' | 'date'>, value: string) => {
+  const handlePostChange = (field: keyof Omit<BlogPost, 'id' | 'date'>, value: string) => {
       if(currentPost) {
         setCurrentPost({...currentPost, [field]: value});
       }
@@ -137,6 +135,8 @@ export default function BlogManagementPage() {
                 <div className="flex justify-center p-8">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
+            ) : posts.length === 0 ? (
+                <p className="text-center text-muted-foreground py-8">No posts found. Add a new post to get started.</p>
             ) : posts.map((post) => (
               <Card key={post.id} className="flex items-start gap-4 p-4 bg-muted/50">
                 <Image src={post.image || "https://placehold.co/150x100.png"} alt={post.title} width={150} height={100} className="rounded-md object-cover"/>
@@ -145,7 +145,7 @@ export default function BlogManagementPage() {
                         <div>
                             <p className="text-sm text-primary font-semibold">{post.category}</p>
                             <h3 className="font-semibold text-lg">{post.title}</h3>
-                            <p className="text-xs text-muted-foreground">{post.date}</p>
+                            <p className="text-xs text-muted-foreground">{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                         </div>
                         <div className="flex items-center gap-2">
                            <Button variant="outline" size="sm" onClick={() => openEditDialog(post)}>Edit</Button>
