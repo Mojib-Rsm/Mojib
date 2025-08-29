@@ -15,17 +15,21 @@ const alegreya = Alegreya({
 });
 
 export const metadata = {
-  title: 'Mojib Rsm - WordPress Developer, AI Specialist & Digital Marketer',
-  description: "Welcome to the portfolio of Mojib Rsm. Discover my projects in WordPress, AI, and digital marketing. Let's build something amazing together.",
-  keywords: "Mojib Rsm, WordPress Developer, AI Specialist, Digital Marketer, Web Developer, SEO Expert, Freelancer Bangladesh",
+  title: 'Mojib Rsm - Expert WordPress Developer, AI Specialist & Digital Marketer in Bangladesh',
+  description: "Looking for a top-rated WordPress developer in Bangladesh? Mojib Rsm offers expert web development, AI integration, and digital marketing services to grow your business online. View my portfolio and let's build something amazing.",
+  keywords: "Mojib Rsm, WordPress Developer Bangladesh, AI Specialist, Digital Marketer, Web Developer, SEO Expert, Freelance web developer in Bangladesh, top WordPress expert, AI integration services, React developer, Next.js developer",
   openGraph: {
-    title: 'Mojib Rsm - Professional Portfolio',
-    description: 'Showcasing software development projects, skills, and experience in WordPress, AI, and more.',
+    title: 'Mojib Rsm - Professional Portfolio | WordPress & AI Expert',
+    description: 'Expert WordPress development, AI integration, and digital marketing services to help your business succeed. Based in Bangladesh.',
     images: ['/uploads/mojib-hero.png'],
     url: 'https://www.mojib.me',
+    type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
+    title: 'Mojib Rsm - Expert WordPress Developer & AI Specialist',
+    description: 'Showcasing web development projects, skills, and experience in WordPress, AI, and digital marketing in Bangladesh.',
+    images: ['/uploads/mojib-hero.png'],
   },
 };
 

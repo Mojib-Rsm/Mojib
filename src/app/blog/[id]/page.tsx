@@ -22,20 +22,26 @@ export async function generateMetadata(
     }
   }
 
-  // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || []
+  const description = post.content.substring(0, 160).replace(/\s\S*$/, '...');
 
   return {
     title: `${post.title} | Mojib Rsm Blog`,
-    description: post.content.substring(0, 160),
+    description: description,
     openGraph: {
       title: post.title,
-      description: post.content.substring(0, 160),
+      description: description,
       images: [post.image, ...previousImages],
       type: 'article',
       publishedTime: post.date,
       authors: ['Mojib Rsm'],
     },
+    twitter: {
+        card: 'summary_large_image',
+        title: post.title,
+        description: description,
+        images: [post.image],
+    }
   }
 }
 
