@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
         hostname: 'www.mojib.me',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
