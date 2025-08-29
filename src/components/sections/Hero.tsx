@@ -117,7 +117,7 @@ export function Hero() {
                 </Link>
               </Button>
               <Button variant="ghost" size="icon" asChild>
-                <Link href="https://facebook.com/mojibur.rsm" target="_blank">
+                <Link href="https://www.facebook.com/MoJiiB.RsM" target="_blank">
                   <Facebook className="h-5 w-5" />
                 </Link>
               </Button>

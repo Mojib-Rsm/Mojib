@@ -26,7 +26,7 @@ export function Footer() {
   const socialLinks = [
     { href: 'https://github.com/mojibrsm', icon: <Github className="h-5 w-5" />, label: 'Github' },
     { href: 'https://linkedin.com/in/mojibrsm', icon: <Linkedin className="h-5 w-5" />, label: 'LinkedIn' },
-    { href: 'https://facebook.com/mojibur.rsm', icon: <Facebook className="h-5 w-5" />, label: 'Facebook' },
+    { href: 'https://www.facebook.com/MoJiiB.RsM', icon: <Facebook className="h-5 w-5" />, label: 'Facebook' },
   ];
 
   return (
