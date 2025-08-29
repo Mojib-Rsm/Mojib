@@ -46,9 +46,9 @@ export function getBlogPosts(): BlogPost[] {
   try {
     const storedPosts = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (storedPosts) {
-      return JSON.parse(storedPosts);
+      const posts = JSON.parse(storedPosts);
+      return Array.isArray(posts) ? posts : initialPosts;
     } else {
-      // If no posts in local storage, set the initial posts
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initialPosts));
       return initialPosts;
     }
