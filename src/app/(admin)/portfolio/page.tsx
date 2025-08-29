@@ -13,7 +13,7 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
-import { getProjects, addProject, updateProject, deleteProject, Project } from '@/services/projects';
+import { getProjects, saveProjects, type Project } from '@/services/projects';
 
 export default function PortfolioManagementPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -25,25 +25,24 @@ export default function PortfolioManagementPage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
-    setIsLoading(true);
-    try {
-      const fetchedProjects = await getProjects();
-      setProjects(fetchedProjects);
-    } catch (error) {
-      console.error("Error fetching projects: ", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch projects. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
+    const loadProjects = () => {
+      setIsLoading(true);
+      try {
+        const loadedProjects = getProjects();
+        setProjects(loadedProjects);
+      } catch (error) {
+        console.error("Error loading projects:", error);
+        toast({
+          title: "Error",
+          description: "Could not load projects.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadProjects();
+  }, [toast]);
 
   const openAddDialog = () => {
     setCurrentProject({
@@ -68,16 +67,25 @@ export default function PortfolioManagementPage() {
       if (!currentProject) return;
       setIsSaving(true);
       try {
+        let updatedProjects;
         if (currentProject.id) {
-            const { id, ...data } = currentProject;
-            await updateProject(id, data as Omit<Project, 'id' | 'createdAt'>);
+            updatedProjects = projects.map(p => p.id === currentProject.id ? currentProject as Project : p);
             toast({ title: "Success", description: "Project updated successfully." });
         } else {
-            const { id, ...data } = currentProject;
-            await addProject(data as Omit<Project, 'id' | 'createdAt'>);
+            const newProject: Project = {
+                id: Date.now().toString(),
+                title: currentProject.title || '',
+                description: currentProject.description || '',
+                image: currentProject.image || 'https://placehold.co/600x400.png',
+                link: currentProject.link || '',
+                technologies: currentProject.technologies || [],
+                category: currentProject.category || 'Web',
+            }
+            updatedProjects = [newProject, ...projects];
             toast({ title: "Success", description: "Project added successfully." });
         }
-        await fetchProjects();
+        setProjects(updatedProjects);
+        saveProjects(updatedProjects);
         setIsDialogOpen(false);
         setCurrentProject(null);
       } catch (error) {
@@ -94,9 +102,10 @@ export default function PortfolioManagementPage() {
 
   const handleRemoveProject = async (id: string) => {
       try {
-        await deleteProject(id);
+        const updatedProjects = projects.filter(p => p.id !== id);
+        setProjects(updatedProjects);
+        saveProjects(updatedProjects);
         toast({ title: "Success", description: "Project deleted successfully." });
-        await fetchProjects();
       } catch (error) {
          console.error("Error deleting project: ", error);
          toast({
@@ -107,7 +116,7 @@ export default function PortfolioManagementPage() {
       }
   }
   
-  const handleProjectChange = (field: keyof Omit<Project, 'id' | 'technologies' | 'createdAt'>, value: string) => {
+  const handleProjectChange = (field: keyof Omit<Project, 'id' | 'technologies'>, value: string) => {
       if(currentProject) {
         setCurrentProject({...currentProject, [field]: value});
       }
@@ -258,3 +267,5 @@ export default function PortfolioManagementPage() {
     </div>
   );
 }
+
+    
