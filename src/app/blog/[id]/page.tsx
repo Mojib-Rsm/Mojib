@@ -26,7 +26,7 @@ export async function generateMetadata(
   const description = post.content.substring(0, 160).replace(/\s\S*$/, '...');
 
   return {
-    title: `${post.title} | Mojib Rsm Blog`,
+    title: `${post.title}`,
     description: description,
     openGraph: {
       title: post.title,

@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -86,7 +87,7 @@ export function About() {
               width={600}
               height={800}
               className="rounded-lg object-cover w-full h-full relative z-10 shadow-2xl"
-              data-ai-hint="man suit"
+              data-ai-hint="man developer"
             />
           </motion.div>
           <motion.div className="flex flex-col gap-6 items-start text-left" variants={containerVariants}>

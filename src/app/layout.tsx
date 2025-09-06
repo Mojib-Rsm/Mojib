@@ -15,7 +15,11 @@ const alegreya = Alegreya({
 });
 
 export const metadata = {
-  title: 'Mojib Rsm - Expert WordPress Developer, AI Specialist & Digital Marketer in Bangladesh',
+  metadataBase: new URL('https://www.mojib.me'),
+  title: {
+    default: 'Mojib Rsm - Expert WordPress Developer, AI Specialist & Digital Marketer in Bangladesh',
+    template: '%s | Mojib Rsm',
+  },
   description: "Looking for a top-rated WordPress developer in Bangladesh? Mojib Rsm offers expert web development, AI integration, and digital marketing services to grow your business online. View my portfolio and let's build something amazing.",
   keywords: "Mojib Rsm, WordPress Developer Bangladesh, AI Specialist, Digital Marketer, Web Developer, SEO Expert, Freelance web developer in Bangladesh, top WordPress expert, AI integration services, React developer, Next.js developer",
   openGraph: {
