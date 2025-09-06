@@ -13,46 +13,36 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
-
-type Project = {
-    id: string;
-    image: string;
-    title: string;
-    description: string;
-    technologies: string[];
-    link: string;
-    category: string;
-}
-
-const initialProjects: Project[] = [
-    {
-        id: '1',
-        image: "https://www.mojib.me/uploads/1754959172720-Screenshot-842.webp",
-        title: "Oftern News Website",
-        description: "A comprehensive news portal with a custom theme and plugins.",
-        technologies: ["WordPress", "PHP", "MySQL"],
-        link: "#",
-        category: 'Web'
-    },
-    {
-        id: '2',
-        image: "https://www.mojib.me/uploads/1754959260179-images.jpeg",
-        title: "Oftern Shop (E-commerce)",
-        description: "A full-featured e-commerce platform with a modern tech stack.",
-        technologies: ["React", "Firebase", "Node.js"],
-        link: "#",
-        category: 'Web'
-    },
-];
+import { getProjects, saveProjects, type Project } from '@/services/projects';
 
 export default function PortfolioManagementPage() {
-  const [projects, setProjects] = useState<Project[]>(initialProjects);
-  const [isLoading, setIsLoading] = useState(false);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [currentProject, setCurrentProject] = useState<Partial<Project> | null>(null);
   const [techInput, setTechInput] = useState('');
   const { toast } = useToast();
+
+  useEffect(() => {
+    const loadProjects = () => {
+      setIsLoading(true);
+      try {
+        const loadedProjects = getProjects();
+        setProjects(loadedProjects);
+      } catch (error) {
+        console.error("Error loading projects:", error);
+        toast({
+          title: "Error",
+          description: "Could not load projects.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadProjects();
+  }, [toast]);
 
   const openAddDialog = () => {
     setCurrentProject({
@@ -77,22 +67,25 @@ export default function PortfolioManagementPage() {
       if (!currentProject) return;
       setIsSaving(true);
       try {
+        let updatedProjects;
         if (currentProject.id) {
-            setProjects(projects.map(p => p.id === currentProject.id ? currentProject as Project : p));
+            updatedProjects = projects.map(p => p.id === currentProject.id ? currentProject as Project : p);
             toast({ title: "Success", description: "Project updated successfully." });
         } else {
             const newProject: Project = {
                 id: Date.now().toString(),
                 title: currentProject.title || '',
                 description: currentProject.description || '',
-                image: currentProject.image || '',
+                image: currentProject.image || 'https://placehold.co/600x400.png',
                 link: currentProject.link || '',
                 technologies: currentProject.technologies || [],
                 category: currentProject.category || 'Web',
-            };
-            setProjects([newProject, ...projects]);
+            }
+            updatedProjects = [newProject, ...projects];
             toast({ title: "Success", description: "Project added successfully." });
         }
+        setProjects(updatedProjects);
+        saveProjects(updatedProjects);
         setIsDialogOpen(false);
         setCurrentProject(null);
       } catch (error) {
@@ -109,7 +102,9 @@ export default function PortfolioManagementPage() {
 
   const handleRemoveProject = async (id: string) => {
       try {
-        setProjects(projects.filter(p => p.id !== id));
+        const updatedProjects = projects.filter(p => p.id !== id);
+        setProjects(updatedProjects);
+        saveProjects(updatedProjects);
         toast({ title: "Success", description: "Project deleted successfully." });
       } catch (error) {
          console.error("Error deleting project: ", error);
@@ -153,7 +148,7 @@ export default function PortfolioManagementPage() {
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Portfolio Management</h1>
+        <h1 className="text-3xl font-bold">Projects Management</h1>
         <Button onClick={openAddDialog}>
             <PlusCircle className="mr-2 h-4 w-4" />
             Add New Project
@@ -272,3 +267,4 @@ export default function PortfolioManagementPage() {
     </div>
   );
 }
+

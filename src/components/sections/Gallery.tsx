@@ -7,14 +7,14 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog';
 
 const galleryImages = [
-  { src: "/uploads/1752046515076-1725103684395.jpg", alt: "Bangladesh Jatiya Sangsad" },
-  { src: "/uploads/1752046533263-IMG-20240920-WA0045-EDIT.jpg", alt: "With delwar Friend" },
-  { src: "/uploads/1752046710975-FB_IMG_1728372217283.jpg", alt: "July Revolution (Bangladesh) 2024" },
-  { src: "/uploads/1752046723676-IMG20250619130703f.jpg", alt: "in college farewall day" },
-  { src: "/uploads/1754960582012-1752046739672-IMG20250619130510.jpg", alt: "in college farewall day" },
-  { src: "/uploads/1754960669253-485138794_668780005565511_8193880567669148641_n.jpg", alt: "working on a laptop" },
-  { src: "/uploads/1752046740793-aulbtu.jpg", alt: "Eid 2024" },
-  { src: "/uploads/1752046744345-Mojibur_Rahman_sm.png", alt: "my Passport size image" },
+  { src: "/uploads/1752046515076-1725103684395.jpg", alt: "Bangladesh Jatiya Sangsad Bhaban" },
+  { src: "/uploads/1752046533263-IMG-20240920-WA0045-EDIT.jpg", alt: "Mojib with a friend" },
+  { src: "/uploads/1752046710975-FB_IMG_1728372217283.jpg", alt: "Protest during July Revolution in Bangladesh 2024" },
+  { src: "/uploads/1752046723676-IMG20250619130703f.jpg", alt: "Mojib during college farewell day" },
+  { src: "/uploads/1754960582012-1752046739672-IMG20250619130510.jpg", alt: "Mojib with friends on college farewell day" },
+  { src: "/uploads/1754960669253-485138794_668780005565511_8193880567669148641_n.jpg", alt: "A man working on a laptop" },
+  { src: "/uploads/1752046740793-aulbtu.jpg", alt: "Mojib during Eid celebration 2024" },
+  { src: "/uploads/1752046744345-Mojibur_Rahman_sm.png", alt: "Passport size photograph of Mojibur Rahman" },
 ];
 
 export function Gallery() {
