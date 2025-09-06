@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -15,15 +16,10 @@ export function Header() {
 
   const navLinks = [
     { href: '/', label: translations.home },
-    { href: '#about', label: translations.about },
+    { href: '/about', label: translations.about },
     { href: '#services', label: translations.services },
-    { href: '#experience', label: translations.experience },
-    { href: '#skills', label: translations.skills },
     { href: '#portfolio', label: translations.portfolio },
-    { href: '#gallery', label: translations.gallery },
-    { href: '#pricing', label: translations.pricing },
     { href: '#blog', label: translations.blog },
-    { href: '#faq', label: translations.faq },
     { href: '#contact', label: translations.contact },
   ];
 

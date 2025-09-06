@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -16,11 +17,16 @@ export function Footer() {
 
   const navLinks = [
     { href: '/', label: translations.home },
-    { href: '#about', label: translations.about },
+    { href: '/about', label: translations.about },
     { href: '#portfolio', label: translations.portfolio },
-    { href: '#gallery', label: translations.gallery },
     { href: '#blog', label: translations.blog },
     { href: '#contact', label: translations.contact },
+  ];
+
+  const legalLinks = [
+    { href: '/privacy-policy', label: "Privacy Policy" },
+    { href: '/terms-and-conditions', label: "Terms & Conditions" },
+    { href: '/disclaimer', label: "Disclaimer" },
   ];
   
   const socialLinks = [
@@ -58,6 +64,17 @@ export function Footer() {
               </Button>
             ))}
           </div>
+           <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4">
+            {legalLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-xs font-medium transition-colors hover:text-primary text-muted-foreground"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
           <div className="text-sm text-muted-foreground mt-4">
             © {currentYear} Mojib Rsm. {translations.footerAllRightsReserved}
           </div>
