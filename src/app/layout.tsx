@@ -2,6 +2,7 @@
 import './globals.css';
 import { Alegreya, Belleza } from 'next/font/google';
 import { Providers } from '@/components/Providers';
+import Script from 'next/script';
 
 const belleza = Belleza({
   subsets: ['latin'],
@@ -44,6 +45,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+       <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8850298223242719"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className={`${belleza.variable} ${alegreya.variable} font-body antialiased`}>
         <Providers>{children}</Providers>
       </body>
